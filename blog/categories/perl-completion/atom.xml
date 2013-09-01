@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: perl-completion | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/perl-completion/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[perl-completion.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/08/20/emacs-perl-completion/"/>
+    <updated>2012-08-20T15:43:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/08/20/emacs-perl-completion</id>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
+
+<p>すでにauto-intall.elがインストールされている前提で話をすすめます。<br/>
+auto-installのインストール手順は<a href="/blog/2012/08/20/emacs-auto-install/">こちら</a>をご覧ください。</p>
+
+<h2>インストール手順</h2>
+
+<p>emacsを起動し、</p>
+
+<p><code>
+M-x auto-install-batch &lt;RET&gt;
+Extension name: perl-completionn &lt;RET&gt;
+</code></p>
+
+<p>auto-isntall-batchを実行、次にインストールしたいパッケージ名(perl-completion)を入力します。</p>
+
+<p>すると自動で複数ソースのダウンロードが始まります。<br/>
+ダウンロードし終わると「モード行」に</p>
+
+<p><code>
+Type C-c C-c to continue; Type C-c C-d for view diff; Type C-c C-q to quit.
+</code></p>
+
+<p>というメッセージが出てくるので、「C-c C-c」と入力し、ダウンロードしたソースを順番にコンパイルしていきます。<br/>
+すべてコンパイルし終えると、以下のようなメッセージが表示され、インストールが完了します。</p>
+
+<p><code>
+Installation is completed.
+</code></p>
+
+<h2>.emacsの設定</h2>
+
+<p>cperl-mode時に、auto-completion(とauto-complete)を有効にするように設定します。</p>
+
+<p>``` scheme
+;; perl-completion
+(add-hook  &lsquo;cperl-mode-hook (lambda ()</p>
+
+<pre><code>                          (require 'auto-complete)
+                          (require 'perl-completion)
+                          (add-to-list 'ac-sources 'ac-source-perl-completion)
+                          (perl-completion-mode t)))
+</code></pre>
+
+<p>```</p>
+
+<h2>実行画面</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/perl-completion001.png" alt="" /></p>
+]]></content>
+  </entry>
+  
+</feed>

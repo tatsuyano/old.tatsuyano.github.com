@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MacのPHP開発環境を整える - 10rane.com</title>
+  <meta name="author" content="tatsuyano">
+
+  
+  <meta name="description" content="はじめに 勉強のためにローカル上でのPHP開発環境を作ろうと思います。 MAMPのインストール macにapache,mysql,phpをセットにしたものをインストールするためのソフト。
+M(ac) A(pache) M(ysql) P(hp)。同じ用途でXAMPPというのもありますが、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tatsuyano.github.io/blog/2012/11/02/mamp-php-mac">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="10rane.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">10rane.com</a></h1>
+  
+    <h2>技術備忘録</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:tatsuyano.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">MacのPHP開発環境を整える</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-02T10:35:00+09:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>はじめに</h2>
+
+<p>勉強のためにローカル上でのPHP開発環境を作ろうと思います。</p>
+
+<h2>MAMPのインストール</h2>
+
+<p>macにapache,mysql,phpをセットにしたものをインストールするためのソフト。<br/>
+M(ac) A(pache) M(ysql) P(hp)。同じ用途でXAMPPというのもありますが、私の環境ではうまく動きませんでした。</p>
+
+<ul>
+<li><a href="http://www.be-webdesigner.com/technotes/server/install/mamp.htm">MAMPのインストール for Mac</a></li>
+<li><a href="http://www.mamp.info/en/">MAMPのダウンロードサイト</a></li>
+</ul>
+
+
+<p>有償のPro版も同時にインストールされてしまいます。今回はPHPを少し触ってみたいだけなので、無償版を使います。</p>
+
+<h2>emacsのPHP開発環境</h2>
+
+<ul>
+<li><a href="/blog/2012/10/29/emacs-php-mode/">php-mode.elをインストールする</a></li>
+<li><a href="/blog/2012/10/29/emacs-php-completion/">php-completion.elをインストールする</a></li>
+</ul>
+
+
+<p><del datetime="2012-11-01T15:03:10+00:00">補完機能と色付けだけは欲しかったのでインストール。</del></p>
+
+<p>php-mode.elだけだと、phpファイルにhtmlの記述がある(又はその逆)とインデントがくずれてしまう。<br/>
+なので最終的に、「php-mode + php-completion + nXhtml』を使う形に落ち着いた。<br/>
+＊php-completionはauto-completeの機能を利用している</p>
+
+<ul>
+<li><a href="/blog/2012/11/01/emacs-nxhtml/">nXhtmlをインストールする</a></li>
+</ul>
+
+
+<p>php-mode.elの設定(インデントと、phpファイルを開いたときのmode指定)をコメントアウト</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">emacs</span> <span class="nv">~/</span><span class="o">.</span><span class="nv">emacs</span><span class="o">.</span><span class="nv">d/conf/50_php</span><span class="o">.</span><span class="nv">el</span>
+</span><span class='line'><span class="c1">;; php-mode</span>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;php-mode</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;;(setq php-mode-force-pear t) ;PEAR規約のインデント設定にする</span>
+</span><span class='line'><span class="c1">;;(add-to-list &#39;auto-mode-alist &#39;(&quot;\\.php$&quot; . php-mode))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>実行画面</h2>
+
+<p>htmlとphpのコードで書かれているindex.phpを開いてみると、htmlのコードを編集すると(nXhtml/nxhtml lnValid)に</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/nxhtml_001.png" alt="" /></p>
+
+<p>phpのコードを編集すると(PHP/nxhtml Completion AC Abbrev)にmodeが切り替わる</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/nxhtml_002.png" alt="" /></p>
+
+<p>補完機能もちゃんと動いている</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/nxhtml_003.png" alt="" />
+＊nXhtmlで起動するさいに下記の警告がでるが、今のところ問題なく動いているので無視する</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">Warning:</span> <span class="o">`</span><span class="nv">font-lock-syntactic-keywords</span><span class="o">&#39;</span> <span class="nv">is</span> <span class="nv">an</span> <span class="nv">obsolete</span> <span class="nv">variable</span> <span class="p">(</span><span class="nf">as</span> <span class="nv">of</span> <span class="mf">24.1</span><span class="p">)</span><span class="c1">;</span>
+</span><span class='line'><span class="nv">use</span> <span class="o">`</span><span class="nv">syntax-propertize-function</span><span class="o">&#39;</span> <span class="nv">instead</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">tatsuyano</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-02T10:35:00+09:00" pubdate data-updated="true">Nov 2<span>nd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/mamp/'>MAMP</a>, <a class='category' href='/blog/categories/emacs/'>emacs</a>, <a class='category' href='/blog/categories/mac/'>mac</a>, <a class='category' href='/blog/categories/php/'>php</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tatsuyano.github.io/blog/2012/11/02/mamp-php-mac/" data-via="" data-counturl="http://tatsuyano.github.io/blog/2012/11/02/mamp-php-mac/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/11/01/emacs-nxhtml/" title="Previous Post: nXhtmlをインストールする">&laquo; nXhtmlをインストールする</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/11/19/walkman-nwd-w263/" title="Next Post: WALKMAN NWD-W263">WALKMAN NWD-W263 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/10/handlersocket-install/">HandlerSocketをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/10/octopress-clippit/">Octopressのコードスニペットの設定</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/09/octopress-install/">Octopressをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/01/pbcopy-pbpaste/">Tmuxでもpbcopy、pbpasteを使えるように設定する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/16/emacs-git-gutter/">git-gutter.elをインストールする</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.85714285714286%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 108.57142857142857%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 105.71428571428571%'>auto-install(2)</a> <a href='/blog/categories/cakephp' style='font-size: 102.85714285714286%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 114.28571428571429%'>CoffeeScript(5)</a> <a href='/blog/categories/el-get' style='font-size: 114.28571428571429%'>el-get(5)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(21)</a> <a href='/blog/categories/flymake' style='font-size: 102.85714285714286%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 117.14285714285714%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.85714285714286%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.71428571428571%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.71428571428571%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.85714285714286%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.85714285714286%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 114.28571428571429%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.71428571428571%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.85714285714286%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.85714285714286%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 108.57142857142857%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.71428571428571%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.71428571428571%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.71428571428571%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.85714285714286%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.85714285714286%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.71428571428571%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 111.42857142857143%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.85714285714286%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.85714285714286%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 117.14285714285714%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.85714285714286%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.85714285714286%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.71428571428571%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.71428571428571%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.85714285714286%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.85714285714286%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.85714285714286%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 128.57142857142858%'>running(10)</a> <a href='/blog/categories/tmux' style='font-size: 111.42857142857143%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.85714285714286%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.85714285714286%'>wordpress(1)</a> </span>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - tatsuyano -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

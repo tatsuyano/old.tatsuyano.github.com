@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: git | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[gistのファイルをダウンロード(参照)する]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/gist/"/>
+    <updated>2013-03-19T01:06:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/gist</id>
+    <content type="html"><![CDATA[<p>gistのファイルをダウンロードするには、通常 git clone を利用するが、ファイル(rawファイル)を直接 wget などしたい場合がある。</p>
+
+<p>その場合は下記のURLで取得する<br/>
+<a href="https://raw.github.com/gist/">https://raw.github.com/gist/</a>&lt;パラメータ>/&lt;ファイル名></p>
+
+<p>例)<br/>
+<a href="https://gist.github.com/zqwell/1021706  ">https://gist.github.com/zqwell/1021706  </a>
+↓<br/>
+<a href="https://raw.github.com/gist/1021706/init-loader.el">https://raw.github.com/gist/1021706/init-loader.el</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[リモートリポジトリの変更を取得する(git fetch)]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/02/25/git-fetch/"/>
+    <updated>2013-02-25T14:15:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/02/25/git-fetch</id>
+    <content type="html"><![CDATA[<p>confilictを起こさないためにも、git pullは使わずにgit fetchを使ったほうがいい。</p>
+
+<p>リモートリポジトリの変更を取得する
+<code>
+git fetch # これによって、FETCH_HEADを使って、以下のようにログや差分を見られるようになる。
+</code></p>
+
+<p>リモートリポジトリのコミットのログを見る
+<code>
+git log FETCH_HEAD
+</code></p>
+
+<p>リモートリポジトリとローカルのHEADの差分を見る
+<code>
+git diff HEAD FETCH_HEAD
+</code></p>
+
+<p>リモートリポジトリと変更をローカルにマージする
+<code>
+git merge FETCH_HEAD
+</code></p>
+
+<p>リモートリポジトリの変更を取得してローカルにマージする
+<code>
+git pull # git pull は git fetch + git merge
+</code></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://yanor.net/wiki/?Git/git%20fetch%20(git%20pull">git fetch ( git pull )</a>)</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[conflictしたファイルを修正しpushする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/02/23/git-conflict/"/>
+    <updated>2013-02-23T14:10:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/02/23/git-conflict</id>
+    <content type="html"><![CDATA[<p>pullした後に、commitしたファイルdummy.txtがconflictした場合</p>
+
+<p><code>
+git pull
+Auto-merging dummy.txt # &lt;- dummy.txtがconflictして、auto-mergeされた
+CONFLICT (content): Merge conflict in dummy.txt
+Automatic merge failed; fix conflicts and then commit the result.
+</code></p>
+
+<p>conflictしたファイルを修正する</p>
+
+<p>```
+emacs dummy.txt
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+
+<h1>local</h1>
+
+<p>remote</p>
+
+<blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><blockquote><p>58da51ee64bf7f793167ddb40d035815e39566b4
+```</p></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote></blockquote>
+
+<p>修正後、git commit -aで再度commitしpush</p>
+
+<p>```
+git commit -a -m &lsquo;merge dummy&rsquo;
+[master 102b6c6] merge dummy</p>
+
+<p>git push
+```
+git commit -a は git add -u した後すぐにgit commitしたのと同義</p>
+
+<p>conflictしているファイルの表示</p>
+
+<p><code>
+git ls-files -u
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[master以外のbranchをリモート(origin)にpushする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/02/23/git-push-origin-newbranch/"/>
+    <updated>2013-02-23T13:58:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/02/23/git-push-origin-newbranch</id>
+    <content type="html"><![CDATA[<p>master以外の別branchをリモートにpushする</p>
+
+<p>```
+git push origin new-branch</p>
+
+<p>git branch -a
+  master
+* new-branch
+  remotes/origin/HEAD &ndash;> origin/master
+  remotes/origin/master
+  remotes/origin/new-branch # &lt;&ndash; 追加される
+```</p>
+
+<p>origin/master以外のリモートにあるbranchをローカルに追加する</p>
+
+<p>```
+git branch new-branch origin/new-branch # &lt;&ndash; 本来ならこれでうまくいくのだが</p>
+
+<h1>なぜかすでにローカルにあるリポジトリから、新たに追加されたリモートのブランチが参照されていない</h1>
+
+<p>git branch -a
+* master
+  remotes/origin/HEAD &ndash;> origin/master
+  remotes/origin/master</p>
+
+<h1>remotes/origin/new-branch &lt;&ndash; 本来参照されるはずのブランチ</h1>
+
+<p>```</p>
+
+<p>うまくいかないので、いったんローカルのリポジトリを破棄し、新たにcloneしなおしてみる</p>
+
+<p>```
+mv local-repository local-repository.bk</p>
+
+<p>git clone ssh://hoge/var/git/remote-repository.git local-repository
+cd local-repository/</p>
+
+<p>git branch -a
+* master
+  remotes/origin/HEAD &ndash;> origin/master
+  remotes/origin/master
+  remotes/origin/new-branch # &lt;&ndash; 追加されている
+```</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://blog.basyura.org/entry/20100323/p1">remote に branch を push し、remote から clone したリポジトリの branch を変更して push する</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[作業ごとにブランチを切る(git branch)]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/02/23/git-branch/"/>
+    <updated>2013-02-23T13:52:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/02/23/git-branch</id>
+    <content type="html"><![CDATA[<h2>branchを切る</h2>
+
+<p>機能追加、バグ修正など、作業ごとにブランチを切るべき</p>
+
+<p>ブランチの作成
+<code>
+git branch new-branch
+</code></p>
+
+<p>ブランチを確認する
+<code>
+git branch -a
+* master # &lt;- 現在のブランチがmasterであることがわかる
+  new-branch
+  remotes/origin/HEAD -&gt; origin/master
+  remotes/origin/master
+</code></p>
+
+<p>作成したブランチに切り替える
+<code>
+git checkout new-branch
+Switched to branch 'new-branch'
+</code></p>
+
+<p>ブランチを作成すると同時にブランチを切り替える
+<code>
+git checkout -b new-branch
+Switched to a new branch 'new-branch'
+</code></p>
+
+<p>ブランチの削除
+```
+git branch -d new-branch
+Deleted branch new-branch (was 6de2d75).</p>
+
+<h1>削除対象のブランチを選択していると削除できない</h1>
+
+<p>git branch -d new-branch
+error: Cannot delete the branch &lsquo;new-branch&rsquo; which you are currently on.</p>
+
+<h1>この場合、いったんmasterに切り替えてから削除</h1>
+
+<p>git checkout master
+git branch -d new-branch
+```</p>
+
+<h2>branchをmasterにmergeする</h2>
+
+<p>```</p>
+
+<h1>まずはmasterにcheckout</h1>
+
+<p>git checkout master</p>
+
+<h1>対象のbranchをmerge</h1>
+
+<p>git merge new-branch
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

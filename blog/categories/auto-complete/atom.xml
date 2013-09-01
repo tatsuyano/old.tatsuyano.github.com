@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: auto-complete | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/auto-complete/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[coffee-modeでauto-completeを使えるようにする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/coffee-mode-used-ac-dict/"/>
+    <updated>2013-03-19T18:48:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/coffee-mode-used-ac-dict</id>
+    <content type="html"><![CDATA[<p>まずは coffee-mode.el を el-get で通常通りにインストールします。</p>
+
+<h2>auto-complete で補完に使うdict(辞書)について</h2>
+
+<p>補完をするときに参照している辞書は、.emacs.d/elisp/el-get/auto-complete/dict/ 配下にあります。<br/>
+デフォルトでは、coffee-mode 用のdictがないので、js2-mode 用に公開されていた辞書をインストールします。</p>
+
+<p><code>
+cd .emacs.d/elisp/el-get/auto-complete/dict/
+wget https://raw.github.com/sandai/dotfiles/master/.emacs.d/ac-dict/js2-mode
+</code></p>
+
+<h2>設定</h2>
+
+<p>coffee-mode でauto-complete を使えるようにし、指定した辞書で補完するようにします。</p>
+
+<p>52-coffee-mode.el
+``` scheme
+(require &lsquo;coffee-mode)</p>
+
+<p>;; デフォルトだとインデントが８スペースなので、２スペースに変更
+;; <a href="http://qiita.com/items/a8d96ae95a1838500e37">http://qiita.com/items/a8d96ae95a1838500e37</a>
+(defun coffee-custom ()
+  &ldquo;coffee-mode-hook&rdquo;
+  (set (make-local-variable &lsquo;tab-width) 2)
+  (setq coffee-tab-width 2))
+(add-hook 'coffee-mode-hook
+  &rsquo;(lambda() (coffee-custom)))</p>
+
+<p>;; auto-complete
+(add-to-list &lsquo;ac-modes 'coffee-mode) ;; coffee-modeでACを使えるようにする</p>
+
+<p>;; coffee-modeで、追加したjs2-modeのdict(辞書)で補完するようにする
+;; wget <a href="https://raw.github.com/sandai/dotfiles/master/.emacs.d/ac-dict/js2-mode">https://raw.github.com/sandai/dotfiles/master/.emacs.d/ac-dict/js2-mode</a>
+(add-hook &lsquo;coffee-mode-hook
+  &rsquo;(lambda ()</p>
+
+<pre><code>(add-to-list 'ac-dictionary-files "~/.emacs.d/elisp/el-get/auto-complete/dict/js2-mode")
+</code></pre>
+
+<p>))
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[el-get.elでauto-complete.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-complete/"/>
+    <updated>2013-03-19T18:43:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-complete</id>
+    <content type="html"><![CDATA[<h2>el-getにインストールされているパッケージリストが古かったので、レシピを更新</h2>
+
+<p>パッケージリストには、auto-complete.elがあるのですが、レシピが古くインストールしてもディレクトリの中は空なので、レシピを新たに設定します。</p>
+
+<p>また、auto-complete.el は popup.el と fuzzy.el というelispが必須なのですが、今回 popup.el のレシピを用意し、auto-complete とは別にインストールする必要があります。<br/>
+※ とりあえず fuzzy.el は別途インストールしなくても動いているので、fuzzy.el は保留。</p>
+
+<h2>レシピの追加</h2>
+
+<p>10-el-get.el
+``` scheme
+(setq el-get-dir &ldquo;~/.emacs.d/elisp/el-get/&rdquo;)</p>
+
+<p>(unless (require &lsquo;el-get nil 'noerror)
+  (with-current-buffer</p>
+
+<pre><code>(url-retrieve-synchronously
+  "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+(goto-char (point-max))
+(eval-print-last-sexp)))
+</code></pre>
+
+<p>(setq el-get-sources
+  &lsquo;(</p>
+
+<pre><code>(:name init-loader
+  :type http
+  :url "https://raw.github.com/gist/1021706/init-loader.el"
+  :description "[My Recipes] Split management init.el. ")
+(:name popup ;; &lt;- 追加
+  :type github
+  :website "https://github.com/auto-complete/popup-el"
+  :description "[My Recipes] This section describes the basic data structures and operations of popups."
+  :pkgname "auto-complete/popup-el")
+(:name auto-complete ;; &lt;- 追加
+  :type github
+  :website "https://github.com/auto-complete/auto-complete"
+  :description "[My Recipes] Auto Complete Mode renews an old completion interface and provides an environment that makes users could be more concentrate on their own works."
+  :pkgname "auto-complete/auto-complete")
+))
+</code></pre>
+
+<p>(el-get &lsquo;sync)
+```</p>
+
+<h2>インストール</h2>
+
+<p>これで、auto-complete.el と popup.el のレシピが更新されたので、M-x el-get-list-packages　でインストールします。</p>
+
+<h2>設定</h2>
+
+<p>12-auto-complete.el
+<code>scheme
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/elisp/el-get/auto-complete/dict")
+(ac-config-default)
+(setq ac-use-menu-map t)
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[auto-complete.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/08/20/emacs-auto-complete/"/>
+    <updated>2012-08-20T15:27:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/08/20/emacs-auto-complete</id>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
+
+<p>すでにauto-intall.elがインストールされている前提で話をすすめます。<br/>
+auto-installのインストール手順は<a href="/blog/2012/08/20/emacs-auto-install/">こちら</a>をご覧ください。</p>
+
+<p>またauto-installを使わずに、手動でインストール、コンパイルしたい場合は<br/>
+下記サイト(auto-complete.elの開発者さんが説明してくれています)をご参照ください。</p>
+
+<p><a href="http://dev.ariel-networks.com/wp/documents/aritcles/emacs/part9" title="">「Emacsのトラノマキ」連載第09回「auto-completeを使おう」</a></p>
+
+<h2>インストール手順</h2>
+
+<p>emacsを起動し、</p>
+
+<p><code>
+M-x auto-install-batch &lt;RET&gt;
+Extension name: auto-complete development version &lt;RET&gt;
+</code></p>
+
+<p>auto-isntall-batchを実行、次にインストールしたいパッケージ名(auto-complete development version)を入力します。<br/>
+すると自動で複数ソースのダウンロードが始まります。</p>
+
+<p>ダウンロードし終わると「モード行」に</p>
+
+<p><code>
+Type C-c C-c to continue; Type C-c C-d for view diff; Type C-c C-q to quit.
+</code></p>
+
+<p>というメッセージが出てくるので、「C-c C-c」と入力し、ダウンロードしたソースを順番にコンパイルしていきます。<br/>
+すべてコンパイルし終えると、以下のようなメッセージが表示され、インストールが完了します。</p>
+
+<p><code>
+Installation is completed.
+</code></p>
+
+<h2>. emacsの設定</h2>
+
+<p><code>scheme
+;; auto-complete
+(require 'auto-complete)
+(require 'auto-complete-config) ; 必須ではないですが一応
+(global-auto-complete-mode t)
+</code></p>
+
+<h2>実行画面</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/auto-complete001.png" alt="" /></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://dev.ariel-networks.com/wp/documents/aritcles/emacs/part9" title="">「Emacsのトラノマキ」連載第09回「auto-completeを使おう」</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

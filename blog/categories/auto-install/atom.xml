@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: auto-install | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/auto-install/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[el-get.elでauto-install.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-install/"/>
+    <updated>2013-03-19T18:04:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-install</id>
+    <content type="html"><![CDATA[<p>まずは <a href="/blog/2013/03/19/emacs-el-get/">el-get.el のインストール</a> が完了していることが前提になります。</p>
+
+<h2>インストール</h2>
+
+<p>まずは M-x el-get-list-packages で利用できるパッケージを一覧表示します。<br/>
+次に インストールしたいパッケージに「i」を押してチェックをいれ、「x」を押すと自動でインストールが始まります。</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/emacs-install-auto-install_001.png" alt="" /></p>
+
+<p>インストールしたパッケージは、 (setq el-get-dir &ldquo;~/.emacs.d/elisp/el-get/&rdquo;) で指定したディレクトリ直下にディレクトリ単位にインストールされます。</p>
+
+<p>またインストールしたパッケージを削除する場合は、M-x el-get-remove で削除します。</p>
+
+<h2>auto-installでインストールしたパッケージの置場所</h2>
+
+<p>el-get.el でインストールしたパッケージと、auto-install.el でインストールしたパッケージを分けて管理したいので、<br/>
+auto-install用のディレクトリとパスの設定をします。</p>
+
+<p>.emacs.d<br/>
+└── elisp<br/>
+　　├── auto-install &hellip; auto-installでインストールしたパッケージの置場所<br/>
+　　└── el-get &hellip; el-getでインストールしたパッケージの置場所<br/>
+　　　　　├── auto-install &hellip; auto-install.elの本体。本体はel-getでインストールしたため<br/>
+　　　　　└── el-get &hellip; el-get.el自身もまた、el-getに管理されている</p>
+
+<h2>auto-installの設定</h2>
+
+<p>init.el<br/>
+<code>scheme
+(setq load-path
+  (append
+  (list
+  ...
+  (expand-file-name "~/.emacs.d/elisp/auto-install/") ;; &lt;- パスの追加
+  )
+  load-path))
+  ...
+  (require 'auto-install)
+  (setq auto-install-directory "~/.emacs.d/elisp/auto-install/") ;; auto-installでインストールしたパッケージの置場所を指定
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[auto-install.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/08/20/emacs-auto-install/"/>
+    <updated>2012-08-20T12:46:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/08/20/emacs-auto-install</id>
+    <content type="html"><![CDATA[<p>anything.elやperl-completion.elを簡単にインストールできるauto-install.elをインストールします。</p>
+
+<h2>emacs.d以下の構成</h2>
+
+<p>.emacs.d以下の構成は<a href="http://typester.stfuawsc.com/slides/perlcasual2/start.html">Perl Hacks on Emacs</a>に習い、以下のようにします。</p>
+
+<p><code>
+.emacs.d
+├── conf … init-loader.elで使う。
+├── elisp … auto-install.elでインストールしたソースや、手動でダウンロードしたソースの置場所。
+└── site … それ以外のライブラリの置場所。
+</code></p>
+
+<h2>ダウンロード</h2>
+
+<p><code>
+cd .emacs.d/elisp/
+wget http://www.emacswiki.org/emacs/download/auto-install.el
+</code></p>
+
+<h2>.emacsの設定</h2>
+
+<p>``` scheme
+;; emacs起動時に、読み込むソース(auto-installなど)の置場所を指定します。
+(add-to-list &lsquo;load-path &ldquo;~/.emacs.d/elisp&rdquo;)</p>
+
+<p>;; auto-installでインストールしたソースの置場所を指定します。
+(require &lsquo;auto-install)
+(setq auto-install-directory &ldquo;~/.emacs.d/elisp/&rdquo;)
+```</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://typester.stfuawsc.com/slides/perlcasual2/start.html">Perl Hacks on Emacs</a></li>
+<li><a href="http://yasuwagon.blogspot.jp/2011/02/auto-installel.html">auto-install.el のインストール</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

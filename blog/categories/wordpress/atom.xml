@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: wordpress | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/wordpress/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[nginxのファイルのアップロードサイズを変更する　413 Request Entity Too Large]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/12/21/nginx-request-entity-too-large/"/>
+    <updated>2012-12-21T10:59:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/12/21/nginx-request-entity-too-large</id>
+    <content type="html"><![CDATA[<p>サイズの大きなファイルをアップロードしようとするとタイトルのエラーが出るので、その対処方法。</p>
+
+<h2>nginx.conf</h2>
+
+<p>まずはnginx.confファイルに「client_max_body_size 20M;」を追加。<br/>
+私はリバースプロキシを利用しているので、2箇所に記述。</p>
+
+<p>``` scheme
+server {
+   listen       80;</p>
+
+<pre><code>  server_name blog.10rane.com;
+</code></pre>
+
+<p>   client_max_body_size 20M; # 413 Request Entity Too Large
+   &hellip;..</p>
+
+<p>server {
+   listen       8080;</p>
+
+<pre><code>  server_name blog.10rane.com;
+</code></pre>
+
+<p>   client_max_body_size 20M; # 413 Request Entity Too Large
+   &hellip;..
+```</p>
+
+<h2>php.ini</h2>
+
+<p>php.iniは3箇所の変更。</p>
+
+<p>``` php</p>
+
+<h1>emacs /etc/php.ini</h1>
+
+<p>upload_max_filesize = 20M
+post_max_size = 20M
+memory_limit = 128M
+```</p>
+
+<h2>再起動</h2>
+
+<p>nginx、fast-cgi両方を再起動。</p>
+
+<p><code>
+/etc/init.d/nginx restart
+/etc/init.d/php-fastcgi restart
+</code></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://weble.org/2012/05/28/nginx-error-413-request-entity-too-large-%E3%81%A8%E5%87%BA%E3%82%8B%E5%A0%B4%E5%90%88%E3%81%AF%E6%9C%80%E5%A4%A7%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%B5%E3%82%A4%E3%82%BA%E3%82%92">nginx error – 413 Request Entity Too Large と出る場合は最大ファイルサイズを変更する</a></li>
+<li><a href="http://se-suganuma.blogspot.jp/2012/04/fileuploadnginxphpini.html">FileをUploadするためのnginxとphp.iniの設定</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

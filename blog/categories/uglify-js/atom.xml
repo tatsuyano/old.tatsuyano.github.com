@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: uglify-js | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/uglify-js/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[uglify-js]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/14/uglify-js/"/>
+    <updated>2013-03-14T18:01:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/14/uglify-js</id>
+    <content type="html"><![CDATA[<p><code>
+npm install -g uglify-js
+</code></p>
+
+<p>パラメータの-gは「global」の意味。「global」はnodeのインストールディレクトリ、<br/>
+そうでなければカレントパッケージのルートかカレントワーキングディレクトリ。</p>
+
+<h2>npmの参考サイト</h2>
+
+<ul>
+<li><a href="https://npmjs.org/doc/config.html">Manage the npm configuration file</a></li>
+<li><a href="http://kysnm.hatenablog.com/entry/20111225/1324828008">npm についてまとめてみる</a></li>
+</ul>
+
+
+<h2>uglify-jsの使い方</h2>
+
+<ul>
+<li>-b, &mdash;beautify     整形(軽量化の逆)</li>
+<li>-o,&mdash;output <file> 出力ファイルの指定</li>
+<li>&mdash;overwrite        軽量化後のコードで入力ファイルを上書きします</li>
+<li>&mdash;unsafe           コードをより短い表現に変換</li>
+</ul>
+
+
+<p><code>
+uglifyjs -o min.js jquery-1.9.1.js
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

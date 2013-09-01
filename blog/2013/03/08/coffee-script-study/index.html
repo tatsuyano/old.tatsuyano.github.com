@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>CoffeeScriptの勉強 その２(構文) - 10rane.com</title>
+  <meta name="author" content="tatsuyano">
+
+  
+  <meta name="description" content="Hello World Javascript Array SyntaxMDN Documentation 1
+2
+3
+4
+5
+$ emacs test.coffee
+hello = -&gt; console.log(&quot;Hello World!&quot;) hello() コンパイル &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tatsuyano.github.io/blog/2013/03/08/coffee-script-study">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="10rane.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">10rane.com</a></h1>
+  
+    <h2>技術備忘録</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:tatsuyano.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">CoffeeScriptの勉強 その２(構文)</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-08T14:56:00+09:00" pubdate data-updated="true">Mar 8<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Hello World</h2>
+
+<figure class='code'><figcaption><span>Javascript Array Syntax</span><a href='http://j.mp/pPUUmW'>MDN Documentation </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">$</span> <span class="nx">emacs</span> <span class="nx">test</span><span class="p">.</span><span class="nx">coffee</span>
+</span><span class='line'><span class="nx">hello</span> <span class="o">=</span> <span class="o">-&gt;</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">hello</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>コンパイル coffee &ndash;> js。 test.jsというJsファイルが生成される</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> coffee -c test.coffee</span></code></pre></td></tr></table></div></figure>
+
+
+<p>生成したJsの実行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>node test.js
+</span><span class='line'>Hello World!</span></code></pre></td></tr></table></div></figure>
+
+
+<p>生成されたJsの中身</p>
+
+<figure class='code'><figcaption><span>Javascript Array Syntax</span><a href='http://j.mp/pPUUmW'>MDN Documentation </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">hello</span><span class="p">;</span>
+</span><span class='line'>    <span class="nx">hello</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">);</span>
+</span><span class='line'> <span class="p">};</span>
+</span><span class='line'> <span class="nx">hello</span><span class="p">();</span>
+</span><span class='line'><span class="p">}).</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>コンパイルせずに直接実行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>coffee test.coffee
+</span><span class='line'>Hello World!</span></code></pre></td></tr></table></div></figure>
+
+
+<p>coffee &lt;ファイル名> と入力するのが面倒なので、zshのaliasを設定する</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>emacs $HOME/.zshrc
+</span><span class='line'>alias -s coffee=coffee
+</span><span class='line'>
+</span><span class='line'>source $HOME/.zshrc</span></code></pre></td></tr></table></div></figure>
+
+
+<p>今後は、ファイル名を入力するだけで実行される</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>./test.coffee
+</span><span class='line'>Hello World!</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>オプション</h2>
+
+<ul>
+<li>-c (&mdash;compile) .coffee から .js にコンパイルします。</li>
+<li>-b (&mdash;bare)    外側の (function(){ &hellip; }).call(this); を取り除きます。</li>
+<li>-w (&mdash;watch)   ソースファイルを監視して、ファイルが変更されるたびにコンパイルを実行します。</li>
+</ul>
+
+
+<h2>構文</h2>
+
+<ul>
+<li>var での変数宣言が不要</li>
+<li>関数の定義(function)の代わりに &ndash;> を使う</li>
+<li>式の終わりや行末にセミコロンを必ずしも置かなくてもよい</li>
+<li>インデントでブロックを表現する</li>
+<li>引数を取る関数の場合、() を省略して書くこともできる</li>
+</ul>
+
+
+<h2>コメントアウト</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># 1行コメント
+</span><span class='line'># コンパイル時には消される
+</span><span class='line'>
+</span><span class='line'>###
+</span><span class='line'>複数行コメント
+</span><span class='line'>コンパイル時にも残る
+</span><span class='line'>###</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>関数</h2>
+
+<p>&ndash;> を使って定義します。引数を取る場合は &ndash;> を (var1, var2) &ndash;> のようにして引数を並べます。<br/>
+関数内の最後の値が自動的にreturnされます。</p>
+
+<figure class='code'><figcaption><span>Javascript Array Syntax</span><a href='http://j.mp/pPUUmW'>MDN Documentation </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">square</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>コンパイル結果 ↓</p>
+
+<figure class='code'><figcaption><span>Javascript Array Syntax</span><a href='http://j.mp/pPUUmW'>MDN Documentation </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">square</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>例) 引数がないので、()を省略</p>
+
+<figure class='code'><figcaption><span>Javascript Array Syntax</span><a href='http://j.mp/pPUUmW'>MDN Documentation </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">hello</span> <span class="o">=</span> <span class="o">-&gt;</span> <span class="s2">&quot;Hello World!&quot;</span>
+</span><span class='line'><span class="nx">hello</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>if文</h2>
+
+<p>複数行の場合</p>
+
+<figure class='code'><figcaption><span>Javascript Array Syntax</span><a href='http://j.mp/pPUUmW'>MDN Documentation </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">fib</span> <span class="o">=</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="o">-&gt;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">n</span> <span class="o">&lt;</span> <span class="mi">2</span>
+</span><span class='line'>     <span class="nx">n</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>     <span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>一行の場合</p>
+
+<figure class='code'><figcaption><span>Javascript Array Syntax</span><a href='http://j.mp/pPUUmW'>MDN Documentation </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">fib</span> <span class="o">=</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">if</span> <span class="nx">n</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="nx">then</span> <span class="nx">n</span> <span class="k">else</span> <span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="nx">fib</span><span class="p">(</span><span class="nx">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>変数展開</h2>
+
+<p>&ldquo; &rdquo; でくくった文字列の中では #{変数名} で変数の値を埋め込むことができます。</p>
+
+<figure class='code'><figcaption><span>Javascript Array Syntax</span><a href='http://j.mp/pPUUmW'>MDN Documentation </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">name</span> <span class="o">=</span> <span class="s2">&quot;Nao&quot;</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s2">&quot;My name is #{name}!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>演算子</h2>
+
+<figure class='code'><figcaption><span>Javascript Array Syntax</span><a href='http://j.mp/pPUUmW'>MDN Documentation </a></figcaption> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">Coffee</span> <span class="o">|</span> <span class="nx">Js</span>
+</span><span class='line'><span class="o">-------|----</span>
+</span><span class='line'> <span class="nx">is</span>    <span class="o">|</span> <span class="o">===</span>
+</span><span class='line'> <span class="nx">isnt</span>  <span class="o">|</span> <span class="o">!==</span>
+</span><span class='line'> <span class="nx">not</span>   <span class="o">|</span> <span class="o">!</span>
+</span><span class='line'> <span class="nx">and</span>   <span class="o">|</span> <span class="o">&amp;&amp;</span>
+</span><span class='line'> <span class="nx">or</span>    <span class="o">|</span> <span class="o">||</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://tech.kayac.com/archive/coffeescript-tutorial.html">今日から始めるCoffeeScript</a></li>
+<li><a href="http://minghai.github.com/library/coffeescript/index.html">The Little Book on CoffeeScript</a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">tatsuyano</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-08T14:56:00+09:00" pubdate data-updated="true">Mar 8<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/coffeescript/'>CoffeeScript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tatsuyano.github.io/blog/2013/03/08/coffee-script-study/" data-via="" data-counturl="http://tatsuyano.github.io/blog/2013/03/08/coffee-script-study/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03/08/coffee-script-emacs/" title="Previous Post: CoffeeScriptの勉強 その１(インストール、環境構築)">&laquo; CoffeeScriptの勉強 その１(インストール、環境構築)</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/03/11/coffee-scirpt-study-object/" title="Next Post: CoffeeScriptの勉強 その３(オブジェクト)">CoffeeScriptの勉強 その３(オブジェクト) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/10/handlersocket-install/">HandlerSocketをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/10/octopress-clippit/">Octopressのコードスニペットの設定</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/09/octopress-install/">Octopressをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/01/pbcopy-pbpaste/">Tmuxでもpbcopy、pbpasteを使えるように設定する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/16/emacs-git-gutter/">git-gutter.elをインストールする</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.85714285714286%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 108.57142857142857%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 105.71428571428571%'>auto-install(2)</a> <a href='/blog/categories/cakephp' style='font-size: 102.85714285714286%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 114.28571428571429%'>CoffeeScript(5)</a> <a href='/blog/categories/el-get' style='font-size: 114.28571428571429%'>el-get(5)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(21)</a> <a href='/blog/categories/flymake' style='font-size: 102.85714285714286%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 117.14285714285714%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.85714285714286%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.71428571428571%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.71428571428571%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.85714285714286%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.85714285714286%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 114.28571428571429%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.71428571428571%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.85714285714286%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.85714285714286%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 108.57142857142857%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.71428571428571%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.71428571428571%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.71428571428571%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.85714285714286%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.85714285714286%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.71428571428571%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 111.42857142857143%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.85714285714286%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.85714285714286%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 117.14285714285714%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.85714285714286%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.85714285714286%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.71428571428571%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.71428571428571%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.85714285714286%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.85714285714286%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.85714285714286%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 128.57142857142858%'>running(10)</a> <a href='/blog/categories/tmux' style='font-size: 111.42857142857143%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.85714285714286%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.85714285714286%'>wordpress(1)</a> </span>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - tatsuyano -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,298 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MacにRictyをインストールする - 10rane.com</title>
+  <meta name="author" content="tatsuyano">
+
+  
+  <meta name="description" content="Rictyとは 去年あたりから話題だったRictyをなんとなくインストールしてみました。
+フォントの特徴は、本家サイトに詳しく書いてあるので見て頂くとして、個人的には「半角文字と全角文字の横幅の比が 1:2 に調整される」ところが素敵だなあと思います。 インストールの前に Rictyをインストール &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tatsuyano.github.io/blog/2012/09/16/mac-ricky">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="10rane.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">10rane.com</a></h1>
+  
+    <h2>技術備忘録</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:tatsuyano.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">MacにRictyをインストールする</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-16T17:59:00+09:00" pubdate data-updated="true">Sep 16<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Rictyとは</h2>
+
+<p>去年あたりから話題だったRictyをなんとなくインストールしてみました。<br/>
+フォントの特徴は、本家サイトに詳しく書いてあるので見て頂くとして、個人的には「半角文字と全角文字の横幅の比が 1:2 に調整される」ところが素敵だなあと思います。</p>
+
+<h2>インストールの前に</h2>
+
+<p>Rictyをインストール(生成する)には、事前に<br/>
+1.「fontforge」がインストールされていること<br/>
+2.「Inconsolata」と「Migu 1M」をダウンロードしていること<br/>
+が前提となります。</p>
+
+<h2>fontforgeのインストール</h2>
+
+<p>homebrewでインストールします。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install fontforge --use-gcc --without-python</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Ricty本体のダウンロード</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git://github.com/yascentur/Ricty.git</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Inconsolata、Migu 1Mのダウンロード</h2>
+
+<p>ダウンロード先は、先程cloneしてできたRictyディレクトリ内にしました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd git/Ricty
+</span><span class='line'>wget http://levien.com/type/myfonts/Inconsolata.otf
+</span><span class='line'>wget 'http://sourceforge.jp/frs/redir.php?m=iij&f=%2Fmix-mplus-ipa%2F56156%2Fmigu-1m-20120411-2.zip'
+</span><span class='line'>unzip migu-1m-20120411-2.zip</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Rictyの生成</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sh ricty_generator.sh auto</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>生成したフォントをコピー</h2>
+
+<p>Macのフォントは/Library/Fonts以下で管理しているので、生成したRictyをcopy。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cp -a Ricty*.ttf /Library/Fonts</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>ターミナルのフォントの設定をRictyにする</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/ricty001.png" alt="" /></p>
+
+<p>他のサイトではemacs単体のみに設定していることが多かったんですが、<br/>
+せっかくなんでターミナル全体に設定します。ちなみに私はTotalTerminal派です。</p>
+
+<h2>実行画面</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/ricty002.png" alt="" /></p>
+
+<p>見ていただくと解るように<br/>
+「半角文字と全角文字の横幅の比が 1:2に調整されている」<br/>
+「全角スペースが可視化されている」ことがわかります。<br/>
+文字自体は少し丸っこくて初めはちょっとだけ違和感があったのですが、慣れるとすごく見やすく感じてきました。</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://save.sys.t.u-tokyo.ac.jp/~yusa/fonts/ricty.html">プログラミング用フォント Ricty</a></li>
+<li><a href="http://show-web.jp/2012/01/31/mac-os-x-lion%E7%92%B0%E5%A2%83netbeans-ide%E3%81%AB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E7%94%A8%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88ricty%E5%B0%8E%E5%85%A5/">Mac OS X Lion環境NetBeans IDEにプログラミング用フォントRicty導入</a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">tatsuyano</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-09-16T17:59:00+09:00" pubdate data-updated="true">Sep 16<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/mac/'>mac</a>, <a class='category' href='/blog/categories/ricky/'>ricky</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tatsuyano.github.io/blog/2012/09/16/mac-ricky/" data-via="" data-counturl="http://tatsuyano.github.io/blog/2012/09/16/mac-ricky/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/09/04/cpanm-dbd-mysql/" title="Previous Post: cpanmでDBD::mysqlをインストールしようとすると、mysql.hがないと怒られる">&laquo; cpanmでDBD::mysqlをインストールしようとすると、mysql.hがないと怒られる</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/09/20/emacs-lisp/" title="Next Post: Emacs-Lispの変数の扱いについて">Emacs-Lispの変数の扱いについて &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/10/handlersocket-install/">HandlerSocketをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/10/octopress-clippit/">Octopressのコードスニペットの設定</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/09/octopress-install/">Octopressをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/01/pbcopy-pbpaste/">Tmuxでもpbcopy、pbpasteを使えるように設定する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/16/emacs-git-gutter/">git-gutter.elをインストールする</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.85714285714286%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 108.57142857142857%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 105.71428571428571%'>auto-install(2)</a> <a href='/blog/categories/cakephp' style='font-size: 102.85714285714286%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 114.28571428571429%'>CoffeeScript(5)</a> <a href='/blog/categories/el-get' style='font-size: 114.28571428571429%'>el-get(5)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(21)</a> <a href='/blog/categories/flymake' style='font-size: 102.85714285714286%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 117.14285714285714%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.85714285714286%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.71428571428571%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.71428571428571%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.85714285714286%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.85714285714286%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 114.28571428571429%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.71428571428571%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.85714285714286%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.85714285714286%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 108.57142857142857%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.71428571428571%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.71428571428571%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.71428571428571%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.85714285714286%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.85714285714286%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.71428571428571%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 111.42857142857143%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.85714285714286%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.85714285714286%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 117.14285714285714%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.85714285714286%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.85714285714286%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.71428571428571%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.71428571428571%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.85714285714286%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.85714285714286%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.85714285714286%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 128.57142857142858%'>running(10)</a> <a href='/blog/categories/tmux' style='font-size: 111.42857142857143%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.85714285714286%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.85714285714286%'>wordpress(1)</a> </span>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - tatsuyano -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

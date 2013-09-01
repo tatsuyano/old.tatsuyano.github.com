@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: php-mode | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/php-mode/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[php-mode.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/10/29/emacs-php-mode/"/>
+    <updated>2012-10-29T10:21:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/10/29/emacs-php-mode</id>
+    <content type="html"><![CDATA[<h2>インストール</h2>
+
+<p><code>
+M-x auto-install-from-url &lt;RET&gt;
+http://php-mode.svn.sourceforge.net/svnroot/php-mode/tags/php-mode-1.5.0/php-mode.el
+</code></p>
+
+<h2>.emacsの設定、50_php.elを作成する</h2>
+
+<p><code>scheme
+cat &gt;&gt; .emacs.d/conf/50_php.el
+;; php-mode
+(require 'php-mode)
+(setq php-mode-force-pear t)
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
+</code></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://blog.fusic.co.jp/archives/94">PHP開発環境 on Emacs</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

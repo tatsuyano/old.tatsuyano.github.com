@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>nvmとnpmをインストールする - 10rane.com</title>
+  <meta name="author" content="tatsuyano">
+
+  
+  <meta name="description" content="nvm(Node Version Manager) とは、node.js本体のバージョン管理するツール。
+npm(Node Packaged Modules) とは、node.jsで作ったパッケージを管理するツール。
+nvmをインストールするとnpmも自動でインストールされる。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tatsuyano.github.io/blog/2013/03/07/nvm-vpm">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="10rane.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">10rane.com</a></h1>
+  
+    <h2>技術備忘録</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:tatsuyano.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Nvmとnpmをインストールする</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-07T12:01:00+09:00" pubdate data-updated="true">Mar 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="https://github.com/creationix/nvm">nvm(Node Version Manager)</a> とは、node.js本体のバージョン管理するツール。<br/>
+<a href="https://npmjs.org/">npm(Node Packaged Modules)</a> とは、node.jsで作ったパッケージを管理するツール。<br/>
+nvmをインストールするとnpmも自動でインストールされる。</p>
+
+<h2>nvmのインストール</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git://github.com/creationix/nvm.git .nvm
+</span><span class='line'>source .nvm/nvm.sh  # nvmで使う環境変数などを設定する</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>node.js本体のインストール</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>nvm ls-remote # 現在までにリリースされているバージョンの確認
+</span><span class='line'>nvm install v0.10.0
+</span><span class='line'>
+</span><span class='line'>nvm ls # インストールしてあるバージョンと、現在設定してあるバージョンを確認
+</span><span class='line'>v0.9.4 v0.8.14 v0.10.0
+</span><span class='line'>current:  v0.10.0
+</span><span class='line'>
+</span><span class='line'>nvm use 0.10.0 # 毎回使うバージョンを指定する必要がある</span></code></pre></td></tr></table></div></figure>
+
+
+<p>node.jsを使うためには、ターミナルを立ち上げるたびに、nvm.shの読み込みと、nodeのバージョンを指定しないといけない。<br/>
+なので、事前に zshrcに設定しておく。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cat &gt;&gt; .zshrc
+</span><span class='line'>[[ -s $HOME/.nvm/nvm.sh ]] && source $HOME/.nvm/nvm.sh
+</span><span class='line'>[[ -s $HOME/.nvm/nvm.sh ]] && nvm use 0.10.0</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>CoffeeScriptなどのnpm(Node Packaged Modules)のインストール方法</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>npm install -g coffee-script</span></code></pre></td></tr></table></div></figure>
+
+
+<p>インストールには、「ローカルインストール」と「グローバルインストール(パラメータに「g」をつける）」がある。<br/>
+ローカルインストールすると</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>npm bin
+</span><span class='line'>/Users/hoge/node_modules/.bin</span></code></pre></td></tr></table></div></figure>
+
+
+<p>にインストールされ、「g」をつけてグローバルインストールにすると、</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>npm bin -g
+</span><span class='line'>/Users/hoge/.nvm/v0.10.0/bin</span></code></pre></td></tr></table></div></figure>
+
+
+<p>にインストールされるので、通常は「g」をつけてインストールすること。</p>
+
+<p>またCoffeeScriptなどパッケージの実際のソースは、$HOME/.npm/配下にインストールされる。<br/>
+/Users/hoge/.nvm/v0.10.0/bin/配下には、リンクが貼られている。</p>
+
+<h2>.npm を移動させ、シムリンクで管理することはできない</h2>
+
+<p>いつものように、Dropbox/dotfile/配下にディレクトリを移動させ、$HOME　直下にリンクを貼って管理したかったが、<br/>
+.npmディレクトリを移動させると、Not Foundなどのエラーがでてきてしまうので、.nvmと.npmはDropboxで共有しないようにする。</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://tmlife.net/programming/javascript/npm-node-js-require-module-memo.html">npm と Node.js 上で require を使ったモジュール読み込みの仕組みについてメモ</a></li>
+<li><a href="http://kysnm.hatenablog.com/entry/20111225/1324828008">npm についてまとめてみる</a></li>
+<li><a href="https://npmjs.org/doc/config.html">Manage the npm configuration file</a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">tatsuyano</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-07T12:01:00+09:00" pubdate data-updated="true">Mar 7<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/node-dot-js/'>node.js</a>, <a class='category' href='/blog/categories/npm/'>npm</a>, <a class='category' href='/blog/categories/nvm/'>nvm</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tatsuyano.github.io/blog/2013/03/07/nvm-vpm/" data-via="" data-counturl="http://tatsuyano.github.io/blog/2013/03/07/nvm-vpm/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03/03/kounosu-pansy-marathon/" title="Previous Post: 鴻巣パンジーマラソン">&laquo; 鴻巣パンジーマラソン</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/03/08/coffee-script-emacs/" title="Next Post: CoffeeScriptの勉強 その１(インストール、環境構築)">CoffeeScriptの勉強 その１(インストール、環境構築) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/10/handlersocket-install/">HandlerSocketをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/10/octopress-clippit/">Octopressのコードスニペットの設定</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/09/octopress-install/">Octopressをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/01/pbcopy-pbpaste/">Tmuxでもpbcopy、pbpasteを使えるように設定する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/16/emacs-git-gutter/">git-gutter.elをインストールする</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.85714285714286%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 108.57142857142857%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 105.71428571428571%'>auto-install(2)</a> <a href='/blog/categories/cakephp' style='font-size: 102.85714285714286%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 114.28571428571429%'>CoffeeScript(5)</a> <a href='/blog/categories/el-get' style='font-size: 114.28571428571429%'>el-get(5)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(21)</a> <a href='/blog/categories/flymake' style='font-size: 102.85714285714286%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 117.14285714285714%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.85714285714286%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.71428571428571%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.71428571428571%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.85714285714286%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.85714285714286%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 114.28571428571429%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.71428571428571%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.85714285714286%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.85714285714286%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 108.57142857142857%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.71428571428571%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.71428571428571%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.71428571428571%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.85714285714286%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.85714285714286%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.71428571428571%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 111.42857142857143%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.85714285714286%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.85714285714286%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 117.14285714285714%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.85714285714286%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.85714285714286%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.71428571428571%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.71428571428571%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.85714285714286%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.85714285714286%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.85714285714286%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 128.57142857142858%'>running(10)</a> <a href='/blog/categories/tmux' style='font-size: 111.42857142857143%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.85714285714286%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.85714285714286%'>wordpress(1)</a> </span>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - tatsuyano -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mosh | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/mosh/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[moshを使ってみる]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/17/mosh/"/>
+    <updated>2013-03-17T18:02:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/17/mosh</id>
+    <content type="html"><![CDATA[<p>去年ぐらいから流行っているmoshを入れてみる。</p>
+
+<p>moshを利用するには、クライアント、サーバー両方にmoshをインストールする必要がある。<br/>
+またmosh内でsshを利用するため、sshの代価というわけではない。</p>
+
+<h2>centosにmoshをmake install</h2>
+
+<p>git cloneして、インストールスクリプトを実行したほうがいいかも。。</p>
+
+<p>```
+yum &mdash;enablerepo=epel install -y protobuf-compiler protobuf-devel boost-devel
+wget <a href="https://github.com/downloads/keithw/mosh/mosh-1.2.3.tar.gz">https://github.com/downloads/keithw/mosh/mosh-1.2.3.tar.gz</a>
+tar xvzf mosh-1.2.3.tar.gz
+cd mosh-1.2.3
+./configure
+make
+make install</p>
+
+<h1>インストール先</h1>
+
+<p>which mosh
+/usr/local/bin/mosh
+```</p>
+
+<h2>iptablesに追加</h2>
+
+<p>```
+emacs /etc/sysconfig/iptables
+-A INPUT -p udp -m udp &mdash;dport 60000:61000 -j ACCEPT</p>
+
+<p>/etc/init.d/iptables restart
+```</p>
+
+<h2>macにmoshにインストール</h2>
+
+<p>mosh(mobile-shell)をbrewでインストール</p>
+
+<p><code>
+brew update
+brew install mobile-shell
+</code></p>
+
+<p>IO::Ptyというperlモジュールも必要なので、cpanmでインストール</p>
+
+<p><code>
+cpanm IO::Pty
+</code></p>
+
+<p>zshrcに補完関数を追加</p>
+
+<p>```
+cat >> .zshrc</p>
+
+<h1>moshcompdef</h1>
+
+<p>mosh=ssh
+```</p>
+
+<h2>利用方法</h2>
+
+<p>利用方法はsshと同じ。</p>
+
+<p><code>
+mosh &lt;server-name&gt;
+</code></p>
+
+<p>回線がすぐ切れるような環境でないと、あまり恩恵は感じないと思うが、とりあえず使ってみようと思います。</p>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/karasuyamatengu/20120411/1334092521">mosh: MITからモバイル時代のSSH代替品</a></li>
+<li><a href="http://mosh.mit.edu/">本家サイト</a></li>
+<li><a href="http://d.hatena.ne.jp/mutsune/20120416/1334590736">mosh のインストール</a></li>
+<li><a href="http://gihyo.jp/admin/serial/01/ubuntu-recipe/0220">第220回　Ubuntuでモバイルシェル「Mosh」を使う</a></li>
+<li>[<a href="http://d.hatena.ne.jp/naoya/20130108/1357630895">近頃の開発環境 : Mosh、z、tmux、Emacs、Perl について</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

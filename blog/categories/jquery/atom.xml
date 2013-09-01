@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Jquery | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/jquery/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[CoffeeScriptの勉強 その４(クラス、Jquery)]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/12/coffee-script-study-jquery/"/>
+    <updated>2013-03-12T17:44:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/12/coffee-script-study-jquery</id>
+    <content type="html"><![CDATA[<h2>クラス</h2>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Javascript Array Syntax <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kr">class</span> <span class="nx">Animal</span>
+</span><span class='line'>  <span class="nx">constructor</span><span class="o">:</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="o">&amp;</span><span class="nx">ndash</span><span class="p">;</span><span class="o">&gt;</span> <span class="err">@</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">say</span><span class="o">:</span><span class="p">(</span><span class="nx">word</span><span class="p">)</span> <span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s2">&quot;#{@name} said: #{word}&quot;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kr">class</span> <span class="nx">Dog</span> <span class="kr">extends</span> <span class="nx">Animal</span>
+</span><span class='line'>  <span class="nx">constructor</span><span class="o">:</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="o">&amp;</span><span class="nx">ndash</span><span class="p">;</span><span class="o">&gt;</span> <span class="kr">super</span> <span class="nx">name</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">say</span><span class="o">:</span><span class="p">(</span><span class="nx">word</span><span class="p">)</span> <span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span> <span class="kr">super</span> <span class="s2">&quot;Bowwow, #{word}&quot;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">dog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dog</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">Bob</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;)</span>
+</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">say</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">hello</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h3>静的なプロパティ</h3>
+
+<p>クラスの静的なプロパティを定義するには変数名の頭に@を付けます。
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Javascript Array Syntax <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kr">class</span> <span class="nx">Dog</span>
+</span><span class='line'>  <span class="err">@</span><span class="nx">TYPE_CHIHUAHUA</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>コンパイル結果↓</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Javascript Array Syntax <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">Dog</span><span class="p">;</span>
+</span><span class='line'><span class="nx">Dog</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">function</span> <span class="nx">Dog</span><span class="p">()</span> <span class="p">{}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">Dog</span><span class="p">.</span><span class="nx">TYPE_CHIHUAHUA</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'><span class="k">return</span> <span class="nx">Dog</span><span class="p">;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">})();</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>クラスの静的なプロパティの使い方というか、そもそもJsのオブジェクト指向、クロージャの実装がしっかりと理解していない。ここは後日勉強する。</p>
+
+<h2>無名関数</h2>
+
+<p>setTimeoutなど引数に無名関数を渡したい場合は、次の行頭にカンマを付けます。
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Javascript Array Syntax <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">setTimeout</span> <span class="o">&amp;</span><span class="nx">ndash</span><span class="p">;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ok</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;)</span>
+</span><span class='line'>  <span class="p">,</span><span class="mi">1000</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>コンパイル結果↓</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Javascript Array Syntax <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation </span></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ok</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;);</span>
+</span><span class='line'><span class="p">},</span><span class="mi">1000</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<h2>コンパイルせずに、直接CoffeeScriptを記述する方法</h2>
+
+<p>本家サイトに置いてある、「coffee-script.js」を読み込んで、scriptタグ
+「script type=&ldquo;text/coffeescript"」で囲むと、直接CoffeeScriptが記述できる。</p>
+
+<p>``` html
+  <script type="text/javascript" src="http://coffeescript.org/extras/coffee-script.js"> </script></p>
+
+<pre><code>&lt;script type="text/coffeescript"&gt;
+    hogehoge...
+&lt;/script&gt;
+</code></pre>
+
+<p>```</p>
+
+<h2>CoffeeScriptで、Jqueryを使う</h2>
+
+<p>これは、とくに考えずに、そのままCoffeeScriptで記述するだけ。
+Jsで書くより、カッコの入れ子がなくなり読みやすくなる。</p>
+
+<p>``` html
+  <script type="text/coffeescript"></p>
+
+<pre><code>  $('#add-more').click -&gt;
+        $('#add-more').hide()
+        $('#task-add').fadeIn()
+</code></pre>
+
+<p>  </script>
+```</p>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://tech.kayac.com/archive/coffeescript-tutorial.html#coffee_syntax_classes">今日から始めるCoffeeScript</a></li>
+<li><a href="http://kudox.jp/java-script/js-private-static">JavaScriptのクロージャを利用したprivate staticメンバ</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

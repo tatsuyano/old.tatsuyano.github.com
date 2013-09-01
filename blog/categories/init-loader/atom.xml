@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: init-loader | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/init-loader/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[el-get.elでinit-loader.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-init-loader/"/>
+    <updated>2013-03-19T18:11:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-init-loader</id>
+    <content type="html"><![CDATA[<h2>インストールしたいパッケージが、el-get のパッケージリストにない場合</h2>
+
+<p>自分でレシピを作成(設定)し、パッケージリストに追加します。リストに追加する方法は２つあります。</p>
+
+<ul>
+<li>レシピ(rcpファイル)を作成し .emacs.d/elisp/el-get/el-get/recipes/ 以下にファイルを置く方法</li>
+<li>init.el などに直接設定を記述する方法</li>
+</ul>
+
+
+<p>どちらも設定する内容は一緒なので、今回は直接設定することにします。設定する内容は主に以下のようになります。</p>
+
+<p>```
+(:name {パッケージ名}</p>
+
+<pre><code>   :type {パッケージ配布方法: elpa, emacswiki, git, svn, http, ...}
+   :url {パッケージURL}
+   :after {後処理} ...)
+</code></pre>
+
+<p>```</p>
+
+<p><a href="http://d.hatena.ne.jp/koshigoeb/20110503/1304425417">el-getありきのinit.elに書き換えてみた</a></p>
+
+<h2>最新のinit-loader.el</h2>
+
+<p>init-loader.elの最新ファイルは 現在<a href="https://gist.github.com/zqwell/1021706">gist</a> にあるので、<br/>
+まずは <a href="http://blog.10rane.com/tech/2013/03/19/gist-raw-url/">rawファイル</a>のURLを確認します。</p>
+
+<p><a href="https://raw.github.com/gist/1021706/init-loader.el">https://raw.github.com/gist/1021706/init-loader.el</a></p>
+
+<h2>レシピの追加</h2>
+
+<p>init.el
+``` scheme
+(setq el-get-dir &ldquo;~/.emacs.d/elisp/el-get/&rdquo;)</p>
+
+<p>(unless (require &lsquo;el-get nil 'noerror)
+  (with-current-buffer</p>
+
+<pre><code>(url-retrieve-synchronously
+  "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+(goto-char (point-max))
+(eval-print-last-sexp)))
+</code></pre>
+
+<p>(setq el-get-sources</p>
+
+<pre><code>  '(
+  (:name init-loader
+  :type http
+  :url "https://raw.github.com/gist/1021706/init-loader.el"
+  :description "[My Recipes] Split management init.el.")
+  ))
+</code></pre>
+
+<p>(el-get &lsquo;sync)
+```</p>
+
+<h2>インストール</h2>
+
+<p>レシピが正しい場合、 M-x el-get-list-packages で init-loader が追加されているので、インストールできます。</p>
+
+<h2>init.elの分割</h2>
+
+<p>今まで、init.elにすべて記述していた内容をパッケージごとに分割します。</p>
+
+<p>conf<br/>
+├── 00-basic.el<br/>
+├── 01-truncate-lines.el<br/>
+├── 10-el-get.el<br/>
+├── 11-auto-install.el<br/>
+└── 12-auto-complete.el</p>
+
+<p>init.el
+``` scheme
+(setq load-path
+  (append
+  (list
+  (expand-file-name &ldquo;~/.emacs.d/&rdquo;)
+  (expand-file-name &ldquo;~/.emacs.d/elisp/&rdquo;)
+  (expand-file-name &ldquo;~/.emacs.d/elisp/el-get/init-loader/&rdquo;)
+  (expand-file-name &ldquo;~/.emacs.d/elisp/el-get/el-get/&rdquo;)
+  (expand-file-name &ldquo;~/.emacs.d/elisp/auto-install/&rdquo;)
+  )
+  load-path))</p>
+
+<p>(require &lsquo;init-loader)
+(init-loader-load &ldquo;~/.emacs.d/conf&rdquo;)
+```</p>
+
+<p>10-el-get.el
+``` scheme
+(setq el-get-dir &ldquo;~/.emacs.d/elisp/el-get/&rdquo;)</p>
+
+<p>(unless (require &lsquo;el-get nil 'noerror)
+  (with-current-buffer</p>
+
+<pre><code>(url-retrieve-synchronously
+"https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+(goto-char (point-max))
+(eval-print-last-sexp)))
+</code></pre>
+
+<p>(setq el-get-sources</p>
+
+<pre><code>  '(
+  (:name init-loader
+  :type http
+  :url "https://raw.github.com/gist/1021706/init-loader.el"
+  :description "[My Recipes] Split management init.el.")
+  ))
+</code></pre>
+
+<p>(el-get &lsquo;sync)
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[init-loader.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/08/21/emacs-init-loader/"/>
+    <updated>2012-08-21T16:54:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/08/21/emacs-init-loader</id>
+    <content type="html"><![CDATA[<h2>インストール</h2>
+
+<p><code>
+M-x auto-install-from-url &lt;RET&gt;
+http://coderepos.org/share/browser/lang/elisp/init-loader/init-loader.el
+</code></p>
+
+<h2>とりあえず.emacs.elをコピーし、00_init.elを作成</h2>
+
+<p><code>
+cp -a .emacs.el .emacs.d/conf/00_init.el
+</code></p>
+
+<h2>.emacsの設定</h2>
+
+<p>今後は、.emacs.d/conf/以下に、設定ごとのファイルを設置していくので、<br/>
+.emacsには、読み込み先のみを設定する。</p>
+
+<p>``` scheme
+;; load-path
+(add-to-list &lsquo;load-path &ldquo;~/.emacs.d/elisp&rdquo;)</p>
+
+<p>(require &lsquo;init-loader)
+(init-loader-load &ldquo;~/.emacs.d/conf&rdquo;)
+```</p>
+
+<h2>ファイルを分割する</h2>
+
+<p>さきほど生成した00_init.elを設定ごとにファイルを分割していく。</p>
+
+<p><code>
+tree
+.
+├── 00_init.el
+├── 10_auto_install.el
+├── 50_autocomplete.el
+├── 50_perl.el
+├── 60_flymake.el
+├── 80_markdown.el
+└── 80_serial_number.pl
+</code></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://typester.stfuawsc.com/slides/perlcasual2/start.html" title="">Perl Hacks on Emacs</a></li>
+<li><a href="http://shibayu36.hatenablog.com/entry/20101229/1293624201">emacsでinit-loaderを導入してみた</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: markdown | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/markdown/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[markdown-mode.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/08/22/emacs-markdown/"/>
+    <updated>2012-08-22T17:14:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/08/22/emacs-markdown</id>
+    <content type="html"><![CDATA[<h2>インストール</h2>
+
+<p>本来、直接.emacs.d/elisp/以下でgit cloneして<br/>
+.emacs.d/elisp/markdown-mode/ というディレクトリ構成にしたかったのですが、<br/>
+あとで行う、文字色の設定が(ファイルの読み込み順序の関係で)うまくいかなかったので、<br/>
+このようなディレクトリ構成になりました。</p>
+
+<p><code>
+git clone git://jblevins.org/git/markdown-mode.git
+mv markdown.el webpage.sh .emacs.d/elisp/
+rm -rf markdown-mode
+</code></p>
+
+<p><code>scheme
+emacs .emacs.d/conf/80_markdown.el
+;;(add-to-list 'load-path "~/.emacs.d/elisp/markdown-mode") ;; 今回elisp直下にファイルを置いたのでコメントアウト
+(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
+(setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
+</code></p>
+
+<h2>文字(見出し等)に色を付ける</h2>
+
+<p>デフォルトのままだと見出し等に色がついてなく、見にくいので<br/>
+<a href="http://d.hatena.ne.jp/CortYuming/20120602/p1">こちらのサイト</a>を参考に色をつけてみました。</p>
+
+<p>``` scheme
+cat >> .emacs.d/conf/80_markdown.el
+;; custom color
+(defface markdown-header-face-1
+  &lsquo;((((class color) (background light))</p>
+
+<pre><code>   (:foreground "DeepPink1" :underline "DeepPink1" :weight bold))
+       (((class color) (background dark))
+            (:foreground "DeepPink1" :underline "DeepPink1" :weight bold)))
+              "Face for level-1 headers.")
+</code></pre>
+
+<p>(defface markdown-header-face-2
+  &lsquo;((((class color) (background light))</p>
+
+<pre><code>   (:foreground "magenta1" :underline "magenta1" :weight bold))
+       (((class color) (background dark))
+            (:foreground "magenta1" :underline "magenta1" :weight bold)))
+              "Face for level-2 headers.")
+</code></pre>
+
+<p>(defface markdown-header-face-3
+  &lsquo;((((class color) (background light))</p>
+
+<pre><code>   (:foreground "purple1" :underline "purple1" :weight bold))
+       (((class color) (background dark))
+            (:foreground "purple1" :underline "purple1" :weight bold)))
+              "Face for level-3 headers.")
+</code></pre>
+
+<p>(defface markdown-header-face-4
+  &lsquo;((((class color) (background light))</p>
+
+<pre><code>   (:foreground "DeepPink4" :underline "DeepPink4" :weight bold))
+       (((class color) (background dark))
+            (:foreground "DeepPink4" :underline "DeepPink4" :weight bold)))
+              "Face for level-4 headers.")
+</code></pre>
+
+<p>(defface markdown-header-face-5
+  &lsquo;((((class color) (background light))</p>
+
+<pre><code>   (:foreground "magenta4" :underline "magenta4" :weight bold))
+       (((class color) (background dark))
+            (:foreground "magenta4" :underline "magenta4" :weight bold)))
+              "Face for level-5 headers.")
+</code></pre>
+
+<p>(defface markdown-header-face-6
+  &lsquo;((((class color) (background light))</p>
+
+<pre><code>   (:foreground "purple4" :underline "purple4" :weight bold))
+       (((class color) (background dark))
+            (:foreground "purple4" :underline "purple4" :weight bold)))
+              "Face for level-6 headers.")
+</code></pre>
+
+<p>```</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://blog.s-amemiya.com/development/emacs%E3%81%AEmarkdown-mode%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E3%81%BF%E3%82%8B/">Emacsのmarkdown-modeを使ってみる</a></li>
+<li><a href="http://d.hatena.ne.jp/CortYuming/20120602/p1">markdown-mode のヘッダーが全て同じ色で見づらいから色付けて分かりやすくしてみた</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

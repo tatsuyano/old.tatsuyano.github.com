@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ricky | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/ricky/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MacにRictyをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/09/16/mac-ricky/"/>
+    <updated>2012-09-16T17:59:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/09/16/mac-ricky</id>
+    <content type="html"><![CDATA[<h2>Rictyとは</h2>
+
+<p>去年あたりから話題だったRictyをなんとなくインストールしてみました。<br/>
+フォントの特徴は、本家サイトに詳しく書いてあるので見て頂くとして、個人的には「半角文字と全角文字の横幅の比が 1:2 に調整される」ところが素敵だなあと思います。</p>
+
+<h2>インストールの前に</h2>
+
+<p>Rictyをインストール(生成する)には、事前に<br/>
+1.「fontforge」がインストールされていること<br/>
+2.「Inconsolata」と「Migu 1M」をダウンロードしていること<br/>
+が前提となります。</p>
+
+<h2>fontforgeのインストール</h2>
+
+<p>homebrewでインストールします。</p>
+
+<p><code>
+brew install fontforge --use-gcc --without-python
+</code></p>
+
+<h2>Ricty本体のダウンロード</h2>
+
+<p><code>
+git clone git://github.com/yascentur/Ricty.git
+</code></p>
+
+<h2>Inconsolata、Migu 1Mのダウンロード</h2>
+
+<p>ダウンロード先は、先程cloneしてできたRictyディレクトリ内にしました。</p>
+
+<p><code>
+cd git/Ricty
+wget http://levien.com/type/myfonts/Inconsolata.otf
+wget 'http://sourceforge.jp/frs/redir.php?m=iij&amp;f=%2Fmix-mplus-ipa%2F56156%2Fmigu-1m-20120411-2.zip'
+unzip migu-1m-20120411-2.zip
+</code></p>
+
+<h2>Rictyの生成</h2>
+
+<p><code>
+sh ricty_generator.sh auto
+</code></p>
+
+<h2>生成したフォントをコピー</h2>
+
+<p>Macのフォントは/Library/Fonts以下で管理しているので、生成したRictyをcopy。</p>
+
+<p><code>
+cp -a Ricty*.ttf /Library/Fonts
+</code></p>
+
+<h2>ターミナルのフォントの設定をRictyにする</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/ricty001.png" alt="" /></p>
+
+<p>他のサイトではemacs単体のみに設定していることが多かったんですが、<br/>
+せっかくなんでターミナル全体に設定します。ちなみに私はTotalTerminal派です。</p>
+
+<h2>実行画面</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/ricty002.png" alt="" /></p>
+
+<p>見ていただくと解るように<br/>
+「半角文字と全角文字の横幅の比が 1:2に調整されている」<br/>
+「全角スペースが可視化されている」ことがわかります。<br/>
+文字自体は少し丸っこくて初めはちょっとだけ違和感があったのですが、慣れるとすごく見やすく感じてきました。</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://save.sys.t.u-tokyo.ac.jp/~yusa/fonts/ricty.html">プログラミング用フォント Ricty</a></li>
+<li><a href="http://show-web.jp/2012/01/31/mac-os-x-lion%E7%92%B0%E5%A2%83netbeans-ide%E3%81%AB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E7%94%A8%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88ricty%E5%B0%8E%E5%85%A5/">Mac OS X Lion環境NetBeans IDEにプログラミング用フォントRicty導入</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

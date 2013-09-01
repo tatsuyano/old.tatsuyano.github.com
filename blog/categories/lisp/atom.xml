@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: lisp | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/lisp/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs-Lispの変数の扱いについて]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/09/20/emacs-lisp/"/>
+    <updated>2012-09-20T18:08:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/09/20/emacs-lisp</id>
+    <content type="html"><![CDATA[<p>やさしいEmacs-Lisp講座(改訂版)の勉強メモ。</p>
+
+<h2>動的スコープ(P21)</h2>
+
+<p>変数(let*以外)は動的スコープとして扱われる。<br/>
+つまり一度変数を宣言すると、その変数はどこからでも参照できてしまう。</p>
+
+<h2>変数名の衝突(P19)</h2>
+
+<p>Emacs-Lispは処理系全体(読み込んでいるすべてのプログラム)で一つの名前空間しかない。<br/>
+なのでグローバル変数にはパッケージ固有のプレフィックスをつける。</p>
+
+<h2>defvar(P19)</h2>
+
+<p>defvarで変数を宣言すると、その変数の値は、defvarで再度値を代入しても更新されない(しかしsetqなどで値の代入された場合は更新されてしまう)。<br/>
+Emacs-Lispでは「定数宣言」のように使っていく。</p>
+
+<p><code>scheme
+(defvar dvar 1 "実験用") ;; -&gt; 1
+(defvar dvar 2)         ;; -&gt; 1 値が上書きされない
+(setq dvar 3)           ;; -&gt; 3 defvar以外で宣言(代入)された場合は上書きされてしまう。
+</code></p>
+
+<h2>set,setq(P18)</h2>
+
+<p>変数の代入(宣言)を行う。setqのほうは同時に複数の変数を代入できる。</p>
+
+<p><code>scheme
+(set 'foo 5)
+(setq aa 3 bb 2 cc 4)
+</code></p>
+
+<h2>let(P20)</h2>
+
+<p>let式の中で初めて宣言された変数は、let式外(グローバル領域)では参照できない。<br/>
+関数内だけで参照したい(ローカル変数として使いたい)場合に用いる。<br/>
+グローバル変数をlet式内で一時的に変えたい場合に用いる。<br/>
+本体すべてを評価したあとで、最後に評価した値を返す。</p>
+
+<p>;書式&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-<br/>
+;(let (変数リスト)　|<br/>
+;  本体) 　　　　　|<br/>
+; &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</p>
+
+<p>``` scheme
+(setq foo 5);; &ndash;> 5</p>
+
+<p>(let ((foo 3) (fuga foo))
+  fuga);; &ndash;> 5 fugaがグローバル変数のfooで初期化されるため</p>
+
+<p>(let ((foo 3))
+  foo);; &ndash;> 3 let式のfooで初期化されるため</p>
+
+<p>foo  ;; &ndash;> 5 let式で値が更新(代入)されても、値に影響されない
+fuga ;; &ndash;> error let式内で宣言された変数のため
+```</p>
+
+<h2>let*(P21)</h2>
+
+<p>``` scheme
+(let* ((foo 3) (fuga foo))
+  fuga);; &ndash;> 3 fugaがlet式のfooで初期化されるため</p>
+
+<p>(let* ((foo 3))
+  foo);; &ndash;> 3 let式のfooで初期化されるため
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

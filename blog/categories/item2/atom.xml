@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: item2 | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/item2/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[iterm2のカラースキームを変更する]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/04/05/item2-color-scheme/"/>
+    <updated>2013-04-05T19:33:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/04/05/item2-color-scheme</id>
+    <content type="html"><![CDATA[<p>最近は background を白系の透過で使っていたが、なんとなくまた黒系の透過に戻してみた。<br/>
+毎回自分で設定するのは面倒なので、今回はこちらの方のカラースキームを使わしてもらうことにした。</p>
+
+<p><a href="http://this.aereal.org/entry/2013/01/02/222304">iTerm 2 で使えるカラースキーム、Japanesque を作った</a></p>
+
+<h2>カラースキームのダウンロード</h2>
+
+<p><code>
+$ mkdir Dropbox/src/itermcolors
+$ cd Dropbox/src/itermcolors
+$ wget https://raw.github.com/aereal/dotfiles/master/colors/Japanesque/Japanesque.itermcolors
+</code></p>
+
+<h2>カラースキームの設定</h2>
+
+<h3>新しい Profile を作成する</h3>
+
+<p>Preferences > Profiles > General > +<br/>
+Preferences > Profiles > General > Name<br/>
+Preferences > Profiles > General > Other Actions > Set as Default</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/iterm2_color_scheme_001.png" alt="" /></p>
+
+<h3>ダウンロードしたカラースキームを import する</h3>
+
+<p>Import を行うと、Load Presets に新たに Japanesque が追加される。</p>
+
+<p>Preferences > Profiles > Colors > Import<br/>
+Preferences > Profiles > Colors > Japanesque</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/iterm2_color_scheme_002.png" alt="" /></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/nomnel/20111120/1321799289">iTerm2のカラースキームをSolarizedにする</a></li>
+<li><a href="http://this.aereal.org/entry/2013/01/02/222304">iTerm 2 で使えるカラースキーム、Japanesque を作った</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iterm2 + tmux に乗り換えた]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/01/27/item2-tmux/"/>
+    <updated>2013-01-27T11:21:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/01/27/item2-tmux</id>
+    <content type="html"><![CDATA[<p>今まで頑なにTotalTerminal + KeyRemap4MacBookを使って来た私ですが、ついに乗り換えることにしました。<br/>
+理由はKeyRemap4MacBookをバージョンアップしたら、一部のkey bindが使えなくなってしまったから。まあいい機会なので乗り換えたいと思います。</p>
+
+<h2>iterm2のバージョン</h2>
+
+<p><a href="http://code.google.com/p/iterm2/downloads/list">iterm2の公式ページ</a>からダウンロード</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/01_iterm2.png" alt="" /></p>
+
+<p>ダウンロードしたファイル解凍してみるとなぜか「tmux-for-iTerm2-20130122.tar.gz」というファイルも入っている。</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/02_iterm2.png" alt="" /></p>
+
+<p><a href="http://code.google.com/p/iterm2/wiki/TmuxIntegration">iterm2の公式wiki</a>で調べてみると、tmuxを使う場合、この「iTerm2用のtmux」じゃないと細かい挙動が期待どおりに動かないっぽい（適当）。<br/>
+なので、このタイミングでScreenからtmuxにも乗り換えてみることにした。</p>
+
+<h2>brewでlibevnetのインストール</h2>
+
+<p>まず、こちらのサイト「<a href="http://d.hatena.ne.jp/kmn23/20120215/1329323332">Lionにiterm2とtmux と libeventをインストールする</a>」を参考にlibenventをインストール。</p>
+
+<p><code>
+brew update
+brew install libevent
+</code></p>
+
+<h2>tmuxのインストール</h2>
+
+<p>さきほどダウンロードしたファイルを解凍し、make &amp; install</p>
+
+<p><code>
+tar xvzf tmux-for-iTerm2-20130122.tar.gz
+cd tmux
+./configure
+make
+make clean
+sudo make install
+</code></p>
+
+<p>念のためtmuxのインストール先を確認</p>
+
+<p><code>
+which tmux
+/usr/local/bin/tmux
+</code></p>
+
+<h2>iterm2の初期設定</h2>
+
+<p>今まで、KeyRemap4MacBookでcmdとoptionを入れ替えていて、操作上はcmdにmetaキーが割り振ってある感じにして使っていたんですが、このタイミングでoptionにmetaキーを割り当てることにしました。<br/>
+ただ、それ以外の操作はできるかぎりTotalTerminalと同じようにしたいので、その設定をしていきます。</p>
+
+<h3>バックグラウンドを白にし、透過させる</h3>
+
+<p>Preferences > Profiles > Colors > Background</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/03_iterm2.png" alt="" /></p>
+
+<p>Preferences > Profiles > Window > Transparency</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/04_iterm2.png" alt="" /></p>
+
+<h3>画面の上部からターミナルをショートカットで表示できるようにする</h3>
+
+<p>Preferences > Profiles > Window > Setting for New Window > Style > Top of Screen<br/>
+Preferences > Profiles > Window > Setting for New Window > Space > All Spaces<br/>
+Preferences > Profiles > Window > Setting for New Window > Rows  > 70</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/04_iterm2.png" alt="" /></p>
+
+<p>Preferences > Keys > Hot key > Show/hide iTerm2 with a system-wide hotkey</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/05_iterm2.png" alt="" /></p>
+
+<h3>metaキーをoptionに割り当てる</h3>
+
+<p>Preferences > Profiles > Keys > Left option  > +Esc<br/>
+Preferences > Profiles > Keys > Right option > +Esc</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/06_iterm2.png" alt="" /></p>
+
+<h3>cmd + w ですぐにターミナルを終了しないようにする</h3>
+
+<p>Preferences > Profiles > Session > Always prompt before closing</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/07_iterm2.png" alt="" /></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/kmn23/20120215/1329323332">Lionにiterm2とtmux と libeventをインストールする</a></li>
+<li><a href="http://weboo-returns.com/blog/using-iterm2-as-visor/">iTerm2 を Visor のように使う方法</a></li>
+<li><a href="http://blog.bungu-do.jp/archives/3434">MacのiTerm2でEmacsを使用するときのMetaキー設定</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

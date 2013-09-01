@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: el-get | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/el-get/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[git-gutter.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/04/16/emacs-git-gutter/"/>
+    <updated>2013-04-16T20:45:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/04/16/emacs-git-gutter</id>
+    <content type="html"><![CDATA[<p>gitの差分を表示してくれる git-gutter を入れてみました。</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/git_gutter_001.png" alt="" /></p>
+
+<h2>インストール</h2>
+
+<p>はじめREADME.mdにかいてあるとおり、M-x package-install git-gutter で</p>
+
+<blockquote><blockquote><p>Installation
+You can install git-gutter.el from MELPA with package.el (M-x package-install git-gutter).
+And you can also install it with el-get.</p></blockquote></blockquote>
+
+<p>ELPA経由インストールしてみたが、versionが0.28と少し古くエラーがでたので、el-getのrecipeを用意してインストールした。</p>
+
+<p><code>scheme
+(:name emacs-git-gutter
+  :type github
+  :website "https://github.com/syohex/emacs-git-gutter"
+  :description "[My Recipes] git-gutter.el is port of GitGutter which is a plugin of Sublime Text."
+  :pkgname "syohex/emacs-git-gutter")
+</code></p>
+
+<h2>設定</h2>
+
+<p>とりあえず差分の表示だけがほしいので、最小限の設定に。</p>
+
+<p>.emacs.d/conf/81-git-gutter.el</p>
+
+<p>``` scheme
+(require &lsquo;git-gutter)
+;;(global-git-gutter-mode t)</p>
+
+<p>(setq git-gutter:separator-sign &ldquo;|&rdquo;)
+(set-face-foreground &lsquo;git-gutter:separator &ldquo;yellow&rdquo;)</p>
+
+<p>(add-hook &lsquo;cperl-mode-hook 'git-gutter-mode)
+(add-hook 'js2-mode-hook   'git-gutter-mode)
+(add-hook 'php-mode-hook   'git-gutter-mode)
+(add-hook 'ruby-mode-hook  'git-gutter-mode)
+```</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="https://github.com/syohex/emacs-git-gutter/blob/master/README.md">github</a></li>
+<li><a href="http://d.hatena.ne.jp/naoya/20130414/1365967372">git-gutter.el</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[el-get.elでauto-complete.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-complete/"/>
+    <updated>2013-03-19T18:43:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-complete</id>
+    <content type="html"><![CDATA[<h2>el-getにインストールされているパッケージリストが古かったので、レシピを更新</h2>
+
+<p>パッケージリストには、auto-complete.elがあるのですが、レシピが古くインストールしてもディレクトリの中は空なので、レシピを新たに設定します。</p>
+
+<p>また、auto-complete.el は popup.el と fuzzy.el というelispが必須なのですが、今回 popup.el のレシピを用意し、auto-complete とは別にインストールする必要があります。<br/>
+※ とりあえず fuzzy.el は別途インストールしなくても動いているので、fuzzy.el は保留。</p>
+
+<h2>レシピの追加</h2>
+
+<p>10-el-get.el
+``` scheme
+(setq el-get-dir &ldquo;~/.emacs.d/elisp/el-get/&rdquo;)</p>
+
+<p>(unless (require &lsquo;el-get nil 'noerror)
+  (with-current-buffer</p>
+
+<pre><code>(url-retrieve-synchronously
+  "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+(goto-char (point-max))
+(eval-print-last-sexp)))
+</code></pre>
+
+<p>(setq el-get-sources
+  &lsquo;(</p>
+
+<pre><code>(:name init-loader
+  :type http
+  :url "https://raw.github.com/gist/1021706/init-loader.el"
+  :description "[My Recipes] Split management init.el. ")
+(:name popup ;; &lt;- 追加
+  :type github
+  :website "https://github.com/auto-complete/popup-el"
+  :description "[My Recipes] This section describes the basic data structures and operations of popups."
+  :pkgname "auto-complete/popup-el")
+(:name auto-complete ;; &lt;- 追加
+  :type github
+  :website "https://github.com/auto-complete/auto-complete"
+  :description "[My Recipes] Auto Complete Mode renews an old completion interface and provides an environment that makes users could be more concentrate on their own works."
+  :pkgname "auto-complete/auto-complete")
+))
+</code></pre>
+
+<p>(el-get &lsquo;sync)
+```</p>
+
+<h2>インストール</h2>
+
+<p>これで、auto-complete.el と popup.el のレシピが更新されたので、M-x el-get-list-packages　でインストールします。</p>
+
+<h2>設定</h2>
+
+<p>12-auto-complete.el
+<code>scheme
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/elisp/el-get/auto-complete/dict")
+(ac-config-default)
+(setq ac-use-menu-map t)
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[el-get.elでinit-loader.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-init-loader/"/>
+    <updated>2013-03-19T18:11:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-init-loader</id>
+    <content type="html"><![CDATA[<h2>インストールしたいパッケージが、el-get のパッケージリストにない場合</h2>
+
+<p>自分でレシピを作成(設定)し、パッケージリストに追加します。リストに追加する方法は２つあります。</p>
+
+<ul>
+<li>レシピ(rcpファイル)を作成し .emacs.d/elisp/el-get/el-get/recipes/ 以下にファイルを置く方法</li>
+<li>init.el などに直接設定を記述する方法</li>
+</ul>
+
+
+<p>どちらも設定する内容は一緒なので、今回は直接設定することにします。設定する内容は主に以下のようになります。</p>
+
+<p>```
+(:name {パッケージ名}</p>
+
+<pre><code>   :type {パッケージ配布方法: elpa, emacswiki, git, svn, http, ...}
+   :url {パッケージURL}
+   :after {後処理} ...)
+</code></pre>
+
+<p>```</p>
+
+<p><a href="http://d.hatena.ne.jp/koshigoeb/20110503/1304425417">el-getありきのinit.elに書き換えてみた</a></p>
+
+<h2>最新のinit-loader.el</h2>
+
+<p>init-loader.elの最新ファイルは 現在<a href="https://gist.github.com/zqwell/1021706">gist</a> にあるので、<br/>
+まずは <a href="http://blog.10rane.com/tech/2013/03/19/gist-raw-url/">rawファイル</a>のURLを確認します。</p>
+
+<p><a href="https://raw.github.com/gist/1021706/init-loader.el">https://raw.github.com/gist/1021706/init-loader.el</a></p>
+
+<h2>レシピの追加</h2>
+
+<p>init.el
+``` scheme
+(setq el-get-dir &ldquo;~/.emacs.d/elisp/el-get/&rdquo;)</p>
+
+<p>(unless (require &lsquo;el-get nil 'noerror)
+  (with-current-buffer</p>
+
+<pre><code>(url-retrieve-synchronously
+  "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+(goto-char (point-max))
+(eval-print-last-sexp)))
+</code></pre>
+
+<p>(setq el-get-sources</p>
+
+<pre><code>  '(
+  (:name init-loader
+  :type http
+  :url "https://raw.github.com/gist/1021706/init-loader.el"
+  :description "[My Recipes] Split management init.el.")
+  ))
+</code></pre>
+
+<p>(el-get &lsquo;sync)
+```</p>
+
+<h2>インストール</h2>
+
+<p>レシピが正しい場合、 M-x el-get-list-packages で init-loader が追加されているので、インストールできます。</p>
+
+<h2>init.elの分割</h2>
+
+<p>今まで、init.elにすべて記述していた内容をパッケージごとに分割します。</p>
+
+<p>conf<br/>
+├── 00-basic.el<br/>
+├── 01-truncate-lines.el<br/>
+├── 10-el-get.el<br/>
+├── 11-auto-install.el<br/>
+└── 12-auto-complete.el</p>
+
+<p>init.el
+``` scheme
+(setq load-path
+  (append
+  (list
+  (expand-file-name &ldquo;~/.emacs.d/&rdquo;)
+  (expand-file-name &ldquo;~/.emacs.d/elisp/&rdquo;)
+  (expand-file-name &ldquo;~/.emacs.d/elisp/el-get/init-loader/&rdquo;)
+  (expand-file-name &ldquo;~/.emacs.d/elisp/el-get/el-get/&rdquo;)
+  (expand-file-name &ldquo;~/.emacs.d/elisp/auto-install/&rdquo;)
+  )
+  load-path))</p>
+
+<p>(require &lsquo;init-loader)
+(init-loader-load &ldquo;~/.emacs.d/conf&rdquo;)
+```</p>
+
+<p>10-el-get.el
+``` scheme
+(setq el-get-dir &ldquo;~/.emacs.d/elisp/el-get/&rdquo;)</p>
+
+<p>(unless (require &lsquo;el-get nil 'noerror)
+  (with-current-buffer</p>
+
+<pre><code>(url-retrieve-synchronously
+"https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+(goto-char (point-max))
+(eval-print-last-sexp)))
+</code></pre>
+
+<p>(setq el-get-sources</p>
+
+<pre><code>  '(
+  (:name init-loader
+  :type http
+  :url "https://raw.github.com/gist/1021706/init-loader.el"
+  :description "[My Recipes] Split management init.el.")
+  ))
+</code></pre>
+
+<p>(el-get &lsquo;sync)
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[el-get.elでauto-install.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-install/"/>
+    <updated>2013-03-19T18:04:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-install</id>
+    <content type="html"><![CDATA[<p>まずは <a href="/blog/2013/03/19/emacs-el-get/">el-get.el のインストール</a> が完了していることが前提になります。</p>
+
+<h2>インストール</h2>
+
+<p>まずは M-x el-get-list-packages で利用できるパッケージを一覧表示します。<br/>
+次に インストールしたいパッケージに「i」を押してチェックをいれ、「x」を押すと自動でインストールが始まります。</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/emacs-install-auto-install_001.png" alt="" /></p>
+
+<p>インストールしたパッケージは、 (setq el-get-dir &ldquo;~/.emacs.d/elisp/el-get/&rdquo;) で指定したディレクトリ直下にディレクトリ単位にインストールされます。</p>
+
+<p>またインストールしたパッケージを削除する場合は、M-x el-get-remove で削除します。</p>
+
+<h2>auto-installでインストールしたパッケージの置場所</h2>
+
+<p>el-get.el でインストールしたパッケージと、auto-install.el でインストールしたパッケージを分けて管理したいので、<br/>
+auto-install用のディレクトリとパスの設定をします。</p>
+
+<p>.emacs.d<br/>
+└── elisp<br/>
+　　├── auto-install &hellip; auto-installでインストールしたパッケージの置場所<br/>
+　　└── el-get &hellip; el-getでインストールしたパッケージの置場所<br/>
+　　　　　├── auto-install &hellip; auto-install.elの本体。本体はel-getでインストールしたため<br/>
+　　　　　└── el-get &hellip; el-get.el自身もまた、el-getに管理されている</p>
+
+<h2>auto-installの設定</h2>
+
+<p>init.el<br/>
+<code>scheme
+(setq load-path
+  (append
+  (list
+  ...
+  (expand-file-name "~/.emacs.d/elisp/auto-install/") ;; &lt;- パスの追加
+  )
+  load-path))
+  ...
+  (require 'auto-install)
+  (setq auto-install-directory "~/.emacs.d/elisp/auto-install/") ;; auto-installでインストールしたパッケージの置場所を指定
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[el-get.elでパッケージ管理を行う (el-get.elのインストール)]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get/"/>
+    <updated>2013-03-19T10:18:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get</id>
+    <content type="html"><![CDATA[<p>今までパッケージを手動でインストールしていて、自分が何のパッケージをインストールしたかを<br/>
+把握できなくなってきていたので、el-get.elでパッケージ管理をすることにしました。</p>
+
+<h2>el-get.elでのパッケージ管理の特徴</h2>
+
+<p>自分がel-get.elでいいなあと思ったのは、以下の２つ</p>
+
+<ul>
+<li>自分がどのパッケージをインストールしているのかを簡単に把握できること</li>
+<li>レシピといって、パッケージごとのインストール方法を柔軟に設定できること</li>
+</ul>
+
+
+<h2>emacsのバージョン</h2>
+
+<p>emacsのバージョンは homebrew でインストールした「24.1.1」です。</p>
+
+<h2>emacs.dの構成</h2>
+
+<p>今回、今使っているemacs.dを捨てて、一から作り直すことにしました。</p>
+
+<p>.emacs.d<br/>
+├── conf &hellip; init-loaderで分割したファイルを入れる<br/>
+└── elisp &hellip; 手動でパッケージを入れた場合はここに直接入れる<br/>
+│　　    ├── el-get       &hellip; el-get.elでインストールしたパッケージをディレクトリ単位で入れていく<br/>
+│　　    └── auto-install &hellip; auto-installでインストールした場合<br/>
+│  <br/>
+└── init.el &hellip; .emacs.elの代わり。load-pathの設定など</p>
+
+<p>今回は .emacs.el は使わずに代わりに .emacs.d 直下に init.el というファイルを作成します。<br/>
+また、できるかぎり el-get.el でパッケージ管理を行なっていき、インストールできなかった場合は auto-install でインストールを行うことにします。<br/>
+auto-install でもインストールできなかった場合は、elispディレクトリ直下に手動でインストールしていきます。</p>
+
+<p>今後のインストール方法(パッケージ管理)の優先度<br/>
+1.el-get > 2.auto-install > 3.手動</p>
+
+<h2>el-get.elのインストール</h2>
+
+<p>まずは el-get.el 本体のインストールから。事前に上記の .emacs.d の構成を作っておくこと。<br/>
+el-get.el でインストールしたパッケージは、.emacs.d/elisp/el-get/ 直下に入れていきます。<br/>
+init.el に以下の設定を入れて、emacsを起動させると自動でインストールが始まります。</p>
+
+<p>init.el
+``` scheme
+(setq load-path
+  (append</p>
+
+<pre><code>(list
+  (expand-file-name "~/.emacs.d/")
+  (expand-file-name "~/.emacs.d/elisp/")
+  (expand-file-name "~/.emacs.d/elisp/el-get/el-get/")
+  (expand-file-name "~/.emacs.d/elisp/auto-install/")
+)
+load-path))
+</code></pre>
+
+<p>(unless (require &lsquo;el-get nil 'noerror)
+  (with-current-buffer</p>
+
+<pre><code>(url-retrieve-synchronously
+  "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+(goto-char (point-max))
+(eval-print-last-sexp)))
+</code></pre>
+
+<p>(el-get &lsquo;sync)
+```</p>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://shishithefool.blogspot.jp/2012/04/el-get-emacs.html">el-get を使って Emacs でパッケージ管理</a></li>
+<li><a href="http://shibayu36.hatenablog.com/entry/2013/03/14/081524">el-getを使ってみる(インストール編)</a></li>
+<li><a href="https://github.com/dimitri/el-get">github dimitri/el-get</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

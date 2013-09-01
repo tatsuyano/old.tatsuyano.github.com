@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mac | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/mac/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[tmuxでもpbcopy、pbpasteを使えるように設定する]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/05/01/pbcopy-pbpaste/"/>
+    <updated>2013-05-01T12:42:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/05/01/pbcopy-pbpaste</id>
+    <content type="html"><![CDATA[<p>最近しりましたpbcopyとpbpasteをtmuxで使う方法です。</p>
+
+<h2>pbcopyとpbpasteの使い方</h2>
+
+<p><code>
+ls -la | pbcopy    # 標準出力 -&gt; クリップボード
+pbpaste &gt; hoge.txt # クリップボード -&gt; 標準出力
+</code></p>
+
+<h2>pbcopyとpbpasteをtmuxで使うための設定</h2>
+
+<p>tmuxで、pbcopyとpbpasteが正しく動かない。</p>
+
+<p><code>
+brew install reattach-to-user-namespace
+</code></p>
+
+<p>.tmux.conf
+<code>
+set -g default-command 'reattach-to-user-namespace -l zsh'
+</code></p>
+
+<h2>tmuxにpbcopyのキーバインドを追加</h2>
+
+<p><a href="http://koseki.hatenablog.com/entry/20110816/TmuxCopy">Mac の tmux でクリップボードを使う。</a>のサイトを参考にpbcopyのキーバインドを追加しました。</p>
+
+<p>.tmux.conf
+```</p>
+
+<h1>buffer copy</h1>
+
+<p>bind C-q run-shell &lsquo;reattach-to-user-namespace tmux-pbcopy&rsquo;
+```</p>
+
+<p>emacs $HOME/Dropbox/dotfile/mybin/tmux-pbcopy
+``` scheme</p>
+
+<h1>! /bin/sh</h1>
+
+<p>tmux save-buffer /tmp/.tmux_to_pbcopy
+cat /tmp/.tmux_to_pbcopy | pbcopy</p>
+
+<h1>以下はメッセージを表示するだけ。無くてもOK。</h1>
+
+<p>HEAD=<code>head -1 /tmp/.tmux_to_pbcopy</code>
+TAIL=<code>tail -1 /tmp/.tmux_to_pbcopy</code>
+tmux display-message &ldquo;Copy:  $HEAD  &ndash;  $TAIL&rdquo;
+```</p>
+
+<h2>使い方</h2>
+
+<ul>
+<li>C-z C-[ でコピーモードに入る。</li>
+<li>C-SPCで選択開始</li>
+<li>C-wでバッファにコピー</li>
+<li>C-z C-qでバッファの内容をクリップボードにコピー</li>
+</ul>
+
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://www.ideaxidea.com/archives/2011/04/macosx_terminal_tips.html">ターミナルで使える「pbcopy」「pbpaste」って知ってました？</a></li>
+<li><a href="http://koseki.hatenablog.com/entry/20110816/TmuxCopy">Mac の tmux でクリップボードを使う。</a></li>
+<li><a href="http://blog.livedoor.jp/xaicron/archives/54458405.html">homebrew で最低限これだけはいれておけってやつ</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ディレクトリ中のファイルサイズの合計値を再帰的に集計したい その２]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/04/07/find-cmd-on-mac-2/"/>
+    <updated>2013-04-07T19:54:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/04/07/find-cmd-on-mac-2</id>
+    <content type="html"><![CDATA[<p>前回の<a href="/blog/2013/04/06/find-cmd-on-mac-1/">ディレクトリ中のファイルサイズの合計値を再帰的に集計したい その１</a>でmac用、linux用のワンライナーを関数として登録したのですが、
+mac用のワンライナーが厳密には、期待した結果とは違うので、作り直してみました。</p>
+
+<p>``` perl</p>
+
+<h1>!/usr/bin/env perl</h1>
+
+<p>use strict;
+use constant DELETED_STDOUT    => &ldquo;\x1b[1A&rdquo;;
+use constant INITIALIZE_STDOUT => &ldquo; &rdquo;;</p>
+
+<p>my $dir = $ARGV[0] || &ldquo;.&rdquo;;
+my $info = file_info($dir);</p>
+
+<p>printf INITIALIZE_STDOUT;
+print_info($info);</p>
+
+<p>sub file_info {
+  my $dir = shift;
+  my @list = ();
+  my $info = { file_size   => 0,</p>
+
+<pre><code>           directories =&gt; 0,
+           files       =&gt; 0 };
+</code></pre>
+
+<p>  opendir(DIR, $dir) or die(&ldquo;Can not open directory:$dir ($!)&rdquo;);
+  @list = readdir(DIR);
+  closedir(DIR);</p>
+
+<p>  foreach my $file (sort @list){</p>
+
+<pre><code>next if $file =~ /^\.{1,2}$/;
+
+if( -d "$dir/$file" ){
+  my $hash = file_info("$dir/$file");
+  $info-&gt;{file_size}   += $hash-&gt;{file_size};
+  $info-&gt;{directories} += $hash-&gt;{directories};
+  $info-&gt;{files}       += $hash-&gt;{files};
+
+  $info-&gt;{directories}++;
+}else{
+  $info-&gt;{file_size} += -s "$dir/$file";
+  $info-&gt;{files}++;
+}
+</code></pre>
+
+<p>  }</p>
+
+<p>  print_info($info);
+  printf DELETED_STDOUT;
+  return $info;
+}</p>
+
+<p>sub print_info {
+  my $info = shift;</p>
+
+<p>  printf &ldquo;%d directories, %d files, %s\n&rdquo;,</p>
+
+<pre><code>$info-&gt;{directories},
+$info-&gt;{files},
+format_kmgt($info-&gt;{file_size});
+</code></pre>
+
+<p>}</p>
+
+<p>sub format_kmgt {
+  my $byte = shift;
+  my @prefix = (&ldquo;B&rdquo;,&ldquo;K&rdquo;,&ldquo;M&rdquo;,&ldquo;G&rdquo;,&ldquo;T&rdquo;);</p>
+
+<p>  while(1024 &lt; $byte){</p>
+
+<pre><code>$byte = $byte / 1024;
+shift @prefix;
+</code></pre>
+
+<p>  }</p>
+
+<p>  return sprintf &ldquo;%.1f%s&rdquo;,$byte,shift @prefix;
+}</p>
+
+<p>1;
+```</p>
+
+<p>プログラムの置場所をどこにするべきか少し悩んだのですが、Dropbox以下にPATHを通したディレクトリを用意し、そこに置くことにしました。</p>
+
+<p><code>
+mkdir /Users/$HOME/Dropbox/dotfile/mybin
+chmod 755 /Users/$HOME/Dropbox/dotfile/mybin
+chmod 755 /Users/$HOME/Dropbox/dotfile/mybin/bu
+cat &gt;&gt; .zshrc export PATH=$PATH:$HOME/Dropbox/dotfile/mybin
+</code></p>
+
+<p>perlのプログラムなので
+<code>
+/Users/$HOME/perl5/perlbrew/perls/perl-5.14.2/bin/
+</code>
+や、自前のプログラムということで、
+<code>
+/usr/local/bin
+</code>
+がいいのかもしれません。</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://dqn.sakusakutto.jp/2011/08/linux_usrlocal.html">/usr/local/の使い方まとめ</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ディレクトリ中のファイルサイズの合計値を再帰的に集計したい その１]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/04/06/find-cmd-on-mac-1/"/>
+    <updated>2013-04-06T19:45:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/04/06/find-cmd-on-mac-1</id>
+    <content type="html"><![CDATA[<p>たまにディレクトリ中のファイルサイズの合計値を、再帰的に集計したいときがある。<br/>
+で、いつも考えなしにこちらのサイトで紹介されているコマンドを叩いていたわけなんですが、</p>
+
+<p><a href="http://sonic64.com/2004-05-26.html">ディレクトリ中のファイルサイズ合計値を バイト表示</a></p>
+
+<p><code>
+find -type f -printf "%s\n" |perl -ne '$i++; $byte += $_; $str = "\r$i files, $byte byte"; $str =~ s/(\d{1,3})(?=(?:\d\d\d)+(?!\d))/$1,/g; print $str'
+</code></p>
+
+<p>mac(osx)だと動かない。どうやらmacのfindのオプションに printf がないもよう。</p>
+
+<p><a href="http://stackoverflow.com/questions/752818/why-does-macs-find-not-have-the-option-printf">Why does Mac&rsquo;s $find not have the option -printf?</a></p>
+
+<p>そこで printf f &lsquo;%s\n&rsquo; のかわりに stat -f &lsquo;%z&rsquo; を代用してみた。<br/>
+<code>
+find ./ -print0 | xargs -0 stat -f '%z' | perl -ne '$i++; $byte += $_; $str = "\r$i files, $byte byte"; $str =~ s/(\d{1,3})(?=(?:\d\d\d)+(?!\d))/$1,/g; print $str';
+</code></p>
+
+<p>とりあえず期待した結果になるが、カレントディレクトリのサイズも合計されてしまう。。<br/>
+ちょっとカレントディレクトリのサイズを除外する方法がわからなかったので、このまま関数にして使うことにした。</p>
+
+<p>```</p>
+
+<h1>linux</h1>
+
+<p>function bu(){ find -type f -printf &ldquo;%s\n&rdquo; |perl -ne &lsquo;$i++; $byte += $_; $str = &ldquo;\r$i files, $byte byte&rdquo;; $str =~ s/(\d{1,3})(?=(?:\d\d\d)+(?!\d))/$1,/g; print $str&rsquo;; }</p>
+
+<h1>mac</h1>
+
+<p>function bu(){ find ./ -print0 | xargs -0 stat -f &lsquo;%z&rsquo; | perl -ne &lsquo;$i++; $byte += $_; $str = &ldquo;\r$i files, $byte byte&rdquo;; $str =~ s/(\d{1,3})(?=(?:\d\d\d)+(?!\d))/$1,/g; print $str&rsquo;; }
+```</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://sonic64.com/2004-05-26.html">ディレクトリ中のファイルサイズ合計値を バイト表示</a></li>
+<li><a href="http://stackoverflow.com/questions/752818/why-does-macs-find-not-have-the-option-printf">Why does Mac&rsquo;s $find not have the option -printf?</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MacのPHP開発環境を整える]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/11/02/mamp-php-mac/"/>
+    <updated>2012-11-02T10:35:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/11/02/mamp-php-mac</id>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
+
+<p>勉強のためにローカル上でのPHP開発環境を作ろうと思います。</p>
+
+<h2>MAMPのインストール</h2>
+
+<p>macにapache,mysql,phpをセットにしたものをインストールするためのソフト。<br/>
+M(ac) A(pache) M(ysql) P(hp)。同じ用途でXAMPPというのもありますが、私の環境ではうまく動きませんでした。</p>
+
+<ul>
+<li><a href="http://www.be-webdesigner.com/technotes/server/install/mamp.htm">MAMPのインストール for Mac</a></li>
+<li><a href="http://www.mamp.info/en/">MAMPのダウンロードサイト</a></li>
+</ul>
+
+
+<p>有償のPro版も同時にインストールされてしまいます。今回はPHPを少し触ってみたいだけなので、無償版を使います。</p>
+
+<h2>emacsのPHP開発環境</h2>
+
+<ul>
+<li><a href="/blog/2012/10/29/emacs-php-mode/">php-mode.elをインストールする</a></li>
+<li><a href="/blog/2012/10/29/emacs-php-completion/">php-completion.elをインストールする</a></li>
+</ul>
+
+
+<p><del datetime="2012-11-01T15:03:10+00:00">補完機能と色付けだけは欲しかったのでインストール。</del></p>
+
+<p>php-mode.elだけだと、phpファイルにhtmlの記述がある(又はその逆)とインデントがくずれてしまう。<br/>
+なので最終的に、「php-mode + php-completion + nXhtml』を使う形に落ち着いた。<br/>
+＊php-completionはauto-completeの機能を利用している</p>
+
+<ul>
+<li><a href="/blog/2012/11/01/emacs-nxhtml/">nXhtmlをインストールする</a></li>
+</ul>
+
+
+<p>php-mode.elの設定(インデントと、phpファイルを開いたときのmode指定)をコメントアウト</p>
+
+<p><code>scheme
+emacs ~/.emacs.d/conf/50_php.el
+;; php-mode
+(require 'php-mode)
+;;(setq php-mode-force-pear t) ;PEAR規約のインデント設定にする
+;;(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
+</code></p>
+
+<h2>実行画面</h2>
+
+<p>htmlとphpのコードで書かれているindex.phpを開いてみると、htmlのコードを編集すると(nXhtml/nxhtml lnValid)に</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/nxhtml_001.png" alt="" /></p>
+
+<p>phpのコードを編集すると(PHP/nxhtml Completion AC Abbrev)にmodeが切り替わる</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/nxhtml_002.png" alt="" /></p>
+
+<p>補完機能もちゃんと動いている</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/nxhtml_003.png" alt="" />
+＊nXhtmlで起動するさいに下記の警告がでるが、今のところ問題なく動いているので無視する</p>
+
+<p><code>
+Warning: `font-lock-syntactic-keywords' is an obsolete variable (as of 24.1);
+use `syntax-propertize-function' instead.
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MacにRictyをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/09/16/mac-ricky/"/>
+    <updated>2012-09-16T17:59:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/09/16/mac-ricky</id>
+    <content type="html"><![CDATA[<h2>Rictyとは</h2>
+
+<p>去年あたりから話題だったRictyをなんとなくインストールしてみました。<br/>
+フォントの特徴は、本家サイトに詳しく書いてあるので見て頂くとして、個人的には「半角文字と全角文字の横幅の比が 1:2 に調整される」ところが素敵だなあと思います。</p>
+
+<h2>インストールの前に</h2>
+
+<p>Rictyをインストール(生成する)には、事前に<br/>
+1.「fontforge」がインストールされていること<br/>
+2.「Inconsolata」と「Migu 1M」をダウンロードしていること<br/>
+が前提となります。</p>
+
+<h2>fontforgeのインストール</h2>
+
+<p>homebrewでインストールします。</p>
+
+<p><code>
+brew install fontforge --use-gcc --without-python
+</code></p>
+
+<h2>Ricty本体のダウンロード</h2>
+
+<p><code>
+git clone git://github.com/yascentur/Ricty.git
+</code></p>
+
+<h2>Inconsolata、Migu 1Mのダウンロード</h2>
+
+<p>ダウンロード先は、先程cloneしてできたRictyディレクトリ内にしました。</p>
+
+<p><code>
+cd git/Ricty
+wget http://levien.com/type/myfonts/Inconsolata.otf
+wget 'http://sourceforge.jp/frs/redir.php?m=iij&amp;f=%2Fmix-mplus-ipa%2F56156%2Fmigu-1m-20120411-2.zip'
+unzip migu-1m-20120411-2.zip
+</code></p>
+
+<h2>Rictyの生成</h2>
+
+<p><code>
+sh ricty_generator.sh auto
+</code></p>
+
+<h2>生成したフォントをコピー</h2>
+
+<p>Macのフォントは/Library/Fonts以下で管理しているので、生成したRictyをcopy。</p>
+
+<p><code>
+cp -a Ricty*.ttf /Library/Fonts
+</code></p>
+
+<h2>ターミナルのフォントの設定をRictyにする</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/ricty001.png" alt="" /></p>
+
+<p>他のサイトではemacs単体のみに設定していることが多かったんですが、<br/>
+せっかくなんでターミナル全体に設定します。ちなみに私はTotalTerminal派です。</p>
+
+<h2>実行画面</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/ricty002.png" alt="" /></p>
+
+<p>見ていただくと解るように<br/>
+「半角文字と全角文字の横幅の比が 1:2に調整されている」<br/>
+「全角スペースが可視化されている」ことがわかります。<br/>
+文字自体は少し丸っこくて初めはちょっとだけ違和感があったのですが、慣れるとすごく見やすく感じてきました。</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://save.sys.t.u-tokyo.ac.jp/~yusa/fonts/ricty.html">プログラミング用フォント Ricty</a></li>
+<li><a href="http://show-web.jp/2012/01/31/mac-os-x-lion%E7%92%B0%E5%A2%83netbeans-ide%E3%81%AB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E7%94%A8%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88ricty%E5%B0%8E%E5%85%A5/">Mac OS X Lion環境NetBeans IDEにプログラミング用フォントRicty導入</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

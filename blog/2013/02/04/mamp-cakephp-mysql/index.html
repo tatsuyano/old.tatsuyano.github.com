@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>MAMP環境でのCakePHPのmysql.sockの指定方法 - 10rane.com</title>
+  <meta name="author" content="tatsuyano">
+
+  
+  <meta name="description" content="worning MacにMAMPをインストールし、CakePHPの「bakeコンソール」でModelクラスを作成したさいに、mysql.sockの指定箇所が違うよと警告された 1
+2
+3
+4
+Warning Error: PDO::__construct(): [2002] No such &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tatsuyano.github.io/blog/2013/02/04/mamp-cakephp-mysql">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="10rane.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">10rane.com</a></h1>
+  
+    <h2>技術備忘録</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:tatsuyano.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">MAMP環境でのCakePHPのmysql.sockの指定方法</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-04T12:33:00+09:00" pubdate data-updated="true">Feb 4<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>worning</h2>
+
+<p>MacにMAMPをインストールし、CakePHPの「bakeコンソール」でModelクラスを作成したさいに、mysql.sockの指定箇所が違うよと警告された</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Warning Error: PDO::__construct(): [2002] No such file or directory (trying to connect via unix:///var/mysql/mysql.sock) in [/Applications/MAMP/htdocs/bake/lib/Cake/Model/Datasource/Database/Mysql.php, line 149]
+</span><span class='line'>
+</span><span class='line'>Error: Database connection "SQLSTATE[HY000] [2002] No such file or directory" is missing, or could not be created.
+</span><span class='line'>#0 /Applications/MAMP/htdocs/bake/lib/Cake/Model/Datasource/DboSource.php(260): Mysql-&gt;connect()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>MAMPを使っているので、mysql.sockは「/Applications/MAMP/tmp/mysql/mysql.sock」作成されている。<br/>
+たぶん解決方法としては３つあって、<br/>
+1.sockファイルをworiningに書いてある「/var/mysql/mysql.sock」に生成するようMysql側の設定をいじる。<br/>
+2.「/var/mysql/mysql.sock」に「/Applications/MAMP/tmp/mysql/mysql.sock」のリンクを貼ってしまう。<br/>
+3.たぶん「app/Config/database.php」に現在生成されているmysql.sockの場所を指定する。</p>
+
+<p>どう考えても「３」が正しいやり方だと思うけど、なかなかそれっぽい情報が引っかからなかったがやっとあった。</p>
+
+<p><a href="http://stackoverflow.com/questions/1688705/cakephp-console-bake-on-mac-os-with-mamp-database-connection-error">Cakephp console (bake) on Mac OS with Mamp : database connection error</a></p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">public</span> <span class="nv">$default</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>    <span class="s1">&#39;datasource&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Database/Mysql&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;persistent&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;host&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;login&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;USERNAME&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;PASSWORD&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;database&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;DATABASE&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;encoding&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s1">&#39;unix_socket&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/Applications/MAMP/tmp/mysql/mysql.sock&#39;</span> <span class="c1"># &lt;- this</span>
+</span><span class='line'>    <span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2.x系から、socketの指定がデフォルトと違う場合に上記のように設定する模様。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">tatsuyano</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-04T12:33:00+09:00" pubdate data-updated="true">Feb 4<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/cakephp/'>CakePHP</a>, <a class='category' href='/blog/categories/mamp/'>MAMP</a>, <a class='category' href='/blog/categories/mysql/'>mysql</a>, <a class='category' href='/blog/categories/php/'>php</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tatsuyano.github.io/blog/2013/02/04/mamp-cakephp-mysql/" data-via="" data-counturl="http://tatsuyano.github.io/blog/2013/02/04/mamp-cakephp-mysql/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/28/tmuxinator/" title="Previous Post: tmuxinatorのインストール">&laquo; tmuxinatorのインストール</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/02/10/git-checkout/" title="Next Post: ファイルを指定したコミットの状態に戻す(git checkout)">ファイルを指定したコミットの状態に戻す(git checkout) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/10/handlersocket-install/">HandlerSocketをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/10/octopress-clippit/">Octopressのコードスニペットの設定</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/09/octopress-install/">Octopressをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/01/pbcopy-pbpaste/">Tmuxでもpbcopy、pbpasteを使えるように設定する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/16/emacs-git-gutter/">git-gutter.elをインストールする</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.85714285714286%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 108.57142857142857%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 105.71428571428571%'>auto-install(2)</a> <a href='/blog/categories/cakephp' style='font-size: 102.85714285714286%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 114.28571428571429%'>CoffeeScript(5)</a> <a href='/blog/categories/el-get' style='font-size: 114.28571428571429%'>el-get(5)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(21)</a> <a href='/blog/categories/flymake' style='font-size: 102.85714285714286%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 117.14285714285714%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.85714285714286%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.71428571428571%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.71428571428571%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.85714285714286%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.85714285714286%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 114.28571428571429%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.71428571428571%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.85714285714286%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.85714285714286%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 108.57142857142857%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.71428571428571%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.71428571428571%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.71428571428571%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.85714285714286%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.85714285714286%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.71428571428571%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 111.42857142857143%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.85714285714286%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.85714285714286%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 117.14285714285714%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.85714285714286%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.85714285714286%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.71428571428571%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.71428571428571%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.85714285714286%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.85714285714286%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.85714285714286%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 128.57142857142858%'>running(10)</a> <a href='/blog/categories/tmux' style='font-size: 111.42857142857143%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.85714285714286%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.85714285714286%'>wordpress(1)</a> </span>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - tatsuyano -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

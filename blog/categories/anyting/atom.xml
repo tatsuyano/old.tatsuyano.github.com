@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: anyting | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/anyting/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[anything.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/08/20/emacs-anything/"/>
+    <updated>2012-08-20T15:18:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/08/20/emacs-anything</id>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
+
+<p>すでにauto-intall.elがインストールされている前提で話をすすめます。<br/>
+auto-installのインストール手順は<a href="/blog/2012/08/20/emacs-auto-install/">こちら</a>をご覧ください。</p>
+
+<h2>インストール手順</h2>
+
+<p>emacsを起動し、</p>
+
+<p><code>
+M-x auto-install-batch &lt;RET&gt;
+Extension name: anything &lt;RET&gt;
+</code></p>
+
+<p>auto-isntall-batchを実行、次にインストールしたいパッケージ名(anything)を入力します。<br/>
+すると自動で複数ソースのダウンロードが始まります。<br/>
+ダウンロードし終わると「モード行」に</p>
+
+<p><code>
+Type C-c C-c to continue; Type C-c C-d for view diff; Type C-c C-q to quit.
+</code></p>
+
+<p>というメッセージが出てくるので、「C-c C-c」と入力し、ダウンロードしたソースを順番にコンパイルしていきます。<br/>
+すべてコンパイルし終えると、以下のようなメッセージが表示され、インストールが完了します。</p>
+
+<p><code>
+Installation is completed.
+</code></p>
+
+<h2>インストールされるソース一覧</h2>
+
+<p><code>scheme
+cd .emacs.d/elisp/
+tree
+.
+├── anything-auto-install.el
+├── anything-auto-install.elc
+├── anything-complete.el
+├── anything-complete.elc
+├── anything-config.el
+├── anything-config.elc
+├── anything-grep.el
+├── anything-grep.elc
+├── anything-gtags.el
+├── anything-gtags.elc
+├── anything-ipa.el
+├── anything-ipa.elc
+├── anything-match-plugin.el
+├── anything-match-plugin.elc
+├── anything-menu.el
+├── anything-menu.elc
+├── anything-migemo.el
+├── anything-migemo.elc
+├── anything-obsolete.el
+├── anything-obsolete.elc
+├── anything-show-completion.el
+├── anything-show-completion.elc
+├── anything-startup.el
+├── anything-startup.elc
+├── anything.el
+├── anything.elc
+├── descbinds-anything.el
+├── descbinds-anything.elc
+├── ipa.el
+└── ipa.elc
+</code></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/rubikitch/20091221/autoinstall">auto-install.elでEmacsLispパッケージを自動インストール &ndash;> anything.el関連を一括インストール</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

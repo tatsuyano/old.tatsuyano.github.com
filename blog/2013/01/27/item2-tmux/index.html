@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>iterm2 + tmux に乗り換えた - 10rane.com</title>
+  <meta name="author" content="tatsuyano">
+
+  
+  <meta name="description" content="今まで頑なにTotalTerminal + KeyRemap4MacBookを使って来た私ですが、ついに乗り換えることにしました。
+理由はKeyRemap4MacBookをバージョンアップしたら、一部のkey bindが使えなくなってしまったから。まあいい機会なので乗り換えたいと思います。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://tatsuyano.github.io/blog/2013/01/27/item2-tmux">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="10rane.com" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">10rane.com</a></h1>
+  
+    <h2>技術備忘録</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:tatsuyano.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Iterm2 + Tmux に乗り換えた</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-27T11:21:00+09:00" pubdate data-updated="true">Jan 27<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>今まで頑なにTotalTerminal + KeyRemap4MacBookを使って来た私ですが、ついに乗り換えることにしました。<br/>
+理由はKeyRemap4MacBookをバージョンアップしたら、一部のkey bindが使えなくなってしまったから。まあいい機会なので乗り換えたいと思います。</p>
+
+<h2>iterm2のバージョン</h2>
+
+<p><a href="http://code.google.com/p/iterm2/downloads/list">iterm2の公式ページ</a>からダウンロード</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/01_iterm2.png" alt="" /></p>
+
+<p>ダウンロードしたファイル解凍してみるとなぜか「tmux-for-iTerm2-20130122.tar.gz」というファイルも入っている。</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/02_iterm2.png" alt="" /></p>
+
+<p><a href="http://code.google.com/p/iterm2/wiki/TmuxIntegration">iterm2の公式wiki</a>で調べてみると、tmuxを使う場合、この「iTerm2用のtmux」じゃないと細かい挙動が期待どおりに動かないっぽい（適当）。<br/>
+なので、このタイミングでScreenからtmuxにも乗り換えてみることにした。</p>
+
+<h2>brewでlibevnetのインストール</h2>
+
+<p>まず、こちらのサイト「<a href="http://d.hatena.ne.jp/kmn23/20120215/1329323332">Lionにiterm2とtmux と libeventをインストールする</a>」を参考にlibenventをインストール。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew update
+</span><span class='line'>brew install libevent</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>tmuxのインストール</h2>
+
+<p>さきほどダウンロードしたファイルを解凍し、make &amp; install</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tar xvzf tmux-for-iTerm2-20130122.tar.gz
+</span><span class='line'>cd tmux
+</span><span class='line'>./configure
+</span><span class='line'>make
+</span><span class='line'>make clean
+</span><span class='line'>sudo make install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>念のためtmuxのインストール先を確認</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>which tmux
+</span><span class='line'>/usr/local/bin/tmux</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>iterm2の初期設定</h2>
+
+<p>今まで、KeyRemap4MacBookでcmdとoptionを入れ替えていて、操作上はcmdにmetaキーが割り振ってある感じにして使っていたんですが、このタイミングでoptionにmetaキーを割り当てることにしました。<br/>
+ただ、それ以外の操作はできるかぎりTotalTerminalと同じようにしたいので、その設定をしていきます。</p>
+
+<h3>バックグラウンドを白にし、透過させる</h3>
+
+<p>Preferences > Profiles > Colors > Background</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/03_iterm2.png" alt="" /></p>
+
+<p>Preferences > Profiles > Window > Transparency</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/04_iterm2.png" alt="" /></p>
+
+<h3>画面の上部からターミナルをショートカットで表示できるようにする</h3>
+
+<p>Preferences > Profiles > Window > Setting for New Window > Style > Top of Screen<br/>
+Preferences > Profiles > Window > Setting for New Window > Space > All Spaces<br/>
+Preferences > Profiles > Window > Setting for New Window > Rows  > 70</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/04_iterm2.png" alt="" /></p>
+
+<p>Preferences > Keys > Hot key > Show/hide iTerm2 with a system-wide hotkey</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/05_iterm2.png" alt="" /></p>
+
+<h3>metaキーをoptionに割り当てる</h3>
+
+<p>Preferences > Profiles > Keys > Left option  > +Esc<br/>
+Preferences > Profiles > Keys > Right option > +Esc</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/06_iterm2.png" alt="" /></p>
+
+<h3>cmd + w ですぐにターミナルを終了しないようにする</h3>
+
+<p>Preferences > Profiles > Session > Always prompt before closing</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/07_iterm2.png" alt="" /></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/kmn23/20120215/1329323332">Lionにiterm2とtmux と libeventをインストールする</a></li>
+<li><a href="http://weboo-returns.com/blog/using-iterm2-as-visor/">iTerm2 を Visor のように使う方法</a></li>
+<li><a href="http://blog.bungu-do.jp/archives/3434">MacのiTerm2でEmacsを使用するときのMetaキー設定</a></li>
+</ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">tatsuyano</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-27T11:21:00+09:00" pubdate data-updated="true">Jan 27<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/item2/'>item2</a>, <a class='category' href='/blog/categories/tmux/'>tmux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://tatsuyano.github.io/blog/2013/01/27/item2-tmux/" data-via="" data-counturl="http://tatsuyano.github.io/blog/2013/01/27/item2-tmux/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/12/21/nginx-basic-authentication-limit-ip/" title="Previous Post: nginxにBASIC認証とIP制限を入れる">&laquo; nginxにBASIC認証とIP制限を入れる</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/01/28/tmuxinator/" title="Next Post: tmuxinatorのインストール">tmuxinatorのインストール &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/06/10/handlersocket-install/">HandlerSocketをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/10/octopress-clippit/">Octopressのコードスニペットの設定</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/09/octopress-install/">Octopressをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/01/pbcopy-pbpaste/">Tmuxでもpbcopy、pbpasteを使えるように設定する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/04/16/emacs-git-gutter/">git-gutter.elをインストールする</a>
+      </li>
+    
+  </ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.85714285714286%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 108.57142857142857%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 105.71428571428571%'>auto-install(2)</a> <a href='/blog/categories/cakephp' style='font-size: 102.85714285714286%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 114.28571428571429%'>CoffeeScript(5)</a> <a href='/blog/categories/el-get' style='font-size: 114.28571428571429%'>el-get(5)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(21)</a> <a href='/blog/categories/flymake' style='font-size: 102.85714285714286%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 117.14285714285714%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.85714285714286%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.71428571428571%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.71428571428571%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.85714285714286%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.85714285714286%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 114.28571428571429%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.71428571428571%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.85714285714286%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.85714285714286%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 108.57142857142857%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.71428571428571%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.71428571428571%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.71428571428571%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.85714285714286%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.85714285714286%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.71428571428571%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 111.42857142857143%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.85714285714286%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.85714285714286%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 117.14285714285714%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.85714285714286%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.85714285714286%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.71428571428571%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.71428571428571%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.85714285714286%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.85714285714286%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.85714285714286%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 128.57142857142858%'>running(10)</a> <a href='/blog/categories/tmux' style='font-size: 111.42857142857143%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.85714285714286%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.85714285714286%'>wordpress(1)</a> </span>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - tatsuyano -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

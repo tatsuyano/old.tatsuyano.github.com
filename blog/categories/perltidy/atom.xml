@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: perltidy | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/perltidy/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[perltidyをインストールし、emacsでも使えるように設定する]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/08/21/emacs-perltidy/"/>
+    <updated>2012-08-21T15:50:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/08/21/emacs-perltidy</id>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
+
+<p>perltidyとはperlのソースを指定したフォーマットに整形してくれるツールです。</p>
+
+<h2>インストール</h2>
+
+<p>私の環境はCentOSなので、<del datetime="2012-09-04T06:43:23+00:00">yumでインストールします。</del><br/>
+macとCentOS両方同じ方法でインストールしたいので、Perlモジュールのperltidyを使用することにします。</p>
+
+<p><code>
+cpanm Perl::Tidy
+</code></p>
+
+<h2>フォーマットを指定する</h2>
+
+<p>ホームディレクトリに「.perltidyrc」というファイルを生成し、フォーマットを指定します。<br/>
+以下の設定は、書籍「Perl Best Practices」のものらしいです。。</p>
+
+<p>```
+cat > .perltidyrc
+-l=78   # Max line width is 78 cols
+-i=4    # Indent level is 4 cols
+-ci=4   # Continuation indent is 4 cols
+-st     # Output to STDOUT
+-se     # Errors to STDERR
+-vt=2   # Maximal vertical tightness
+-cti=0  # No extra indentation for closing brackets
+-pt=1   # Medium parenthesis tightness
+-bt=1   # Medium brace tightness
+-sbt=1  # Medium square brace tightness
+-bbt=1  # Medium block brace tightness
+-nsfs   # No space before semicolons
+-nolq   # Don&rsquo;t outdent long quoted strings
+-wbb=&ldquo;% + &ndash; * / x != == >= &lt;= =~ !~ &lt; > | &amp; >= &lt; = <em>*= += </em>= &amp;= &lt;&lt;= &amp;&amp;= &ndash;= /= |= >>= ||= .= %= ^= x=&rdquo;</p>
+
+<pre><code>    # Break before all operators
+</code></pre>
+
+<p>```</p>
+
+<h2>使用例</h2>
+
+<p>コマンドとして単体で使うには以下のように使ってください。</p>
+
+<p><code>
+perltidy hoge.pl
+</code></p>
+
+<h2>.emacsの設定</h2>
+
+<p>``` scheme
+;; perl tidy
+;; sudo yum -y install perltidy</p>
+
+<p>;; リージョン内のperlソースを整形する。
+(defun perltidy-region ()
+  &ldquo;Run perltidy on the current region.&rdquo;</p>
+
+<pre><code>  (interactive)
+      (save-excursion
+            (shell-command-on-region (point) (mark) "perltidy -q" nil t)))
+            (global-set-key "\C-ct" 'perltidy-region)
+</code></pre>
+
+<p>;; ソースすべてを整形する。
+(defun perltidy-defun ()
+  &ldquo;Run perltidy on the current defun.&rdquo;</p>
+
+<pre><code>(interactive)
+  (save-excursion (mark-defun) (perltidy-region)))
+  (global-set-key "\C-c\C-t" 'perltidy-defun)
+</code></pre>
+
+<p>```</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/supermassiveblackhole/20100723/1279874404" title="">UbuntuでEmacsからPerlの整形ツールperltidyを使う設定</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

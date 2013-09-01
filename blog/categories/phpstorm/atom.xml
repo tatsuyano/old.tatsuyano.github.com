@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: PhpStorm | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/phpstorm/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[PhpStormのkeymapを変更し、C-hにdelete-backward-charを割り当てる]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/02/14/phpstorm-keymap/"/>
+    <updated>2013-02-14T13:45:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/02/14/phpstorm-keymap</id>
+    <content type="html"><![CDATA[<p>C-h(delete-backward-char)のことを「hungry backspace」というらしい。</p>
+
+<p><code>
+Preference &gt; Keymap &gt; Main menu &gt; Navigate &gt; Type Hierarchy &gt; Remove ^H
+Preference &gt; Keymap &gt; hungry backspace &gt; Add Keyboard Shortcut ^H
+</code></p>
+
+<p>ついでにCtrl+i に設定されていた「Implement Mehtods」のショートカットを削除</p>
+
+<p><code>
+Preference &gt; Keymap &gt; Main menu &gt; Code &gt; Implement Methods &gt; Remove ^I
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[PhpStormのメモリ使用量を増やす]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/02/14/phpstorm-memory/"/>
+    <updated>2013-02-14T13:37:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/02/14/phpstorm-memory</id>
+    <content type="html"><![CDATA[<p>こちらのサイトの<a href="http://webinthelife.com/?p=274">記事</a>まんまなんですが、結構速くなったのでメモ。</p>
+
+<p>```
+emacs /Applications/PhpStorm.app/Contents/Info.plist</p>
+
+<p><key>VMOptions.x86_64</key>
+<string>-Xms128m -Xmx800m -XX:MaxPermSize=350m -XX:ReservedCodeCacheSize=64m -XX:+UseCodeCacheFlushing -XX:+UseCompressedOops</string>
+↓
+<key>VMOptions.x86_64</key>
+<string>-Xms256m -Xmx1024m -XX:MaxPermSize=512m -XX:ReservedCodeCacheSize=128m -XX:+UseCodeCacheFlushing -XX:+UseCompressedOops</string>
+```</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/php_storm_memory_001.png" alt="" />
+ &ndash;>
+<img src="https://dl.dropboxusercontent.com/u/159938/blog_images/php_storm_memory_002.png" alt="" /></p>
+
+<p>最大791Mだったのが、1015Mになり、少し速くなりました。</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://webinthelife.com/?p=274">Mac版PHPStormのメモリ割り当てを増やして快適に</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

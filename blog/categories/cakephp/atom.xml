@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: CakePHP | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/cakephp/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MAMP環境でのCakePHPのmysql.sockの指定方法]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/02/04/mamp-cakephp-mysql/"/>
+    <updated>2013-02-04T12:33:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/02/04/mamp-cakephp-mysql</id>
+    <content type="html"><![CDATA[<h2>worning</h2>
+
+<p>MacにMAMPをインストールし、CakePHPの「bakeコンソール」でModelクラスを作成したさいに、mysql.sockの指定箇所が違うよと警告された</p>
+
+<p>```
+Warning Error: PDO::__construct(): [2002] No such file or directory (trying to connect via unix:///var/mysql/mysql.sock) in [/Applications/MAMP/htdocs/bake/lib/Cake/Model/Datasource/Database/Mysql.php, line 149]</p>
+
+<p>Error: Database connection &ldquo;SQLSTATE[HY000] [2002] No such file or directory&rdquo; is missing, or could not be created.</p>
+
+<h1>0 /Applications/MAMP/htdocs/bake/lib/Cake/Model/Datasource/DboSource.php(260): Mysql->connect()</h1>
+
+<p>```</p>
+
+<p>MAMPを使っているので、mysql.sockは「/Applications/MAMP/tmp/mysql/mysql.sock」作成されている。<br/>
+たぶん解決方法としては３つあって、<br/>
+1.sockファイルをworiningに書いてある「/var/mysql/mysql.sock」に生成するようMysql側の設定をいじる。<br/>
+2.「/var/mysql/mysql.sock」に「/Applications/MAMP/tmp/mysql/mysql.sock」のリンクを貼ってしまう。<br/>
+3.たぶん「app/Config/database.php」に現在生成されているmysql.sockの場所を指定する。</p>
+
+<p>どう考えても「３」が正しいやり方だと思うけど、なかなかそれっぽい情報が引っかからなかったがやっとあった。</p>
+
+<p><a href="http://stackoverflow.com/questions/1688705/cakephp-console-bake-on-mac-os-with-mamp-database-connection-error">Cakephp console (bake) on Mac OS with Mamp : database connection error</a></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">public</span> <span class="nv">$default</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="o">&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="s1">&#39;datasource&#39;</span> <span class="o">=&amp;</span><span class="nx">gt</span><span class="p">;</span> <span class="s1">&#39;Database/Mysql&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="s1">&#39;persistent&#39;</span> <span class="o">=&amp;</span><span class="nx">gt</span><span class="p">;</span> <span class="k">false</span><span class="p">,</span>
+</span><span class='line'><span class="s1">&#39;host&#39;</span> <span class="o">=&amp;</span><span class="nx">gt</span><span class="p">;</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="s1">&#39;login&#39;</span> <span class="o">=&amp;</span><span class="nx">gt</span><span class="p">;</span> <span class="s1">&#39;USERNAME&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="s1">&#39;password&#39;</span> <span class="o">=&amp;</span><span class="nx">gt</span><span class="p">;</span> <span class="s1">&#39;PASSWORD&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="s1">&#39;database&#39;</span> <span class="o">=&amp;</span><span class="nx">gt</span><span class="p">;</span> <span class="s1">&#39;DATABASE&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="s1">&#39;encoding&#39;</span> <span class="o">=&amp;</span><span class="nx">gt</span><span class="p">;</span> <span class="s1">&#39;utf8&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="s1">&#39;unix_socket&#39;</span> <span class="o">=&amp;</span><span class="nx">gt</span><span class="p">;</span> <span class="s1">&#39;/Applications/MAMP/tmp/mysql/mysql.sock&#39;</span> <span class="c1"># &amp;lt;- this</span>
+</span><span class='line'><span class="p">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nx">code</span><span class="o">&gt;&lt;/</span><span class="nx">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>2.x系から、socketの指定がデフォルトと違う場合に上記のように設定する模様。</p>
+]]></content>
+  </entry>
+  
+</feed>

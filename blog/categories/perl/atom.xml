@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: perl | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/perl/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[cpanmでDBD::mysqlをインストールしようとすると、mysql.hがないと怒られる]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/09/04/cpanm-dbd-mysql/"/>
+    <updated>2012-09-04T17:23:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/09/04/cpanm-dbd-mysql</id>
+    <content type="html"><![CDATA[<h2>インストール</h2>
+
+<p><code>perl
+cpanm DBD::mysql
+</code></p>
+
+<p>しようするとエラーが。。build.logを確認してみると</p>
+
+<p><code>
+emacs .cpanm/build.log
+...
+dbdimp.h:24:49: error: mysql.h: そのようなファイルやディレクトリはありません
+</code></p>
+
+<p>とのこと。ググったところ、「mysql.h」は「mysql-devel」に入っているらしいので、mysql-develをインストールし、再度 cpanm DBD::mysqlを実行。</p>
+
+<p><code>
+sudo yum -y install mysql-devel
+...
+cpanm DBD::mysql
+</code></p>
+
+<p>今度は</p>
+
+<p><code>
+emacs .cpanm/build.log
+...
+make: *** [test_dynamic] エラー 255
+</code></p>
+
+<p>エラーの原因がよくわからなかったので、再度で検索したところ、下記のサイトの方法で対応できました。<br/>
+<a href="http://shibayu36.hatenablog.com/entry/20100605/1275754485">Mac OS XにDBD::mysqlをインストール</a></p>
+
+<p><code>
+cd .cpanm/latest-build/DBD-mysql*
+perl Makefile.PL --testuser='hoge' --testpassword='piyo'
+make
+make test
+make install
+</code></p>
+
+<p>mysqlの接続でしけていたんですね。勉強になりました。</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://shibayu36.hatenablog.com/entry/20100605/1275754485" title="">Mac OS XにDBD::mysqlをインストール</a></li>
+<li><a href="http://d.hatena.ne.jp/eisenbach/20111019/1319021855" title="">Rails3の bundle install で mysql.h が見つからないというエラー</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[flymakeを設定し、perlのシンタックスチェックをする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/08/21/emacs-flymake/"/>
+    <updated>2012-08-21T15:55:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/08/21/emacs-flymake</id>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
+
+<p>perlのシンタックスチェックをflymakeで行うには、事前に「set-perl5lib.el」をインストールする必要があります。</p>
+
+<h2>set-perl5lib.elのインストール</h2>
+
+<p><code>
+cd .emacs.d/elisp/
+wget http://svn.coderepos.org/share/lang/elisp/set-perl5lib/set-perl5lib.el
+</code></p>
+
+<h2>.emacsの設定</h2>
+
+<p>``` scheme
+;; flymake for perl
+(require &lsquo;flymake)
+(require 'set-perl5lib) ;; <a href="http://svn.coderepos.org/share/lang/elisp/set-perl5lib/set-perl5lib.el">http://svn.coderepos.org/share/lang/elisp/set-perl5lib/set-perl5lib.el</a></p>
+
+<p>(defvar flymake-perl-err-line-patterns &lsquo;((&ldquo;\(.*\) at \([^ \n]+\) line \([0-9]+\)[,.\n]&rdquo; 2 3 nil 1)))
+(defconst flymake-allowed-perl-file-name-masks &rsquo;((&ldquo;\.pl$&rdquo; flymake-perl-init)</p>
+
+<pre><code>                                            ("\\.pm$" flymake-perl-init)
+                                            ("\\.t$" flymake-perl-init)
+                                            ))
+</code></pre>
+
+<p>(defun flymake-perl-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy</p>
+
+<pre><code>                   'flymake-create-temp-inplace))
+     (local-file (file-relative-name
+                  temp-file
+                  (file-name-directory buffer-file-name))))
+</code></pre>
+
+<p>  (list &ldquo;perl&rdquo; (list &ldquo;-wc&rdquo; local-file))))</p>
+
+<p>(defun flymake-perl-load ()
+  (interactive)
+  (set-perl5lib)
+  (defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)</p>
+
+<pre><code>(setq flymake-check-was-interrupted t))
+</code></pre>
+
+<p>  (ad-activate &lsquo;flymake-post-syntax-check)
+  (setq flymake-allowed-file-name-masks (append flymake-allowed-file-name-masks flymake-allowed-perl-file-name-masks))
+  (setq flymake-err-line-patterns flymake-perl-err-line-patterns)
+  (flymake-mode t))</p>
+
+<p>(add-hook &lsquo;cperl-mode-hook &rsquo;(lambda () (flymake-perl-load)))</p>
+
+<p>(defun next-flymake-error ()
+  (interactive)
+  (flymake-goto-next-error)
+  (let ((err (get-char-property (point) &lsquo;help-echo)))</p>
+
+<pre><code>(when err
+  (message err))))
+</code></pre>
+
+<p>(global-set-key &ldquo;\M-e&rdquo; &lsquo;next-flymake-error)
+```</p>
+
+<h2>実行画面</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/flymark001.png" alt="" /></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://typester.stfuawsc.com/slides/perlcasual2/start.html" title="">Perl Hacks on Emacs</a></li>
+<li><a href="http://tech.lampetty.net/tech/index.php/archives/384" title="">Perl開発環境としてのEmacsの設定</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[perltidyをインストールし、emacsでも使えるように設定する]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/08/21/emacs-perltidy/"/>
+    <updated>2012-08-21T15:50:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/08/21/emacs-perltidy</id>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
+
+<p>perltidyとはperlのソースを指定したフォーマットに整形してくれるツールです。</p>
+
+<h2>インストール</h2>
+
+<p>私の環境はCentOSなので、<del datetime="2012-09-04T06:43:23+00:00">yumでインストールします。</del><br/>
+macとCentOS両方同じ方法でインストールしたいので、Perlモジュールのperltidyを使用することにします。</p>
+
+<p><code>
+cpanm Perl::Tidy
+</code></p>
+
+<h2>フォーマットを指定する</h2>
+
+<p>ホームディレクトリに「.perltidyrc」というファイルを生成し、フォーマットを指定します。<br/>
+以下の設定は、書籍「Perl Best Practices」のものらしいです。。</p>
+
+<p>```
+cat > .perltidyrc
+-l=78   # Max line width is 78 cols
+-i=4    # Indent level is 4 cols
+-ci=4   # Continuation indent is 4 cols
+-st     # Output to STDOUT
+-se     # Errors to STDERR
+-vt=2   # Maximal vertical tightness
+-cti=0  # No extra indentation for closing brackets
+-pt=1   # Medium parenthesis tightness
+-bt=1   # Medium brace tightness
+-sbt=1  # Medium square brace tightness
+-bbt=1  # Medium block brace tightness
+-nsfs   # No space before semicolons
+-nolq   # Don&rsquo;t outdent long quoted strings
+-wbb=&ldquo;% + &ndash; * / x != == >= &lt;= =~ !~ &lt; > | &amp; >= &lt; = <em>*= += </em>= &amp;= &lt;&lt;= &amp;&amp;= &ndash;= /= |= >>= ||= .= %= ^= x=&rdquo;</p>
+
+<pre><code>    # Break before all operators
+</code></pre>
+
+<p>```</p>
+
+<h2>使用例</h2>
+
+<p>コマンドとして単体で使うには以下のように使ってください。</p>
+
+<p><code>
+perltidy hoge.pl
+</code></p>
+
+<h2>.emacsの設定</h2>
+
+<p>``` scheme
+;; perl tidy
+;; sudo yum -y install perltidy</p>
+
+<p>;; リージョン内のperlソースを整形する。
+(defun perltidy-region ()
+  &ldquo;Run perltidy on the current region.&rdquo;</p>
+
+<pre><code>  (interactive)
+      (save-excursion
+            (shell-command-on-region (point) (mark) "perltidy -q" nil t)))
+            (global-set-key "\C-ct" 'perltidy-region)
+</code></pre>
+
+<p>;; ソースすべてを整形する。
+(defun perltidy-defun ()
+  &ldquo;Run perltidy on the current defun.&rdquo;</p>
+
+<pre><code>(interactive)
+  (save-excursion (mark-defun) (perltidy-region)))
+  (global-set-key "\C-c\C-t" 'perltidy-defun)
+</code></pre>
+
+<p>```</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/supermassiveblackhole/20100723/1279874404" title="">UbuntuでEmacsからPerlの整形ツールperltidyを使う設定</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[perl-completion.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2012/08/20/emacs-perl-completion/"/>
+    <updated>2012-08-20T15:43:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2012/08/20/emacs-perl-completion</id>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
+
+<p>すでにauto-intall.elがインストールされている前提で話をすすめます。<br/>
+auto-installのインストール手順は<a href="/blog/2012/08/20/emacs-auto-install/">こちら</a>をご覧ください。</p>
+
+<h2>インストール手順</h2>
+
+<p>emacsを起動し、</p>
+
+<p><code>
+M-x auto-install-batch &lt;RET&gt;
+Extension name: perl-completionn &lt;RET&gt;
+</code></p>
+
+<p>auto-isntall-batchを実行、次にインストールしたいパッケージ名(perl-completion)を入力します。</p>
+
+<p>すると自動で複数ソースのダウンロードが始まります。<br/>
+ダウンロードし終わると「モード行」に</p>
+
+<p><code>
+Type C-c C-c to continue; Type C-c C-d for view diff; Type C-c C-q to quit.
+</code></p>
+
+<p>というメッセージが出てくるので、「C-c C-c」と入力し、ダウンロードしたソースを順番にコンパイルしていきます。<br/>
+すべてコンパイルし終えると、以下のようなメッセージが表示され、インストールが完了します。</p>
+
+<p><code>
+Installation is completed.
+</code></p>
+
+<h2>.emacsの設定</h2>
+
+<p>cperl-mode時に、auto-completion(とauto-complete)を有効にするように設定します。</p>
+
+<p>``` scheme
+;; perl-completion
+(add-hook  &lsquo;cperl-mode-hook (lambda ()</p>
+
+<pre><code>                          (require 'auto-complete)
+                          (require 'perl-completion)
+                          (add-to-list 'ac-sources 'ac-source-perl-completion)
+                          (perl-completion-mode t)))
+</code></pre>
+
+<p>```</p>
+
+<h2>実行画面</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/perl-completion001.png" alt="" /></p>
+]]></content>
+  </entry>
+  
+</feed>

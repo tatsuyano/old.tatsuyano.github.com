@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: node.js | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/node-dot-js/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[uglify-js]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/14/uglify-js/"/>
+    <updated>2013-03-14T18:01:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/14/uglify-js</id>
+    <content type="html"><![CDATA[<p><code>
+npm install -g uglify-js
+</code></p>
+
+<p>パラメータの-gは「global」の意味。「global」はnodeのインストールディレクトリ、<br/>
+そうでなければカレントパッケージのルートかカレントワーキングディレクトリ。</p>
+
+<h2>npmの参考サイト</h2>
+
+<ul>
+<li><a href="https://npmjs.org/doc/config.html">Manage the npm configuration file</a></li>
+<li><a href="http://kysnm.hatenablog.com/entry/20111225/1324828008">npm についてまとめてみる</a></li>
+</ul>
+
+
+<h2>uglify-jsの使い方</h2>
+
+<ul>
+<li>-b, &mdash;beautify     整形(軽量化の逆)</li>
+<li>-o,&mdash;output <file> 出力ファイルの指定</li>
+<li>&mdash;overwrite        軽量化後のコードで入力ファイルを上書きします</li>
+<li>&mdash;unsafe           コードをより短い表現に変換</li>
+</ul>
+
+
+<p><code>
+uglifyjs -o min.js jquery-1.9.1.js
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[nvmとnpmをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/07/nvm-vpm/"/>
+    <updated>2013-03-07T12:01:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/07/nvm-vpm</id>
+    <content type="html"><![CDATA[<p><a href="https://github.com/creationix/nvm">nvm(Node Version Manager)</a> とは、node.js本体のバージョン管理するツール。<br/>
+<a href="https://npmjs.org/">npm(Node Packaged Modules)</a> とは、node.jsで作ったパッケージを管理するツール。<br/>
+nvmをインストールするとnpmも自動でインストールされる。</p>
+
+<h2>nvmのインストール</h2>
+
+<p><code>
+git clone git://github.com/creationix/nvm.git .nvm
+source .nvm/nvm.sh  # nvmで使う環境変数などを設定する
+</code></p>
+
+<h2>node.js本体のインストール</h2>
+
+<p>```
+nvm ls-remote # 現在までにリリースされているバージョンの確認
+nvm install v0.10.0</p>
+
+<p>nvm ls # インストールしてあるバージョンと、現在設定してあるバージョンを確認
+v0.9.4 v0.8.14 v0.10.0
+current:  v0.10.0</p>
+
+<p>nvm use 0.10.0 # 毎回使うバージョンを指定する必要がある
+```</p>
+
+<p>node.jsを使うためには、ターミナルを立ち上げるたびに、nvm.shの読み込みと、nodeのバージョンを指定しないといけない。<br/>
+なので、事前に zshrcに設定しておく。</p>
+
+<p><code>
+cat &gt;&gt; .zshrc
+[[ -s $HOME/.nvm/nvm.sh ]] &amp;&amp; source $HOME/.nvm/nvm.sh
+[[ -s $HOME/.nvm/nvm.sh ]] &amp;&amp; nvm use 0.10.0
+</code></p>
+
+<h2>CoffeeScriptなどのnpm(Node Packaged Modules)のインストール方法</h2>
+
+<p><code>
+npm install -g coffee-script
+</code></p>
+
+<p>インストールには、「ローカルインストール」と「グローバルインストール(パラメータに「g」をつける）」がある。<br/>
+ローカルインストールすると</p>
+
+<p><code>
+npm bin
+/Users/hoge/node_modules/.bin
+</code></p>
+
+<p>にインストールされ、「g」をつけてグローバルインストールにすると、</p>
+
+<p><code>
+npm bin -g
+/Users/hoge/.nvm/v0.10.0/bin
+</code></p>
+
+<p>にインストールされるので、通常は「g」をつけてインストールすること。</p>
+
+<p>またCoffeeScriptなどパッケージの実際のソースは、$HOME/.npm/配下にインストールされる。<br/>
+/Users/hoge/.nvm/v0.10.0/bin/配下には、リンクが貼られている。</p>
+
+<h2>.npm を移動させ、シムリンクで管理することはできない</h2>
+
+<p>いつものように、Dropbox/dotfile/配下にディレクトリを移動させ、$HOME　直下にリンクを貼って管理したかったが、<br/>
+.npmディレクトリを移動させると、Not Foundなどのエラーがでてきてしまうので、.nvmと.npmはDropboxで共有しないようにする。</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://tmlife.net/programming/javascript/npm-node-js-require-module-memo.html">npm と Node.js 上で require を使ったモジュール読み込みの仕組みについてメモ</a></li>
+<li><a href="http://kysnm.hatenablog.com/entry/20111225/1324828008">npm についてまとめてみる</a></li>
+<li><a href="https://npmjs.org/doc/config.html">Manage the npm configuration file</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

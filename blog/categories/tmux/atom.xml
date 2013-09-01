@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: tmux | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/tmux/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[tmuxでもpbcopy、pbpasteを使えるように設定する]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/05/01/pbcopy-pbpaste/"/>
+    <updated>2013-05-01T12:42:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/05/01/pbcopy-pbpaste</id>
+    <content type="html"><![CDATA[<p>最近しりましたpbcopyとpbpasteをtmuxで使う方法です。</p>
+
+<h2>pbcopyとpbpasteの使い方</h2>
+
+<p><code>
+ls -la | pbcopy    # 標準出力 -&gt; クリップボード
+pbpaste &gt; hoge.txt # クリップボード -&gt; 標準出力
+</code></p>
+
+<h2>pbcopyとpbpasteをtmuxで使うための設定</h2>
+
+<p>tmuxで、pbcopyとpbpasteが正しく動かない。</p>
+
+<p><code>
+brew install reattach-to-user-namespace
+</code></p>
+
+<p>.tmux.conf
+<code>
+set -g default-command 'reattach-to-user-namespace -l zsh'
+</code></p>
+
+<h2>tmuxにpbcopyのキーバインドを追加</h2>
+
+<p><a href="http://koseki.hatenablog.com/entry/20110816/TmuxCopy">Mac の tmux でクリップボードを使う。</a>のサイトを参考にpbcopyのキーバインドを追加しました。</p>
+
+<p>.tmux.conf
+```</p>
+
+<h1>buffer copy</h1>
+
+<p>bind C-q run-shell &lsquo;reattach-to-user-namespace tmux-pbcopy&rsquo;
+```</p>
+
+<p>emacs $HOME/Dropbox/dotfile/mybin/tmux-pbcopy
+``` scheme</p>
+
+<h1>! /bin/sh</h1>
+
+<p>tmux save-buffer /tmp/.tmux_to_pbcopy
+cat /tmp/.tmux_to_pbcopy | pbcopy</p>
+
+<h1>以下はメッセージを表示するだけ。無くてもOK。</h1>
+
+<p>HEAD=<code>head -1 /tmp/.tmux_to_pbcopy</code>
+TAIL=<code>tail -1 /tmp/.tmux_to_pbcopy</code>
+tmux display-message &ldquo;Copy:  $HEAD  &ndash;  $TAIL&rdquo;
+```</p>
+
+<h2>使い方</h2>
+
+<ul>
+<li>C-z C-[ でコピーモードに入る。</li>
+<li>C-SPCで選択開始</li>
+<li>C-wでバッファにコピー</li>
+<li>C-z C-qでバッファの内容をクリップボードにコピー</li>
+</ul>
+
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://www.ideaxidea.com/archives/2011/04/macosx_terminal_tips.html">ターミナルで使える「pbcopy」「pbpaste」って知ってました？</a></li>
+<li><a href="http://koseki.hatenablog.com/entry/20110816/TmuxCopy">Mac の tmux でクリップボードを使う。</a></li>
+<li><a href="http://blog.livedoor.jp/xaicron/archives/54458405.html">homebrew で最低限これだけはいれておけってやつ</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[tmuxのコピーモードで、標準出力を見る方法]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/12/tmux-copy/"/>
+    <updated>2013-03-12T17:58:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/12/tmux-copy</id>
+    <content type="html"><![CDATA[<p>tmux.confに「set-window-option -g mode-mouse on」を追加する方法もあるが、<br/>
+これだと、「カーソルで文字を反転させて(文字を選んで)、コピペ」ができなくなってしまう。</p>
+
+<p>なので、代わりにコピーモードで標準出力を見る方法</p>
+
+<p><code>
+C-z [ # コピーモード、C-n、C-pで上下に移動
+q # コピーモードをぬける
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[tmuxinatorのインストール]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/01/28/tmuxinator/"/>
+    <updated>2013-01-28T11:43:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/01/28/tmuxinator</id>
+    <content type="html"><![CDATA[<h2>RubyGemsからtmuxinatorのインストール</h2>
+
+<p>念のため、RubyGemsをupdateしてからインストール</p>
+
+<p><code>
+gem update
+gem install tmuxinator
+</code></p>
+
+<p>tmuxinatorがインストールされているか確認
+<code>
+gem which tmuxinator
+usr/local/Cellar/ruby/1.9.3-p0/lib/ruby/gems/1.9.1/gems/tmuxinator-0.5.0/lib/tmuxinator.rb
+</code></p>
+
+<h2>メッセージに従い、初期設定</h2>
+
+<p><code>
+echo "[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] &amp;&amp; source $HOME/.tmuxinator/scripts/tmuxinator" &gt;&gt; ~/.zshrc
+source ~/.zshrc
+</code></p>
+
+<h2>$SHELL、$EDITORの確認</h2>
+
+<p>設定が必須なので確認</p>
+
+<p><code>
+echo $EDITOR $SHELL
+emacs /bin/bash
+</code></p>
+
+<h2>.tmuxinatorを移動させる</h2>
+
+<p>他のdotfile同様、Dropboxのディレクトリ配下に移動させ、リンクをはる。<br/>
+ただし「.tmuxinator」をリネームして「tmuxinator」としてはいけない。<br/>
+隠しファイルでないと、再度「.tmuxinator」というディレクトリが作成されてしまう。</p>
+
+<p><code>
+mv .tmuxinator Dropbox/dotfile/
+ln -s Dropbox/dotfile/.tmuxinator .tmuxinator
+</code></p>
+
+<h2>RubyGemsの環境変数をbash_profileに設定</h2>
+
+<p>```
+cat .bash_profile
+export GEM_BIN=$(ruby -e &lsquo;require &ldquo;rubygems&rdquo;; puts Gem::bindir&rsquo;)
+export PATH=$GEM_BIN:$PATH</p>
+
+<p>source .bash_profile
+```</p>
+
+<p>環境変数の確認</p>
+
+<p><code>
+printenv | grep ruby
+GEM_BIN=/usr/local/Cellar/ruby/1.9.3-p0/bin
+PATH=/usr/local/Cellar/ruby/1.9.3-p0/bin:....
+</code></p>
+
+<h2>tmuxinatorのプロジェクトを作成</h2>
+
+<p>```
+mux new php</p>
+
+<h1>~/.tmuxinator/php.yml</h1>
+
+<h1>you can make as many tabs as you wish&hellip;</h1>
+
+<p>project_name: php
+project_root: ~/
+tabs:
+  &ndash; doc:</p>
+
+<pre><code>    layout: main-vertical
+    panes:
+      - emacs Dropbox/doc/memo.md
+      - #empty, will just run plain bash
+      - sql: ./mysql -uroot -proot
+      - hoge: ssh hoge
+</code></pre>
+
+<p>```</p>
+
+<p>作成したプロジェクトの実行</p>
+
+<p><code>
+mux php
+</code></p>
+
+<p>プロジェクトを変更、反映するには、一度tmuxのセッションを閉じる</p>
+
+<h2>参考にしたサイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/akishin999/20121204/1354621657">tmux + tmuxinator が便利</a></li>
+<li><a href="http://rh7.hateblo.jp/entry/20110220/1298209273">カッとなってUbuntu/DebianでRubygems実行コマンドのパスを通した</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iterm2 + tmux に乗り換えた]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/01/27/item2-tmux/"/>
+    <updated>2013-01-27T11:21:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/01/27/item2-tmux</id>
+    <content type="html"><![CDATA[<p>今まで頑なにTotalTerminal + KeyRemap4MacBookを使って来た私ですが、ついに乗り換えることにしました。<br/>
+理由はKeyRemap4MacBookをバージョンアップしたら、一部のkey bindが使えなくなってしまったから。まあいい機会なので乗り換えたいと思います。</p>
+
+<h2>iterm2のバージョン</h2>
+
+<p><a href="http://code.google.com/p/iterm2/downloads/list">iterm2の公式ページ</a>からダウンロード</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/01_iterm2.png" alt="" /></p>
+
+<p>ダウンロードしたファイル解凍してみるとなぜか「tmux-for-iTerm2-20130122.tar.gz」というファイルも入っている。</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/02_iterm2.png" alt="" /></p>
+
+<p><a href="http://code.google.com/p/iterm2/wiki/TmuxIntegration">iterm2の公式wiki</a>で調べてみると、tmuxを使う場合、この「iTerm2用のtmux」じゃないと細かい挙動が期待どおりに動かないっぽい（適当）。<br/>
+なので、このタイミングでScreenからtmuxにも乗り換えてみることにした。</p>
+
+<h2>brewでlibevnetのインストール</h2>
+
+<p>まず、こちらのサイト「<a href="http://d.hatena.ne.jp/kmn23/20120215/1329323332">Lionにiterm2とtmux と libeventをインストールする</a>」を参考にlibenventをインストール。</p>
+
+<p><code>
+brew update
+brew install libevent
+</code></p>
+
+<h2>tmuxのインストール</h2>
+
+<p>さきほどダウンロードしたファイルを解凍し、make &amp; install</p>
+
+<p><code>
+tar xvzf tmux-for-iTerm2-20130122.tar.gz
+cd tmux
+./configure
+make
+make clean
+sudo make install
+</code></p>
+
+<p>念のためtmuxのインストール先を確認</p>
+
+<p><code>
+which tmux
+/usr/local/bin/tmux
+</code></p>
+
+<h2>iterm2の初期設定</h2>
+
+<p>今まで、KeyRemap4MacBookでcmdとoptionを入れ替えていて、操作上はcmdにmetaキーが割り振ってある感じにして使っていたんですが、このタイミングでoptionにmetaキーを割り当てることにしました。<br/>
+ただ、それ以外の操作はできるかぎりTotalTerminalと同じようにしたいので、その設定をしていきます。</p>
+
+<h3>バックグラウンドを白にし、透過させる</h3>
+
+<p>Preferences > Profiles > Colors > Background</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/03_iterm2.png" alt="" /></p>
+
+<p>Preferences > Profiles > Window > Transparency</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/04_iterm2.png" alt="" /></p>
+
+<h3>画面の上部からターミナルをショートカットで表示できるようにする</h3>
+
+<p>Preferences > Profiles > Window > Setting for New Window > Style > Top of Screen<br/>
+Preferences > Profiles > Window > Setting for New Window > Space > All Spaces<br/>
+Preferences > Profiles > Window > Setting for New Window > Rows  > 70</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/04_iterm2.png" alt="" /></p>
+
+<p>Preferences > Keys > Hot key > Show/hide iTerm2 with a system-wide hotkey</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/05_iterm2.png" alt="" /></p>
+
+<h3>metaキーをoptionに割り当てる</h3>
+
+<p>Preferences > Profiles > Keys > Left option  > +Esc<br/>
+Preferences > Profiles > Keys > Right option > +Esc</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/06_iterm2.png" alt="" /></p>
+
+<h3>cmd + w ですぐにターミナルを終了しないようにする</h3>
+
+<p>Preferences > Profiles > Session > Always prompt before closing</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/07_iterm2.png" alt="" /></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/kmn23/20120215/1329323332">Lionにiterm2とtmux と libeventをインストールする</a></li>
+<li><a href="http://weboo-returns.com/blog/using-iterm2-as-visor/">iTerm2 を Visor のように使う方法</a></li>
+<li><a href="http://blog.bungu-do.jp/archives/3434">MacのiTerm2でEmacsを使用するときのMetaキー設定</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,103 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>10rane.com</title>
-  <meta name="author" content="tatsuyano">
-
-  
-  <meta name="description" content="インストールする内容 rpm版 MySQL 5.1.68
-HandlerSocket-Plugin-for-MySQL 最新版(2013/06/05)
-php-handlersocket 0.3.1 作業の流れ すでにyumでインストールしてあるMySQLの削除
-MySQL(rpm版) &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://tatsuyano.github.io">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="10rane.com" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-
-</head>
-
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">10rane.com</a></h1>
-  
-    <h2>技術備忘録</h2>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:tatsuyano.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
+  <title><![CDATA[10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-09-01T22:49:45+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
     
-      <h1 class="entry-title"><a href="/blog/2013/06/10/handlersocket-install/">HandlerSocketをインストールする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
-
-
-<time datetime="2013-06-10T00:56:00+09:00" pubdate data-updated="true">Jun 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>インストールする内容</h2>
+  <entry>
+    <title type="html"><![CDATA[HandlerSocketをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/06/10/handlersocket-install/"/>
+    <updated>2013-06-10T00:56:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/06/10/handlersocket-install</id>
+    <content type="html"><![CDATA[<h2>インストールする内容</h2>
 
 <ul>
 <li>rpm版 MySQL 5.1.68</li>
@@ -543,42 +464,15 @@ hsclient Library Support    enabled</p></blockquote>
 <li><a href="http://www.slideshare.net/akirahiguchi/handlersocket-etc-20110906">HandlerSocket について + a</a></li>
 </ul>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/10/octopress-clippit/">Octopressのコードスニペットの設定</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-10T11:18:00+09:00" pubdate data-updated="true">May 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Octopressの標準設定</h3>
+  <entry>
+    <title type="html"><![CDATA[Octopressのコードスニペットの設定]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/05/10/octopress-clippit/"/>
+    <updated>2013-05-10T11:18:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/05/10/octopress-clippit</id>
+    <content type="html"><![CDATA[<h3>Octopressの標準設定</h3>
 
 <p>rdiscountの場合、<code>```</code>で囲う。色は付かない。</p>
 
@@ -676,42 +570,15 @@ hsclient Library Support    enabled</p></blockquote>
 <li><a href="http://dreamrunner.org/wiki/public_html/docs/Web/octopress.html#sec-9-3">Include Code Snippets</a></li>
 </ul>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/09/octopress-install/">Octopressをインストールする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-09T17:57:00+09:00" pubdate data-updated="true">May 9<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/octopress_001.png" alt="" /></p>
+  <entry>
+    <title type="html"><![CDATA[octopressをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/05/09/octopress-install/"/>
+    <updated>2013-05-09T17:57:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/05/09/octopress-install</id>
+    <content type="html"><![CDATA[<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/octopress_001.png" alt="" /></p>
 
 <h2>Octopressとは</h2>
 
@@ -847,42 +714,15 @@ hsclient Library Support    enabled</p></blockquote>
 <li><a href="http://blog.satooshi.jp/blog/2013/04/09/octopress-preview-never-stop-auto-regeneration">Octopressでpreviewしていたらregeneration: 1 files changedが終わらない場合の対処方法</a></li>
 </ul>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/01/pbcopy-pbpaste/">Tmuxでもpbcopy、pbpasteを使えるように設定する</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-01T12:42:00+09:00" pubdate data-updated="true">May 1<span>st</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近しりましたpbcopyとpbpasteをtmuxで使う方法です。</p>
+  <entry>
+    <title type="html"><![CDATA[tmuxでもpbcopy、pbpasteを使えるように設定する]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/05/01/pbcopy-pbpaste/"/>
+    <updated>2013-05-01T12:42:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/05/01/pbcopy-pbpaste</id>
+    <content type="html"><![CDATA[<p>最近しりましたpbcopyとpbpasteをtmuxで使う方法です。</p>
 
 <h2>pbcopyとpbpasteの使い方</h2>
 
@@ -961,42 +801,15 @@ hsclient Library Support    enabled</p></blockquote>
 <li><a href="http://blog.livedoor.jp/xaicron/archives/54458405.html">homebrew で最低限これだけはいれておけってやつ</a></li>
 </ul>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/16/emacs-git-gutter/">git-gutter.elをインストールする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-16T20:45:00+09:00" pubdate data-updated="true">Apr 16<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>gitの差分を表示してくれる git-gutter を入れてみました。</p>
+  <entry>
+    <title type="html"><![CDATA[git-gutter.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/04/16/emacs-git-gutter/"/>
+    <updated>2013-04-16T20:45:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/04/16/emacs-git-gutter</id>
+    <content type="html"><![CDATA[<p>gitの差分を表示してくれる git-gutter を入れてみました。</p>
 
 <p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/git_gutter_001.png" alt="" /></p>
 
@@ -1061,42 +874,15 @@ And you can also install it with el-get.</p></blockquote></blockquote>
 <li><a href="http://d.hatena.ne.jp/naoya/20130414/1365967372">git-gutter.el</a></li>
 </ul>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/15/kakegawa-shincha-marathon/">掛川・新茶マラソン</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-15T20:42:00+09:00" pubdate data-updated="true">Apr 15<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>昨日、第8回掛川・新茶マラソンに参加してきました。<br/>
+  <entry>
+    <title type="html"><![CDATA[掛川・新茶マラソン]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/04/15/kakegawa-shincha-marathon/"/>
+    <updated>2013-04-15T20:42:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/04/15/kakegawa-shincha-marathon</id>
+    <content type="html"><![CDATA[<p>昨日、第8回掛川・新茶マラソンに参加してきました。<br/>
 まずレース結果ですが、5時間オーバーの5:02:38(ネット)で、惨敗でした。。<br/>
 それでは簡単にですがレビューしたいと思います。</p>
 
@@ -1137,42 +923,15 @@ And you can also install it with el-get.</p></blockquote></blockquote>
 <p>レースコンディション、体調調整とはじめてうまくいった大会でしたが、そもそもの練習不足という、もったいない大会になってしまいました。</p>
 
 <p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/kakegawa_006.jpg" alt="" /></p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/07/find-cmd-on-mac-2/">ディレクトリ中のファイルサイズの合計値を再帰的に集計したい その２</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-07T19:54:00+09:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>前回の<a href="/blog/2013/04/06/find-cmd-on-mac-1/">ディレクトリ中のファイルサイズの合計値を再帰的に集計したい その１</a>でmac用、linux用のワンライナーを関数として登録したのですが、
+  <entry>
+    <title type="html"><![CDATA[ディレクトリ中のファイルサイズの合計値を再帰的に集計したい その２]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/04/07/find-cmd-on-mac-2/"/>
+    <updated>2013-04-07T19:54:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/04/07/find-cmd-on-mac-2</id>
+    <content type="html"><![CDATA[<p>前回の<a href="http://tatsuyano.github.io/blog/2013/04/06/find-cmd-on-mac-1/">ディレクトリ中のファイルサイズの合計値を再帰的に集計したい その１</a>でmac用、linux用のワンライナーを関数として登録したのですが、
 mac用のワンライナーが厳密には、期待した結果とは違うので、作り直してみました。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -1345,42 +1104,15 @@ mac用のワンライナーが厳密には、期待した結果とは違うの�
 <li><a href="http://dqn.sakusakutto.jp/2011/08/linux_usrlocal.html">/usr/local/の使い方まとめ</a></li>
 </ul>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/06/find-cmd-on-mac-1/">ディレクトリ中のファイルサイズの合計値を再帰的に集計したい その１</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-06T19:45:00+09:00" pubdate data-updated="true">Apr 6<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>たまにディレクトリ中のファイルサイズの合計値を、再帰的に集計したいときがある。<br/>
+  <entry>
+    <title type="html"><![CDATA[ディレクトリ中のファイルサイズの合計値を再帰的に集計したい その１]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/04/06/find-cmd-on-mac-1/"/>
+    <updated>2013-04-06T19:45:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/04/06/find-cmd-on-mac-1</id>
+    <content type="html"><![CDATA[<p>たまにディレクトリ中のファイルサイズの合計値を、再帰的に集計したいときがある。<br/>
 で、いつも考えなしにこちらのサイトで紹介されているコマンドを叩いていたわけなんですが、</p>
 
 <p><a href="http://sonic64.com/2004-05-26.html">ディレクトリ中のファイルサイズ合計値を バイト表示</a></p>
@@ -1423,42 +1155,15 @@ mac用のワンライナーが厳密には、期待した結果とは違うの�
 <li><a href="http://stackoverflow.com/questions/752818/why-does-macs-find-not-have-the-option-printf">Why does Mac&rsquo;s $find not have the option -printf?</a></li>
 </ul>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/05/item2-color-scheme/">Iterm2のカラースキームを変更する</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-05T19:33:00+09:00" pubdate data-updated="true">Apr 5<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近は background を白系の透過で使っていたが、なんとなくまた黒系の透過に戻してみた。<br/>
+  <entry>
+    <title type="html"><![CDATA[iterm2のカラースキームを変更する]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/04/05/item2-color-scheme/"/>
+    <updated>2013-04-05T19:33:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/04/05/item2-color-scheme</id>
+    <content type="html"><![CDATA[<p>最近は background を白系の透過で使っていたが、なんとなくまた黒系の透過に戻してみた。<br/>
 毎回自分で設定するのは面倒なので、今回はこちらの方のカラースキームを使わしてもらうことにした。</p>
 
 <p><a href="http://this.aereal.org/entry/2013/01/02/222304">iTerm 2 で使えるカラースキーム、Japanesque を作った</a></p>
@@ -1501,42 +1206,15 @@ Preferences > Profiles > Colors > Japanesque</p>
 <li><a href="http://this.aereal.org/entry/2013/01/02/222304">iTerm 2 で使えるカラースキーム、Japanesque を作った</a></li>
 </ul>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/26/emacs-rsense/">emacsでのRuby環境(Rsenseでオムニ補完)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-26T19:00:00+09:00" pubdate data-updated="true">Mar 26<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今更ですが、最近yugaiさんの「初めてのRuby」を読み始めています。すごく読みやすくて楽しいです。<br/>
+  <entry>
+    <title type="html"><![CDATA[emacsでのRuby環境(Rsenseでオムニ補完)]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/26/emacs-rsense/"/>
+    <updated>2013-03-26T19:00:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/26/emacs-rsense</id>
+    <content type="html"><![CDATA[<p>今更ですが、最近yugaiさんの「初めてのRuby」を読み始めています。すごく読みやすくて楽しいです。<br/>
 そこでemacsのRuby環境もちゃんと用意することにしました。</p>
 
 <h2>Rsenseとは</h2>
@@ -1958,86 +1636,696 @@ el-get でインストールすると error がでて、Rsense が動かなく�
 </span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;ruby-mode-hook</span> <span class="o">&#39;</span><span class="p">(</span><span class="k">lambda </span><span class="p">()</span> <span class="p">(</span><span class="nf">inf-ruby-keys</span><span class="p">)))</span>
 </span></code></pre></td></tr></table></div></figure>
 
-</div>
+]]></content>
+  </entry>
   
+  <entry>
+    <title type="html"><![CDATA[coffee-modeでauto-completeを使えるようにする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/coffee-mode-used-ac-dict/"/>
+    <updated>2013-03-19T18:48:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/coffee-mode-used-ac-dict</id>
+    <content type="html"><![CDATA[<p>まずは coffee-mode.el を el-get で通常通りにインストールします。</p>
+
+<h2>auto-complete で補完に使うdict(辞書)について</h2>
+
+<p>補完をするときに参照している辞書は、.emacs.d/elisp/el-get/auto-complete/dict/ 配下にあります。<br/>
+デフォルトでは、coffee-mode 用のdictがないので、js2-mode 用に公開されていた辞書をインストールします。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd .emacs.d/elisp/el-get/auto-complete/dict/
+</span><span class='line'>wget https://raw.github.com/sandai/dotfiles/master/.emacs.d/ac-dict/js2-mode</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>設定</h2>
+
+<p>coffee-mode でauto-complete を使えるようにし、指定した辞書で補完するようにします。</p>
+
+<p>52-coffee-mode.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;coffee-mode</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; デフォルトだとインデントが８スペースなので、２スペースに変更</span>
+</span><span class='line'><span class="c1">;; http://qiita.com/items/a8d96ae95a1838500e37</span>
+</span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">coffee-custom</span> <span class="p">()</span>
+</span><span class='line'>  <span class="s">&quot;coffee-mode-hook&quot;</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">set</span> <span class="p">(</span><span class="nf">make-local-variable</span> <span class="ss">&#39;tab-width</span><span class="p">)</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">setq</span> <span class="nv">coffee-tab-width</span> <span class="mi">2</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;coffee-mode-hook</span>
+</span><span class='line'>  <span class="o">&#39;</span><span class="p">(</span><span class="nv">lambda</span><span class="p">()</span> <span class="p">(</span><span class="nf">coffee-custom</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; auto-complete</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;ac-modes</span> <span class="ss">&#39;coffee-mode</span><span class="p">)</span> <span class="c1">;; coffee-modeでACを使えるようにする</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; coffee-modeで、追加したjs2-modeのdict(辞書)で補完するようにする</span>
+</span><span class='line'><span class="c1">;; wget https://raw.github.com/sandai/dotfiles/master/.emacs.d/ac-dict/js2-mode</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;coffee-mode-hook</span>
+</span><span class='line'>  <span class="o">&#39;</span><span class="p">(</span><span class="k">lambda </span><span class="p">()</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;ac-dictionary-files</span> <span class="s">&quot;~/.emacs.d/elisp/el-get/auto-complete/dict/js2-mode&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
+  <entry>
+    <title type="html"><![CDATA[el-get.elでauto-complete.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-complete/"/>
+    <updated>2013-03-19T18:43:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-complete</id>
+    <content type="html"><![CDATA[<h2>el-getにインストールされているパッケージリストが古かったので、レシピを更新</h2>
+
+<p>パッケージリストには、auto-complete.elがあるのですが、レシピが古くインストールしてもディレクトリの中は空なので、レシピを新たに設定します。</p>
+
+<p>また、auto-complete.el は popup.el と fuzzy.el というelispが必須なのですが、今回 popup.el のレシピを用意し、auto-complete とは別にインストールする必要があります。<br/>
+※ とりあえず fuzzy.el は別途インストールしなくても動いているので、fuzzy.el は保留。</p>
+
+<h2>レシピの追加</h2>
+
+<p>10-el-get.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">el-get-dir</span> <span class="s">&quot;~/.emacs.d/elisp/el-get/&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">unless</span> <span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;el-get</span> <span class="nv">nil</span> <span class="ss">&#39;noerror</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">with-current-buffer</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">url-retrieve-synchronously</span>
+</span><span class='line'>      <span class="s">&quot;https://raw.github.com/dimitri/el-get/master/el-get-install.el&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">goto-char</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">eval-print-last-sexp</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">el-get-sources</span>
+</span><span class='line'>  <span class="o">&#39;</span><span class="p">(</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">:name</span> <span class="nv">init-loader</span>
+</span><span class='line'>      <span class="nv">:type</span> <span class="nv">http</span>
+</span><span class='line'>      <span class="nv">:url</span> <span class="s">&quot;https://raw.github.com/gist/1021706/init-loader.el&quot;</span>
+</span><span class='line'>      <span class="nv">:description</span> <span class="s">&quot;[My Recipes] Split management init.el. &quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">:name</span> <span class="nv">popup</span> <span class="c1">;; &lt;- 追加</span>
+</span><span class='line'>      <span class="nv">:type</span> <span class="nv">github</span>
+</span><span class='line'>      <span class="nv">:website</span> <span class="s">&quot;https://github.com/auto-complete/popup-el&quot;</span>
+</span><span class='line'>      <span class="nv">:description</span> <span class="s">&quot;[My Recipes] This section describes the basic data structures and operations of popups.&quot;</span>
+</span><span class='line'>      <span class="nv">:pkgname</span> <span class="s">&quot;auto-complete/popup-el&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">:name</span> <span class="nv">auto-complete</span> <span class="c1">;; &lt;- 追加</span>
+</span><span class='line'>      <span class="nv">:type</span> <span class="nv">github</span>
+</span><span class='line'>      <span class="nv">:website</span> <span class="s">&quot;https://github.com/auto-complete/auto-complete&quot;</span>
+</span><span class='line'>      <span class="nv">:description</span> <span class="s">&quot;[My Recipes] Auto Complete Mode renews an old completion interface and provides an environment that makes users could be more concentrate on their own works.&quot;</span>
+</span><span class='line'>      <span class="nv">:pkgname</span> <span class="s">&quot;auto-complete/auto-complete&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">el-get</span> <span class="ss">&#39;sync</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-    </article>
+<h2>インストール</h2>
+
+<p>これで、auto-complete.el と popup.el のレシピが更新されたので、M-x el-get-list-packages　でインストールします。</p>
+
+<h2>設定</h2>
+
+<p>12-auto-complete.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;auto-complete-config</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;ac-dictionary-directories</span> <span class="s">&quot;~/.emacs.d/elisp/el-get/auto-complete/dict&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">ac-config-default</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">ac-use-menu-map</span> <span class="nv">t</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
-<aside class="sidebar">
+  <entry>
+    <title type="html"><![CDATA[el-get.elでinit-loader.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-init-loader/"/>
+    <updated>2013-03-19T18:11:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-init-loader</id>
+    <content type="html"><![CDATA[<h2>インストールしたいパッケージが、el-get のパッケージリストにない場合</h2>
+
+<p>自分でレシピを作成(設定)し、パッケージリストに追加します。リストに追加する方法は２つあります。</p>
+
+<ul>
+<li>レシピ(rcpファイル)を作成し .emacs.d/elisp/el-get/el-get/recipes/ 以下にファイルを置く方法</li>
+<li>init.el などに直接設定を記述する方法</li>
+</ul>
+
+
+<p>どちらも設定する内容は一緒なので、今回は直接設定することにします。設定する内容は主に以下のようになります。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(:name {パッケージ名}
+</span><span class='line'>       :type {パッケージ配布方法: elpa, emacswiki, git, svn, http, ...}
+</span><span class='line'>       :url {パッケージURL}
+</span><span class='line'>       :after {後処理} ...)</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="http://d.hatena.ne.jp/koshigoeb/20110503/1304425417">el-getありきのinit.elに書き換えてみた</a></p>
+
+<h2>最新のinit-loader.el</h2>
+
+<p>init-loader.elの最新ファイルは 現在<a href="https://gist.github.com/zqwell/1021706">gist</a> にあるので、<br/>
+まずは <a href="http://blog.10rane.com/tech/2013/03/19/gist-raw-url/">rawファイル</a>のURLを確認します。</p>
+
+<p><a href="https://raw.github.com/gist/1021706/init-loader.el">https://raw.github.com/gist/1021706/init-loader.el</a></p>
+
+<h2>レシピの追加</h2>
+
+<p>init.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">el-get-dir</span> <span class="s">&quot;~/.emacs.d/elisp/el-get/&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">unless</span> <span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;el-get</span> <span class="nv">nil</span> <span class="ss">&#39;noerror</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">with-current-buffer</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">url-retrieve-synchronously</span>
+</span><span class='line'>      <span class="s">&quot;https://raw.github.com/dimitri/el-get/master/el-get-install.el&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">goto-char</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">eval-print-last-sexp</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">el-get-sources</span>
+</span><span class='line'>      <span class="o">&#39;</span><span class="p">(</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">:name</span> <span class="nv">init-loader</span>
+</span><span class='line'>      <span class="nv">:type</span> <span class="nv">http</span>
+</span><span class='line'>      <span class="nv">:url</span> <span class="s">&quot;https://raw.github.com/gist/1021706/init-loader.el&quot;</span>
+</span><span class='line'>      <span class="nv">:description</span> <span class="s">&quot;[My Recipes] Split management init.el.&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">el-get</span> <span class="ss">&#39;sync</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>インストール</h2>
+
+<p>レシピが正しい場合、 M-x el-get-list-packages で init-loader が追加されているので、インストールできます。</p>
+
+<h2>init.elの分割</h2>
+
+<p>今まで、init.elにすべて記述していた内容をパッケージごとに分割します。</p>
+
+<p>conf<br/>
+├── 00-basic.el<br/>
+├── 01-truncate-lines.el<br/>
+├── 10-el-get.el<br/>
+├── 11-auto-install.el<br/>
+└── 12-auto-complete.el</p>
+
+<p>init.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">load-path</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">append</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">list</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/elisp/&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/elisp/el-get/init-loader/&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/elisp/el-get/el-get/&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/elisp/auto-install/&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">)</span>
+</span><span class='line'>  <span class="nv">load-path</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;init-loader</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">init-loader-load</span> <span class="s">&quot;~/.emacs.d/conf&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>10-el-get.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">el-get-dir</span> <span class="s">&quot;~/.emacs.d/elisp/el-get/&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">unless</span> <span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;el-get</span> <span class="nv">nil</span> <span class="ss">&#39;noerror</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">with-current-buffer</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">url-retrieve-synchronously</span>
+</span><span class='line'>    <span class="s">&quot;https://raw.github.com/dimitri/el-get/master/el-get-install.el&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">goto-char</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">eval-print-last-sexp</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">el-get-sources</span>
+</span><span class='line'>      <span class="o">&#39;</span><span class="p">(</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">:name</span> <span class="nv">init-loader</span>
+</span><span class='line'>      <span class="nv">:type</span> <span class="nv">http</span>
+</span><span class='line'>      <span class="nv">:url</span> <span class="s">&quot;https://raw.github.com/gist/1021706/init-loader.el&quot;</span>
+</span><span class='line'>      <span class="nv">:description</span> <span class="s">&quot;[My Recipes] Split management init.el.&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">el-get</span> <span class="ss">&#39;sync</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2013/06/10/handlersocket-install/">HandlerSocketをインストールする</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/10/octopress-clippit/">Octopressのコードスニペットの設定</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/09/octopress-install/">Octopressをインストールする</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/01/pbcopy-pbpaste/">Tmuxでもpbcopy、pbpasteを使えるように設定する</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/16/emacs-git-gutter/">git-gutter.elをインストールする</a>
-      </li>
-    
-  </ul>
-</section>
-<section>
-  <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.85714285714286%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 108.57142857142857%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 105.71428571428571%'>auto-install(2)</a> <a href='/blog/categories/cakephp' style='font-size: 102.85714285714286%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 114.28571428571429%'>CoffeeScript(5)</a> <a href='/blog/categories/el-get' style='font-size: 114.28571428571429%'>el-get(5)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(21)</a> <a href='/blog/categories/flymake' style='font-size: 102.85714285714286%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 117.14285714285714%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.85714285714286%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.71428571428571%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.71428571428571%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.85714285714286%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.85714285714286%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 114.28571428571429%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.71428571428571%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.85714285714286%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.85714285714286%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 108.57142857142857%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.71428571428571%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.71428571428571%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.71428571428571%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.85714285714286%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.85714285714286%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.71428571428571%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 111.42857142857143%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.85714285714286%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.85714285714286%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 117.14285714285714%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.85714285714286%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.85714285714286%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.71428571428571%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.71428571428571%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.85714285714286%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.85714285714286%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.85714285714286%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 128.57142857142858%'>running(10)</a> <a href='/blog/categories/tmux' style='font-size: 111.42857142857143%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.85714285714286%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.85714285714286%'>wordpress(1)</a> </span>
-</section>
+  <entry>
+    <title type="html"><![CDATA[el-get.elでauto-install.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-install/"/>
+    <updated>2013-03-19T18:04:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-install</id>
+    <content type="html"><![CDATA[<p>まずは <a href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get/">el-get.el のインストール</a> が完了していることが前提になります。</p>
 
+<h2>インストール</h2>
+
+<p>まずは M-x el-get-list-packages で利用できるパッケージを一覧表示します。<br/>
+次に インストールしたいパッケージに「i」を押してチェックをいれ、「x」を押すと自動でインストールが始まります。</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/emacs-install-auto-install_001.png" alt="" /></p>
+
+<p>インストールしたパッケージは、 (setq el-get-dir &ldquo;~/.emacs.d/elisp/el-get/&rdquo;) で指定したディレクトリ直下にディレクトリ単位にインストールされます。</p>
+
+<p>またインストールしたパッケージを削除する場合は、M-x el-get-remove で削除します。</p>
+
+<h2>auto-installでインストールしたパッケージの置場所</h2>
+
+<p>el-get.el でインストールしたパッケージと、auto-install.el でインストールしたパッケージを分けて管理したいので、<br/>
+auto-install用のディレクトリとパスの設定をします。</p>
+
+<p>.emacs.d<br/>
+└── elisp<br/>
+　　├── auto-install &hellip; auto-installでインストールしたパッケージの置場所<br/>
+　　└── el-get &hellip; el-getでインストールしたパッケージの置場所<br/>
+　　　　　├── auto-install &hellip; auto-install.elの本体。本体はel-getでインストールしたため<br/>
+　　　　　└── el-get &hellip; el-get.el自身もまた、el-getに管理されている</p>
+
+<h2>auto-installの設定</h2>
+
+<p>init.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">load-path</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">append</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">list</span>
+</span><span class='line'>  <span class="o">...</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/elisp/auto-install/&quot;</span><span class="p">)</span> <span class="c1">;; &lt;- パスの追加</span>
+</span><span class='line'>  <span class="p">)</span>
+</span><span class='line'>  <span class="nv">load-path</span><span class="p">))</span>
+</span><span class='line'>  <span class="o">...</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;auto-install</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">setq</span> <span class="nv">auto-install-directory</span> <span class="s">&quot;~/.emacs.d/elisp/auto-install/&quot;</span><span class="p">)</span> <span class="c1">;; auto-installでインストールしたパッケージの置場所を指定</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
-</aside>
+  <entry>
+    <title type="html"><![CDATA[el-get.elでパッケージ管理を行う (el-get.elのインストール)]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get/"/>
+    <updated>2013-03-19T10:18:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get</id>
+    <content type="html"><![CDATA[<p>今までパッケージを手動でインストールしていて、自分が何のパッケージをインストールしたかを<br/>
+把握できなくなってきていたので、el-get.elでパッケージ管理をすることにしました。</p>
 
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - tatsuyano -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
+<h2>el-get.elでのパッケージ管理の特徴</h2>
 
-</footer>
+<p>自分がel-get.elでいいなあと思ったのは、以下の２つ</p>
+
+<ul>
+<li>自分がどのパッケージをインストールしているのかを簡単に把握できること</li>
+<li>レシピといって、パッケージごとのインストール方法を柔軟に設定できること</li>
+</ul>
+
+
+<h2>emacsのバージョン</h2>
+
+<p>emacsのバージョンは homebrew でインストールした「24.1.1」です。</p>
+
+<h2>emacs.dの構成</h2>
+
+<p>今回、今使っているemacs.dを捨てて、一から作り直すことにしました。</p>
+
+<p>.emacs.d<br/>
+├── conf &hellip; init-loaderで分割したファイルを入れる<br/>
+└── elisp &hellip; 手動でパッケージを入れた場合はここに直接入れる<br/>
+│　　    ├── el-get       &hellip; el-get.elでインストールしたパッケージをディレクトリ単位で入れていく<br/>
+│　　    └── auto-install &hellip; auto-installでインストールした場合<br/>
+│  <br/>
+└── init.el &hellip; .emacs.elの代わり。load-pathの設定など</p>
+
+<p>今回は .emacs.el は使わずに代わりに .emacs.d 直下に init.el というファイルを作成します。<br/>
+また、できるかぎり el-get.el でパッケージ管理を行なっていき、インストールできなかった場合は auto-install でインストールを行うことにします。<br/>
+auto-install でもインストールできなかった場合は、elispディレクトリ直下に手動でインストールしていきます。</p>
+
+<p>今後のインストール方法(パッケージ管理)の優先度<br/>
+1.el-get > 2.auto-install > 3.手動</p>
+
+<h2>el-get.elのインストール</h2>
+
+<p>まずは el-get.el 本体のインストールから。事前に上記の .emacs.d の構成を作っておくこと。<br/>
+el-get.el でインストールしたパッケージは、.emacs.d/elisp/el-get/ 直下に入れていきます。<br/>
+init.el に以下の設定を入れて、emacsを起動させると自動でインストールが始まります。</p>
+
+<p>init.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">load-path</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">append</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">list</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/elisp/&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/elisp/el-get/el-get/&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/elisp/auto-install/&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>    <span class="nv">load-path</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">unless</span> <span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;el-get</span> <span class="nv">nil</span> <span class="ss">&#39;noerror</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">with-current-buffer</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">url-retrieve-synchronously</span>
+</span><span class='line'>      <span class="s">&quot;https://raw.github.com/dimitri/el-get/master/el-get-install.el&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">goto-char</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">eval-print-last-sexp</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">el-get</span> <span class="ss">&#39;sync</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://shishithefool.blogspot.jp/2012/04/el-get-emacs.html">el-get を使って Emacs でパッケージ管理</a></li>
+<li><a href="http://shibayu36.hatenablog.com/entry/2013/03/14/081524">el-getを使ってみる(インストール編)</a></li>
+<li><a href="https://github.com/dimitri/el-get">github dimitri/el-get</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
+  <entry>
+    <title type="html"><![CDATA[gistのファイルをダウンロード(参照)する]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/19/gist/"/>
+    <updated>2013-03-19T01:06:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/19/gist</id>
+    <content type="html"><![CDATA[<p>gistのファイルをダウンロードするには、通常 git clone を利用するが、ファイル(rawファイル)を直接 wget などしたい場合がある。</p>
+
+<p>その場合は下記のURLで取得する<br/>
+<a href="https://raw.github.com/gist/">https://raw.github.com/gist/</a>&lt;パラメータ>/&lt;ファイル名></p>
+
+<p>例)<br/>
+<a href="https://gist.github.com/zqwell/1021706  ">https://gist.github.com/zqwell/1021706  </a>
+↓<br/>
+<a href="https://raw.github.com/gist/1021706/init-loader.el">https://raw.github.com/gist/1021706/init-loader.el</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[moshを使ってみる]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/17/mosh/"/>
+    <updated>2013-03-17T18:02:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/17/mosh</id>
+    <content type="html"><![CDATA[<p>去年ぐらいから流行っているmoshを入れてみる。</p>
+
+<p>moshを利用するには、クライアント、サーバー両方にmoshをインストールする必要がある。<br/>
+またmosh内でsshを利用するため、sshの代価というわけではない。</p>
+
+<h2>centosにmoshをmake install</h2>
+
+<p>git cloneして、インストールスクリプトを実行したほうがいいかも。。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>yum --enablerepo=epel install -y protobuf-compiler protobuf-devel boost-devel
+</span><span class='line'>wget https://github.com/downloads/keithw/mosh/mosh-1.2.3.tar.gz
+</span><span class='line'>tar xvzf mosh-1.2.3.tar.gz
+</span><span class='line'>cd mosh-1.2.3
+</span><span class='line'>./configure
+</span><span class='line'>make
+</span><span class='line'>make install
+</span><span class='line'>
+</span><span class='line'># インストール先
+</span><span class='line'>which mosh
+</span><span class='line'>/usr/local/bin/mosh</span></code></pre></td></tr></table></div></figure>
 
 
+<h2>iptablesに追加</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>emacs /etc/sysconfig/iptables
+</span><span class='line'>-A INPUT -p udp -m udp --dport 60000:61000 -j ACCEPT
+</span><span class='line'>
+</span><span class='line'>/etc/init.d/iptables restart</span></code></pre></td></tr></table></div></figure>
 
 
+<h2>macにmoshにインストール</h2>
+
+<p>mosh(mobile-shell)をbrewでインストール</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew update
+</span><span class='line'>brew install mobile-shell</span></code></pre></td></tr></table></div></figure>
 
 
+<p>IO::Ptyというperlモジュールも必要なので、cpanmでインストール</p>
 
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cpanm IO::Pty</span></code></pre></td></tr></table></div></figure>
 
 
+<p>zshrcに補完関数を追加</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cat &gt;&gt; .zshrc
+</span><span class='line'># moshcompdef
+</span><span class='line'>mosh=ssh</span></code></pre></td></tr></table></div></figure>
 
 
+<h2>利用方法</h2>
 
-</body>
-</html>
+<p>利用方法はsshと同じ。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mosh &lt;server-name&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回線がすぐ切れるような環境でないと、あまり恩恵は感じないと思うが、とりあえず使ってみようと思います。</p>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/karasuyamatengu/20120411/1334092521">mosh: MITからモバイル時代のSSH代替品</a></li>
+<li><a href="http://mosh.mit.edu/">本家サイト</a></li>
+<li><a href="http://d.hatena.ne.jp/mutsune/20120416/1334590736">mosh のインストール</a></li>
+<li><a href="http://gihyo.jp/admin/serial/01/ubuntu-recipe/0220">第220回　Ubuntuでモバイルシェル「Mosh」を使う</a></li>
+<li>[<a href="http://d.hatena.ne.jp/naoya/20130108/1357630895">近頃の開発環境 : Mosh、z、tmux、Emacs、Perl について</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[アシックスストア東京に行って計測してきた]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/15/asics-store-tokyo/"/>
+    <updated>2013-03-15T20:30:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/15/asics-store-tokyo</id>
+    <content type="html"><![CDATA[<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/asics_store_tokyo_001.jpg" alt="" /></p>
+
+<p>最近膝の痛みがひどく、一度自分のランニングスタイルを確認してみたかったので、アシックスストア東京で計測してきました。</p>
+
+<h2>足型測定 STATIC FOOT ID</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/asics_store_tokyo_002.jpg" alt="" /></p>
+
+<p>まずは足型の測定から。足が小さい(足長が短い)わりには甲高な足ｗ 我ながらかっこ悪い。<br/>
+それ以外の気になるの点は、右足のかかとの傾斜角が少しついていることぐらいでしょうか。</p>
+
+<h2>プロネーション測定 DYNAMIC FOOT ID</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/asics_store_tokyo_003.jpg" alt="" /></p>
+
+<p>今回の計測で一番の発見がこれ。自分はずっとシューズの「かかと外側のすり減り」がヒドかったので、てっきり「オーバープロネーション」になっていると思い込んでいたのですが、計測した結果「アンダープロネーション」でした。</p>
+
+<p>つまり膝への負担(オーバープロネーション)ではなく、すねの筋肉などに負担がかかっているとのこと。<br/>
+また店員さんいわく「かかと外側のすり減り」は正常なランニングスタイルだとのこと。</p>
+
+<h2>では膝の痛みの原因はなんだろう？</h2>
+
+<p>フォームの問題ではないとすると「筋力が足りていない」とか「オーバーワーク」ということなのでしょうか。。<br/>
+とりあえず当面は、痛みをあまりひどくならないように、セーブしながら走っていこうと思います。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[uglify-js]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/14/uglify-js/"/>
+    <updated>2013-03-14T18:01:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/14/uglify-js</id>
+    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>npm install -g uglify-js</span></code></pre></td></tr></table></div></figure>
+
+
+<p>パラメータの-gは「global」の意味。「global」はnodeのインストールディレクトリ、<br/>
+そうでなければカレントパッケージのルートかカレントワーキングディレクトリ。</p>
+
+<h2>npmの参考サイト</h2>
+
+<ul>
+<li><a href="https://npmjs.org/doc/config.html">Manage the npm configuration file</a></li>
+<li><a href="http://kysnm.hatenablog.com/entry/20111225/1324828008">npm についてまとめてみる</a></li>
+</ul>
+
+
+<h2>uglify-jsの使い方</h2>
+
+<ul>
+<li>-b, &mdash;beautify     整形(軽量化の逆)</li>
+<li>-o,&mdash;output <file> 出力ファイルの指定</li>
+<li>&mdash;overwrite        軽量化後のコードで入力ファイルを上書きします</li>
+<li>&mdash;unsafe           コードをより短い表現に変換</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>uglifyjs -o min.js jquery-1.9.1.js</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[tmuxのコピーモードで、標準出力を見る方法]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/03/12/tmux-copy/"/>
+    <updated>2013-03-12T17:58:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/03/12/tmux-copy</id>
+    <content type="html"><![CDATA[<p>tmux.confに「set-window-option -g mode-mouse on」を追加する方法もあるが、<br/>
+これだと、「カーソルで文字を反転させて(文字を選んで)、コピペ」ができなくなってしまう。</p>
+
+<p>なので、代わりにコピーモードで標準出力を見る方法</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>C-z [ # コピーモード、C-n、C-pで上下に移動
+</span><span class='line'>q # コピーモードをぬける</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+</feed>
