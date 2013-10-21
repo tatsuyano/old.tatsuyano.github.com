@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: etc | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/etc/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-10-21T23:50:42+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[livedoorプロバイダを使っていて、Bフレッツからフレッツ光ネクストに切り替えたらネットに繋がらなくなった]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/09/27/connect-with-livedoor-provider-and-flets-hikari-pppoe/"/>
+    <updated>2013-09-27T21:58:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/09/27/connect-with-livedoor-provider-and-flets-hikari-pppoe</id>
+    <content type="html"><![CDATA[<p>引越で、Bフレッツからフレッツ光ネクストに変わったら、<br/>
+ネットに繋がらなくなって、少し焦ったという話。</p>
+
+<p>livedoorプロバイダの光ファイバー(固定IP一つ)を使っていて、<br/>
+引越しなどで、Bフレッツ(VDSL)からフレッツ光ネクスト(PPPoE)に切り替えた場合、</p>
+
+<p>livedoorサポートに連絡して、新たにアカウントを取りなおす必要があります。<br/>
+この時、固定IPとパスワードが変わります。</p>
+
+<p>知っていればなんてことない話なのですが、<br/>
+ネットにそれっぽい情報がなかったので記事に残しておきます。</p>
+]]></content>
+  </entry>
+  
+</feed>

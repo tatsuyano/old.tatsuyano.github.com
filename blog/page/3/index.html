@@ -9,17 +9,8 @@
   <meta name="author" content="tatsuyano">
 
   
-  <meta name="description" content="クラス Javascript Array SyntaxMDN Documentation 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-class Animal constructor:(name) -&gt; @name = name say:(word) -&gt; console.log & &hellip;">
+  <meta name="description" content="去年ぐらいから流行っているmoshを入れてみる。 moshを利用するには、クライアント、サーバー両方にmoshをインストールする必要がある。
+またmosh内でsshを利用するため、sshの代価というわけではない。 centosにmoshをmake install git cloneして、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -75,6 +66,299 @@ class Animal constructor:(name) -&gt; @name = name say:(word) -&gt; console.log 
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/17/mosh/">Moshを使ってみる</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-17T18:02:00+09:00" pubdate data-updated="true">Mar 17<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>去年ぐらいから流行っているmoshを入れてみる。</p>
+
+<p>moshを利用するには、クライアント、サーバー両方にmoshをインストールする必要がある。<br/>
+またmosh内でsshを利用するため、sshの代価というわけではない。</p>
+
+<h2>centosにmoshをmake install</h2>
+
+<p>git cloneして、インストールスクリプトを実行したほうがいいかも。。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>yum --enablerepo=epel install -y protobuf-compiler protobuf-devel boost-devel
+</span><span class='line'>wget https://github.com/downloads/keithw/mosh/mosh-1.2.3.tar.gz
+</span><span class='line'>tar xvzf mosh-1.2.3.tar.gz
+</span><span class='line'>cd mosh-1.2.3
+</span><span class='line'>./configure
+</span><span class='line'>make
+</span><span class='line'>make install
+</span><span class='line'>
+</span><span class='line'># インストール先
+</span><span class='line'>which mosh
+</span><span class='line'>/usr/local/bin/mosh</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>iptablesに追加</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>emacs /etc/sysconfig/iptables
+</span><span class='line'>-A INPUT -p udp -m udp --dport 60000:61000 -j ACCEPT
+</span><span class='line'>
+</span><span class='line'>/etc/init.d/iptables restart</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>macにmoshにインストール</h2>
+
+<p>mosh(mobile-shell)をbrewでインストール</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew update
+</span><span class='line'>brew install mobile-shell</span></code></pre></td></tr></table></div></figure>
+
+
+<p>IO::Ptyというperlモジュールも必要なので、cpanmでインストール</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cpanm IO::Pty</span></code></pre></td></tr></table></div></figure>
+
+
+<p>zshrcに補完関数を追加</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cat &gt;&gt; .zshrc
+</span><span class='line'># moshcompdef
+</span><span class='line'>mosh=ssh</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>利用方法</h2>
+
+<p>利用方法はsshと同じ。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mosh &lt;server-name&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回線がすぐ切れるような環境でないと、あまり恩恵は感じないと思うが、とりあえず使ってみようと思います。</p>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/karasuyamatengu/20120411/1334092521">mosh: MITからモバイル時代のSSH代替品</a></li>
+<li><a href="http://mosh.mit.edu/">本家サイト</a></li>
+<li><a href="http://d.hatena.ne.jp/mutsune/20120416/1334590736">mosh のインストール</a></li>
+<li><a href="http://gihyo.jp/admin/serial/01/ubuntu-recipe/0220">第220回　Ubuntuでモバイルシェル「Mosh」を使う</a></li>
+<li>[<a href="http://d.hatena.ne.jp/naoya/20130108/1357630895">近頃の開発環境 : Mosh、z、tmux、Emacs、Perl について</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/15/asics-store-tokyo/">アシックスストア東京に行って計測してきた</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-15T20:30:00+09:00" pubdate data-updated="true">Mar 15<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/asics_store_tokyo_001.jpg" alt="" /></p>
+
+<p>最近膝の痛みがひどく、一度自分のランニングスタイルを確認してみたかったので、アシックスストア東京で計測してきました。</p>
+
+<h2>足型測定 STATIC FOOT ID</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/asics_store_tokyo_002.jpg" alt="" /></p>
+
+<p>まずは足型の測定から。足が小さい(足長が短い)わりには甲高な足ｗ 我ながらかっこ悪い。<br/>
+それ以外の気になるの点は、右足のかかとの傾斜角が少しついていることぐらいでしょうか。</p>
+
+<h2>プロネーション測定 DYNAMIC FOOT ID</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/asics_store_tokyo_003.jpg" alt="" /></p>
+
+<p>今回の計測で一番の発見がこれ。自分はずっとシューズの「かかと外側のすり減り」がヒドかったので、てっきり「オーバープロネーション」になっていると思い込んでいたのですが、計測した結果「アンダープロネーション」でした。</p>
+
+<p>つまり膝への負担(オーバープロネーション)ではなく、すねの筋肉などに負担がかかっているとのこと。<br/>
+また店員さんいわく「かかと外側のすり減り」は正常なランニングスタイルだとのこと。</p>
+
+<h2>では膝の痛みの原因はなんだろう？</h2>
+
+<p>フォームの問題ではないとすると「筋力が足りていない」とか「オーバーワーク」ということなのでしょうか。。<br/>
+とりあえず当面は、痛みをあまりひどくならないように、セーブしながら走っていこうと思います。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/14/uglify-js/">Uglify-js</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-14T18:01:00+09:00" pubdate data-updated="true">Mar 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>npm install -g uglify-js</span></code></pre></td></tr></table></div></figure>
+
+
+<p>パラメータの-gは「global」の意味。「global」はnodeのインストールディレクトリ、<br/>
+そうでなければカレントパッケージのルートかカレントワーキングディレクトリ。</p>
+
+<h2>npmの参考サイト</h2>
+
+<ul>
+<li><a href="https://npmjs.org/doc/config.html">Manage the npm configuration file</a></li>
+<li><a href="http://kysnm.hatenablog.com/entry/20111225/1324828008">npm についてまとめてみる</a></li>
+</ul>
+
+
+<h2>uglify-jsの使い方</h2>
+
+<ul>
+<li>-b, &mdash;beautify     整形(軽量化の逆)</li>
+<li>-o,&mdash;output <file> 出力ファイルの指定</li>
+<li>&mdash;overwrite        軽量化後のコードで入力ファイルを上書きします</li>
+<li>&mdash;unsafe           コードをより短い表現に変換</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>uglifyjs -o min.js jquery-1.9.1.js</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/12/tmux-copy/">Tmuxのコピーモードで、標準出力を見る方法</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-12T17:58:00+09:00" pubdate data-updated="true">Mar 12<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>tmux.confに「set-window-option -g mode-mouse on」を追加する方法もあるが、<br/>
+これだと、「カーソルで文字を反転させて(文字を選んで)、コピペ」ができなくなってしまう。</p>
+
+<p>なので、代わりにコピーモードで標準出力を見る方法</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>C-z [ # コピーモード、C-n、C-pで上下に移動
+</span><span class='line'>q # コピーモードをぬける</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1123,336 +1407,6 @@ nvmをインストールするとnpmも自動でインストールされる。</
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/25/trunk-training/">ランナー用体幹トレーニング</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-25T20:04:00+09:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>2/24の「西谷綾子のランドリ」で、ランナー用の筋トレについてやっていた内容を簡単にまとめておきたいと思います。</p>
-
-<p>まずランナーの筋トレとは、<br/>
-「ランニングするだけでは鍛えられない筋肉を補強する」ためのもの。<br/>
-例えば「2時間ジョギング」するよりも「1時間40分ジョギング + 筋トレ20分」のほうが効果がある。</p>
-
-<h3>腹筋まわり</h3>
-
-<ol>
-<li>仰向けに寝そべる。この時腹筋に力を入れ、背骨から腰部分が浮かないようにする。</li>
-<li>足を90度に曲げ、クランチ状態にする。</li>
-<li>足を交互にゆっくり伸ばし、また戻す。この時も腰が浮かないように注意すること。</li>
-</ol>
-
-
-<h3>股関節(ヒップリフト)</h3>
-
-<ol>
-<li>仰向けに寝そべる。膝を曲げ、お尻を浮かせる。この時も腹筋に力を入れ、体がまっすぐになるようにする。</li>
-<li>片足をまっすぐ垂直に上げる。</li>
-<li>ゆっくり戻す。</li>
-</ol>
-
-
-<h3>全身(オーバーヘッドスクワット)</h3>
-
-<ol>
-<li>立った状態で、手を逆ハの字に上げる。</li>
-<li>ゆっくりスクワットを行う。</li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/25/git-fetch/">リモートリポジトリの変更を取得する(git Fetch)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-25T14:15:00+09:00" pubdate data-updated="true">Feb 25<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>confilictを起こさないためにも、git pullは使わずにgit fetchを使ったほうがいい。</p>
-
-<p>リモートリポジトリの変更を取得する</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git fetch # これによって、FETCH_HEADを使って、以下のようにログや差分を見られるようになる。</span></code></pre></td></tr></table></div></figure>
-
-
-<p>リモートリポジトリのコミットのログを見る</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git log FETCH_HEAD</span></code></pre></td></tr></table></div></figure>
-
-
-<p>リモートリポジトリとローカルのHEADの差分を見る</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git diff HEAD FETCH_HEAD</span></code></pre></td></tr></table></div></figure>
-
-
-<p>リモートリポジトリと変更をローカルにマージする</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git merge FETCH_HEAD</span></code></pre></td></tr></table></div></figure>
-
-
-<p>リモートリポジトリの変更を取得してローカルにマージする</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git pull # git pull は git fetch + git merge</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>参考サイト</h2>
-
-<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
-
-<ul>
-<li><a href="http://yanor.net/wiki/?Git/git%20fetch%20(git%20pull">git fetch ( git pull )</a>)</li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/23/git-conflict/">Conflictしたファイルを修正しpushする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-23T14:10:00+09:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>pullした後に、commitしたファイルdummy.txtがconflictした場合</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git pull
-</span><span class='line'>Auto-merging dummy.txt # &lt;- dummy.txtがconflictして、auto-mergeされた
-</span><span class='line'>CONFLICT (content): Merge conflict in dummy.txt
-</span><span class='line'>Automatic merge failed; fix conflicts and then commit the result.</span></code></pre></td></tr></table></div></figure>
-
-
-<p>conflictしたファイルを修正する</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>emacs dummy.txt
-</span><span class='line'>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-</span><span class='line'>local
-</span><span class='line'>=======
-</span><span class='line'>remote
-</span><span class='line'>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 58da51ee64bf7f793167ddb40d035815e39566b4</span></code></pre></td></tr></table></div></figure>
-
-
-<p>修正後、git commit -aで再度commitしpush</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git commit -a -m 'merge dummy'
-</span><span class='line'>[master 102b6c6] merge dummy
-</span><span class='line'>
-</span><span class='line'>git push</span></code></pre></td></tr></table></div></figure>
-
-
-<p>git commit -a は git add -u した後すぐにgit commitしたのと同義</p>
-
-<p>conflictしているファイルの表示</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git ls-files -u</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/02/23/git-push-origin-newbranch/">Master以外のbranchをリモート(origin)にpushする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-23T13:58:00+09:00" pubdate data-updated="true">Feb 23<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>master以外の別branchをリモートにpushする</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git push origin new-branch
-</span><span class='line'>
-</span><span class='line'>git branch -a
-</span><span class='line'>  master
-</span><span class='line'>* new-branch
-</span><span class='line'>  remotes/origin/HEAD -&gt; origin/master
-</span><span class='line'>  remotes/origin/master
-</span><span class='line'>  remotes/origin/new-branch # &lt;- 追加される</span></code></pre></td></tr></table></div></figure>
-
-
-<p>origin/master以外のリモートにあるbranchをローカルに追加する</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git branch new-branch origin/new-branch # &lt;- 本来ならこれでうまくいくのだが
-</span><span class='line'>
-</span><span class='line'># なぜかすでにローカルにあるリポジトリから、新たに追加されたリモートのブランチが参照されていない
-</span><span class='line'>git branch -a
-</span><span class='line'>* master
-</span><span class='line'>  remotes/origin/HEAD -&gt; origin/master
-</span><span class='line'>  remotes/origin/master
-</span><span class='line'># remotes/origin/new-branch &lt;- 本来参照されるはずのブランチ</span></code></pre></td></tr></table></div></figure>
-
-
-<p>うまくいかないので、いったんローカルのリポジトリを破棄し、新たにcloneしなおしてみる</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>mv local-repository local-repository.bk
-</span><span class='line'>
-</span><span class='line'>git clone ssh://hoge/var/git/remote-repository.git local-repository
-</span><span class='line'>cd local-repository/
-</span><span class='line'>
-</span><span class='line'>git branch -a
-</span><span class='line'>* master
-</span><span class='line'>  remotes/origin/HEAD -&gt; origin/master
-</span><span class='line'>  remotes/origin/master
-</span><span class='line'>  remotes/origin/new-branch # &lt;- 追加されている</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>参考サイト</h2>
-
-<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
-
-<ul>
-<li><a href="http://blog.basyura.org/entry/20100323/p1">remote に branch を push し、remote から clone したリポジトリの branch を変更して push する</a></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -1470,30 +1424,30 @@ nvmをインストールするとnpmも自動でインストールされる。</
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/16/install-yasnippet-to-elpa/">elpaでyasnippet.elをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/16/emacs-install-scss-mode/">Auto-installでscss-modeをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/14/install-sass-and-compass/">Sassとcompassをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/27/connect-with-livedoor-provider-and-flets-hikari-pppoe/">livedoorプロバイダを使っていて、Bフレッツからフレッツ光ネクストに切り替えたらネットに繋がらなくなった</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/10/handlersocket-install/">HandlerSocketをインストールする</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/10/octopress-clippit/">Octopressのコードスニペットの設定</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/09/octopress-install/">Octopressをインストールする</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/01/pbcopy-pbpaste/">Tmuxでもpbcopy、pbpasteを使えるように設定する</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/16/emacs-git-gutter/">git-gutter.elをインストールする</a>
       </li>
     
   </ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.85714285714286%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 108.57142857142857%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 105.71428571428571%'>auto-install(2)</a> <a href='/blog/categories/cakephp' style='font-size: 102.85714285714286%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 114.28571428571429%'>CoffeeScript(5)</a> <a href='/blog/categories/el-get' style='font-size: 114.28571428571429%'>el-get(5)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(21)</a> <a href='/blog/categories/flymake' style='font-size: 102.85714285714286%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 117.14285714285714%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.85714285714286%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.71428571428571%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.71428571428571%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.85714285714286%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.85714285714286%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 114.28571428571429%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.71428571428571%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.85714285714286%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.85714285714286%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 108.57142857142857%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.71428571428571%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.71428571428571%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.71428571428571%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.85714285714286%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.85714285714286%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.71428571428571%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 111.42857142857143%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.85714285714286%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.85714285714286%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 117.14285714285714%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.85714285714286%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.85714285714286%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.71428571428571%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.71428571428571%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.85714285714286%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.85714285714286%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.85714285714286%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 128.57142857142858%'>running(10)</a> <a href='/blog/categories/tmux' style='font-size: 111.42857142857143%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.85714285714286%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.85714285714286%'>wordpress(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.6086956521739%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 107.82608695652173%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 107.82608695652173%'>auto-install(3)</a> <a href='/blog/categories/cakephp' style='font-size: 102.6086956521739%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 113.04347826086956%'>CoffeeScript(5)</a> <a href='/blog/categories/compass' style='font-size: 102.6086956521739%'>compass(1)</a> <a href='/blog/categories/css' style='font-size: 105.21739130434783%'>css(2)</a> <a href='/blog/categories/el-get' style='font-size: 113.04347826086956%'>el-get(5)</a> <a href='/blog/categories/elpa' style='font-size: 102.6086956521739%'>elpa(1)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(23)</a> <a href='/blog/categories/etc' style='font-size: 102.6086956521739%'>etc(1)</a> <a href='/blog/categories/flymake' style='font-size: 102.6086956521739%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 115.65217391304348%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.6086956521739%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.21739130434783%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.21739130434783%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.6086956521739%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.6086956521739%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 113.04347826086956%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.21739130434783%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.6086956521739%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.6086956521739%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 107.82608695652173%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.21739130434783%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.21739130434783%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.21739130434783%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.6086956521739%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.6086956521739%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.21739130434783%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 110.43478260869566%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.6086956521739%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.6086956521739%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 115.65217391304348%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.6086956521739%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.6086956521739%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.21739130434783%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.21739130434783%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.6086956521739%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.6086956521739%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.6086956521739%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 126.08695652173913%'>running(10)</a> <a href='/blog/categories/sass' style='font-size: 105.21739130434783%'>sass(2)</a> <a href='/blog/categories/tmux' style='font-size: 110.43478260869566%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.6086956521739%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.6086956521739%'>wordpress(1)</a> <a href='/blog/categories/yasnippet' style='font-size: 102.6086956521739%'>yasnippet(1)</a> </span>
 </section>
 
 <section class="well">

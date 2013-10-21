@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: yasnippet | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/yasnippet/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-10-21T23:50:42+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[elpaでyasnippet.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/10/16/install-yasnippet-to-elpa/"/>
+    <updated>2013-10-16T22:24:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/10/16/install-yasnippet-to-elpa</id>
+    <content type="html"><![CDATA[<p>今さらですけどysnippet.elをインストールすることにしました。<br/>
+でいつものようにel-getでインストールしようとしたんですが、<br/>
+昨日scss-modeをインストールしようとした時と同じで、<br/>
+githubに接続するところで止まってしまう(インストールが完了しない)。</p>
+
+<p>もうel-getやめようかなあ。elpaだけのほうが楽っぽいし。。<br/>
+とりあえず、今回はelpaでインストールすることにしました。</p>
+
+<h3>elpaでのインストール</h3>
+
+<p>M-x list-packages でパッケージリストを表示させ、ysnippetの行で[x] &amp; [i]でインストール。</p>
+
+<p>~/.emacs.d/conf/82-yasnippet.el
+``` scheme
+;; yasnippetを置いているフォルダにパス
+(add-to-list &lsquo;load-path</p>
+
+<pre><code>         (expand-file-name "~/.emacs.d/elisp/el-get/package/elpa/yasnippet-0.8.0"))
+</code></pre>
+
+<p>(require &lsquo;yasnippet)</p>
+
+<p>(setq yas-snippet-dirs</p>
+
+<pre><code>  '("~/.emacs.d/elisp/el-get/package/elpa/yasnippet-0.8.0/snippets"
+    ))
+</code></pre>
+
+<p>(yas-global-mode 1)
+```</p>
+
+<h3>スニペットの登録</h3>
+
+<p>試しに、html-modeでスペースのエスケープ文字を登録してみます。</p>
+
+<p>[sp]と入力してtabを押下すると[&amp;nbsp]と出力できるようにする</p>
+
+<p>htmlモードに変更
+<code>scheme
+M-x html-mode
+</code></p>
+
+<p>snippetのひな形作成
+<code>scheme
+M-x yas/new-snippet
+</code></p>
+
+<p>``` scheme</p>
+
+<h1>&ndash;<em>&ndash; mode: snippet &ndash;</em>&ndash;</h1>
+
+<h1>name: &nbsp;</h1>
+
+<h1>key: sp</h1>
+
+<h1>&mdash;</h1>
+
+<p>&nbsp;
+```</p>
+
+<p>html-modeで使いたいので、保存先は以下にします。
+<code>
+/.emacs.d/elisp/el-get/package/elpa/yasnippet-0.8.0/snippets/html-mode/sp
+</code></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://rakkyoo.net/?p=1157">Emacsで「ysnippet.el」を使ってみる</a></li>
+<li><a href="http://d.hatena.ne.jp/mizchi/20100806/1281093295">Emacs/yasnipettで、やさしいコードスニペットの作り方</a></li>
+<li><a href="http://fukuyama.co/yasnippet">yasnippet 8.0の導入からスニペットの書き方、anything/helm/auto-completeとの連携</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

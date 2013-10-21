@@ -9,10 +9,12 @@
   <meta name="author" content="tatsuyano">
 
   
-  <meta name="description" content="はじめに 週末に今年最後のレース、「第１回富士山マラソン」に参加してきました！
-まず結果ですが、速報でグロス「04:59:57」でしたw
-本当にギリギリですが、いちよできれば５時間を切りたいと思っていたので嬉しかったです。
-では簡単にですがレビューしたいと思います。 夜行バス &hellip;">
+  <meta name="description" content="RubyGemsからtmuxinatorのインストール 念のため、RubyGemsをupdateしてからインストール 1
+2
+gem update
+gem install tmuxinator tmuxinatorがインストールされているか確認 1
+2
+gem which tmuxinator &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +70,503 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/28/tmuxinator/">Tmuxinatorのインストール</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-28T11:43:00+09:00" pubdate data-updated="true">Jan 28<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>RubyGemsからtmuxinatorのインストール</h2>
+
+<p>念のため、RubyGemsをupdateしてからインストール</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem update
+</span><span class='line'>gem install tmuxinator</span></code></pre></td></tr></table></div></figure>
+
+
+<p>tmuxinatorがインストールされているか確認</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem which tmuxinator
+</span><span class='line'>usr/local/Cellar/ruby/1.9.3-p0/lib/ruby/gems/1.9.1/gems/tmuxinator-0.5.0/lib/tmuxinator.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>メッセージに従い、初期設定</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>echo "[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator" &gt;&gt; ~/.zshrc
+</span><span class='line'>source ~/.zshrc</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>$SHELL、$EDITORの確認</h2>
+
+<p>設定が必須なので確認</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>echo $EDITOR $SHELL
+</span><span class='line'>emacs /bin/bash</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>.tmuxinatorを移動させる</h2>
+
+<p>他のdotfile同様、Dropboxのディレクトリ配下に移動させ、リンクをはる。<br/>
+ただし「.tmuxinator」をリネームして「tmuxinator」としてはいけない。<br/>
+隠しファイルでないと、再度「.tmuxinator」というディレクトリが作成されてしまう。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mv .tmuxinator Dropbox/dotfile/
+</span><span class='line'>ln -s Dropbox/dotfile/.tmuxinator .tmuxinator</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>RubyGemsの環境変数をbash_profileに設定</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cat .bash_profile
+</span><span class='line'>export GEM_BIN=$(ruby -e 'require "rubygems"; puts Gem::bindir')
+</span><span class='line'>export PATH=$GEM_BIN:$PATH
+</span><span class='line'>
+</span><span class='line'>source .bash_profile</span></code></pre></td></tr></table></div></figure>
+
+
+<p>環境変数の確認</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>printenv | grep ruby
+</span><span class='line'>GEM_BIN=/usr/local/Cellar/ruby/1.9.3-p0/bin
+</span><span class='line'>PATH=/usr/local/Cellar/ruby/1.9.3-p0/bin:....</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>tmuxinatorのプロジェクトを作成</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mux new php
+</span><span class='line'># ~/.tmuxinator/php.yml
+</span><span class='line'># you can make as many tabs as you wish...
+</span><span class='line'>
+</span><span class='line'>project_name: php
+</span><span class='line'>project_root: ~/
+</span><span class='line'>tabs:
+</span><span class='line'>  - doc:
+</span><span class='line'>        layout: main-vertical
+</span><span class='line'>        panes:
+</span><span class='line'>          - emacs Dropbox/doc/memo.md
+</span><span class='line'>          - #empty, will just run plain bash
+</span><span class='line'>          - sql: ./mysql -uroot -proot
+</span><span class='line'>          - hoge: ssh hoge</span></code></pre></td></tr></table></div></figure>
+
+
+<p>作成したプロジェクトの実行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mux php</span></code></pre></td></tr></table></div></figure>
+
+
+<p>プロジェクトを変更、反映するには、一度tmuxのセッションを閉じる</p>
+
+<h2>参考にしたサイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/akishin999/20121204/1354621657">tmux + tmuxinator が便利</a></li>
+<li><a href="http://rh7.hateblo.jp/entry/20110220/1298209273">カッとなってUbuntu/DebianでRubygems実行コマンドのパスを通した</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/27/item2-tmux/">Iterm2 + Tmux に乗り換えた</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-27T11:21:00+09:00" pubdate data-updated="true">Jan 27<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今まで頑なにTotalTerminal + KeyRemap4MacBookを使って来た私ですが、ついに乗り換えることにしました。<br/>
+理由はKeyRemap4MacBookをバージョンアップしたら、一部のkey bindが使えなくなってしまったから。まあいい機会なので乗り換えたいと思います。</p>
+
+<h2>iterm2のバージョン</h2>
+
+<p><a href="http://code.google.com/p/iterm2/downloads/list">iterm2の公式ページ</a>からダウンロード</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/01_iterm2.png" alt="" /></p>
+
+<p>ダウンロードしたファイル解凍してみるとなぜか「tmux-for-iTerm2-20130122.tar.gz」というファイルも入っている。</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/02_iterm2.png" alt="" /></p>
+
+<p><a href="http://code.google.com/p/iterm2/wiki/TmuxIntegration">iterm2の公式wiki</a>で調べてみると、tmuxを使う場合、この「iTerm2用のtmux」じゃないと細かい挙動が期待どおりに動かないっぽい（適当）。<br/>
+なので、このタイミングでScreenからtmuxにも乗り換えてみることにした。</p>
+
+<h2>brewでlibevnetのインストール</h2>
+
+<p>まず、こちらのサイト「<a href="http://d.hatena.ne.jp/kmn23/20120215/1329323332">Lionにiterm2とtmux と libeventをインストールする</a>」を参考にlibenventをインストール。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew update
+</span><span class='line'>brew install libevent</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>tmuxのインストール</h2>
+
+<p>さきほどダウンロードしたファイルを解凍し、make &amp; install</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>tar xvzf tmux-for-iTerm2-20130122.tar.gz
+</span><span class='line'>cd tmux
+</span><span class='line'>./configure
+</span><span class='line'>make
+</span><span class='line'>make clean
+</span><span class='line'>sudo make install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>念のためtmuxのインストール先を確認</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>which tmux
+</span><span class='line'>/usr/local/bin/tmux</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>iterm2の初期設定</h2>
+
+<p>今まで、KeyRemap4MacBookでcmdとoptionを入れ替えていて、操作上はcmdにmetaキーが割り振ってある感じにして使っていたんですが、このタイミングでoptionにmetaキーを割り当てることにしました。<br/>
+ただ、それ以外の操作はできるかぎりTotalTerminalと同じようにしたいので、その設定をしていきます。</p>
+
+<h3>バックグラウンドを白にし、透過させる</h3>
+
+<p>Preferences > Profiles > Colors > Background</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/03_iterm2.png" alt="" /></p>
+
+<p>Preferences > Profiles > Window > Transparency</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/04_iterm2.png" alt="" /></p>
+
+<h3>画面の上部からターミナルをショートカットで表示できるようにする</h3>
+
+<p>Preferences > Profiles > Window > Setting for New Window > Style > Top of Screen<br/>
+Preferences > Profiles > Window > Setting for New Window > Space > All Spaces<br/>
+Preferences > Profiles > Window > Setting for New Window > Rows  > 70</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/04_iterm2.png" alt="" /></p>
+
+<p>Preferences > Keys > Hot key > Show/hide iTerm2 with a system-wide hotkey</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/05_iterm2.png" alt="" /></p>
+
+<h3>metaキーをoptionに割り当てる</h3>
+
+<p>Preferences > Profiles > Keys > Left option  > +Esc<br/>
+Preferences > Profiles > Keys > Right option > +Esc</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/06_iterm2.png" alt="" /></p>
+
+<h3>cmd + w ですぐにターミナルを終了しないようにする</h3>
+
+<p>Preferences > Profiles > Session > Always prompt before closing</p>
+
+<p><img src="http://blog.10rane.com/tech/wp-content/uploads/2013/02/07_iterm2.png" alt="" /></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/kmn23/20120215/1329323332">Lionにiterm2とtmux と libeventをインストールする</a></li>
+<li><a href="http://weboo-returns.com/blog/using-iterm2-as-visor/">iTerm2 を Visor のように使う方法</a></li>
+<li><a href="http://blog.bungu-do.jp/archives/3434">MacのiTerm2でEmacsを使用するときのMetaキー設定</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/12/21/nginx-basic-authentication-limit-ip/">nginxにBASIC認証とIP制限を入れる</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-21T11:04:00+09:00" pubdate data-updated="true">Dec 21<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Basic認証</h2>
+
+<p>自分のホーム以下に.htpasswdファイルを配置するとうまく認証できませんでした。<br/>
+なのであまりよくありませんが面倒なので、/etc/nginx配下で、かつパーミッションは777で。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd /etc/nginx
+</span><span class='line'>htpasswd -c /etc/nginx/.htpasswd hoge
+</span><span class='line'>chmod 777 .htpasswd</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">emacs</span> <span class="nv">conf</span><span class="o">.</span><span class="nv">d/vh_redmine</span><span class="o">.</span><span class="nv">conf</span>
+</span><span class='line'>   <span class="nv">location</span> <span class="nv">/</span> <span class="err">{</span>
+</span><span class='line'>     <span class="o">....</span>
+</span><span class='line'>     <span class="nv">auth_basic</span> <span class="s">&quot;Secret Area&quot;</span><span class="c1">;</span>
+</span><span class='line'>     <span class="nv">auth_basic_user_file</span> <span class="s">&quot;/etc/nginx/.htpasswd&quot;</span><span class="c1">;</span>
+</span><span class='line'>   <span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>IP制限</h2>
+
+<p>上から順に設定が反映されるらしく、allowより前にdenyの設定を入れてしまうとallowが反映されないので注意。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'>  <span class="nv">server</span> <span class="err">{</span>
+</span><span class='line'>    <span class="o">....</span>
+</span><span class='line'>    <span class="nv">allow</span> <span class="nv">xxx</span><span class="o">.</span><span class="nv">xxx</span><span class="o">.</span><span class="nv">xxx</span><span class="o">.</span><span class="nv">xxx</span><span class="c1">;</span>
+</span><span class='line'>    <span class="nv">deny</span>  <span class="nv">all</span><span class="c1">;</span>
+</span><span class='line'>  <span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>再起動</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">/etc/init</span><span class="o">.</span><span class="nv">d/nginx</span> <span class="nv">restart</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://se-suganuma.blogspot.jp/2012/05/nginxbasic.html">nginxでBasic認証を設定</a></li>
+<li><a href="http://ecpplus.net/weblog/nginx%E3%81%A7ip%E3%82%A2%E3%83%89%E3%83%AC%E3%82%B9%E3%81%AB%E3%82%88%E3%82%8B%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9%E5%88%B6%E9%99%90/">Nginx で IPアドレスによるアクセス制限</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/12/21/nginx-request-entity-too-large/">Nginxのファイルのアップロードサイズを変更する　413 Request Entity Too Large</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-21T10:59:00+09:00" pubdate data-updated="true">Dec 21<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>サイズの大きなファイルをアップロードしようとするとタイトルのエラーが出るので、その対処方法。</p>
+
+<h2>nginx.conf</h2>
+
+<p>まずはnginx.confファイルに「client_max_body_size 20M;」を追加。<br/>
+私はリバースプロキシを利用しているので、2箇所に記述。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">server</span> <span class="err">{</span>
+</span><span class='line'>   <span class="nv">listen</span>       <span class="mi">80</span><span class="c1">;</span>
+</span><span class='line'>      <span class="nv">server_name</span> <span class="nv">blog</span><span class="o">.</span><span class="mi">10</span><span class="nv">rane</span><span class="o">.</span><span class="nv">com</span><span class="c1">;</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="nv">client_max_body_size</span> <span class="mi">20</span><span class="nv">M</span><span class="c1">; # 413 Request Entity Too Large</span>
+</span><span class='line'>   <span class="o">.....</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">server</span> <span class="err">{</span>
+</span><span class='line'>   <span class="nv">listen</span>       <span class="mi">8080</span><span class="c1">;</span>
+</span><span class='line'>      <span class="nv">server_name</span> <span class="nv">blog</span><span class="o">.</span><span class="mi">10</span><span class="nv">rane</span><span class="o">.</span><span class="nv">com</span><span class="c1">;</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="nv">client_max_body_size</span> <span class="mi">20</span><span class="nv">M</span><span class="c1">; # 413 Request Entity Too Large</span>
+</span><span class='line'>   <span class="o">.....</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>php.ini</h2>
+
+<p>php.iniは3箇所の変更。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x"># emacs /etc/php.ini</span>
+</span><span class='line'><span class="x">upload_max_filesize = 20M</span>
+</span><span class='line'><span class="x">post_max_size = 20M</span>
+</span><span class='line'><span class="x">memory_limit = 128M</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>再起動</h2>
+
+<p>nginx、fast-cgi両方を再起動。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">/etc/init.d/nginx restart</span>
+</span><span class='line'><span class="x">/etc/init.d/php-fastcgi restart</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://weble.org/2012/05/28/nginx-error-413-request-entity-too-large-%E3%81%A8%E5%87%BA%E3%82%8B%E5%A0%B4%E5%90%88%E3%81%AF%E6%9C%80%E5%A4%A7%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%B5%E3%82%A4%E3%82%BA%E3%82%92">nginx error – 413 Request Entity Too Large と出る場合は最大ファイルサイズを変更する</a></li>
+<li><a href="http://se-suganuma.blogspot.jp/2012/04/fileuploadnginxphpini.html">FileをUploadするためのnginxとphp.iniの設定</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -638,416 +1137,6 @@ M(ac) A(pache) M(ysql) P(hp)。同じ用途でXAMPPというのもあります�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/10/23/chiba-aqualine-marathon/">ちばアクアラインマラソン</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-23T18:35:00+09:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/aqua_line_001.gif" width="80%" ></p>
-
-<p>日曜日、木更津で行われた「ちばアクアラインマラソン」に参加してきました。<br/>
-今回が初のフルマラソンということでいろいろと気づいたこと、マラソンの感想を簡単にですが書きたいと思います。</p>
-
-<p>当日は気温26℃とかなり暑いレースコンディションでした。走る前はそれほど感じなかったのですが、実際走りだすとこの暑さにかなり体力を奪われてしまいました。「暑さ対策として、帽子と日焼け止めを用意」</p>
-
-<p>コースは潮浜公園をスタートし、アクアラインの「海ほたる」で折り返し、その後市内を右回りに回るコースでした。<br/>
-今までマラソンを走るときに、コースの高低差というのは特に気にしたことはなかったのですが、今回は事前に把握しておくことの重要さを感じました。<br/>
-というのも後半の登坂に心が折れて、危うくリタイアしそうになりました。なので次回からは「コースの高低差も含めて事前にしっかり把握する」</p>
-
-<p>さてレースの雰囲気ですがまるでお祭りのような感じでした。当日は日曜だったのですが、地元の小中学生が応援に駆り出されていたりとアクアラインマラソン自体が第1回目ということもあり、町総出で盛り上げようとしてくれているのが伝わってきて大変力になりました。このあたりがハーフマラソンとかと違うなあとしみじみ思いました。</p>
-
-<p>「フルマラソンの時はヘッドフォンは必要なし」</p>
-
-<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/aqua_line_002.png" alt="" /></p>
-
-<p>また今回のレースの目玉はなんといっても、本来渡ることのできないアクアラインを走れるということ！まるで海を渡るみたいで大変気持ちよかったです。</p>
-
-<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/aqua_line_003.jpeg" alt="" /></p>
-
-<p>レース参加人数は約14000人でした。そのため上の画像のようにレース15km地点の海ほたるを超えるまでは、本当に芋洗状態で自分のペースでは走れませんでした。この時に設定タイムを守るために人をよけながら少しハイペースで走ってしまいました。<br/>
-また給水場の混雑がひどく、給水するたびに30秒〜1分ほど足が止められてしまう感じで少し焦ってしまいました。<br/>
-「給水、給食を自分で用意し、できる限り給水場はスキップしたほうがよさそう」</p>
-
-<p>さて今回のレース、設定タイムは4時間30分、1kmを約6分ペースで走るつもりでした。ですが実際走ってみるとこれがとんだ見当違いで、実際のタイムは5時間27分というタイムで惨敗でした。。<br/>
-想定以上の暑さや、アップダウンのコースも考慮に入れてもやはり認識があまかったなあとレース中かなり反省しました。<br/>
-次のフルマラソンでは設定タイムを5時間とし、1kmを約7分ペースで走ろうと思います。また道が混んでいて7分以上のタイムになってしまっても追い抜いたりはしないほうがいいと思いました。<br/>
-「目標タイムは5時間、1kmを約7分ペースで追い抜きはしない」</p>
-
-<p>23km付近まで1km6分ペースと自分の体力以上で走ってしまったため、走りだして23kmぐらいから足が重くなってきました。そのため休む意味も込めてトイレを利用したのですが、やはりこれが大幅なタイムロスになってしまいました。<br/>
-ただ実際にトイレに入ってみるとほとんどオシッコはでませんでした。この時すでにかなり内臓が痛かったので、もしかしたら体にあまり水分を吸収できない状態だったのかもしれません。<br/>
-水でお腹はタプタプいっているが喉だけが乾く、そんな状態でした。次回は事前にトイレの場所を把握し、トイレの利用回数は後半の1回だけですむよう調整したいと思います(今回は4回も行って時間をかなりロスしました)。<br/>
-「トイレの場所を把握。できるかぎり使わないですむよう調整する」</p>
-
-<p>今回初のフルマラソン、予想以上に苦戦してしまいましたが、リタイアせずになんとか完走できたことで次につながったかなあと自分では思っています。<br/>
-来月すぐに「富士山マラソン」が控えているので、今回の経験を生かし次回は歩かずに完走できるように頑張りたいと思います。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/10/01/garmin-forrunner-110/">GARMIN FORERUNNER 110</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-01T18:18:00+09:00" pubdate data-updated="true">Oct 1<span>st</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src='https://dl.dropboxusercontent.com/u/159938/blog_images/garmin001.png' width='40%' /></p>
-
-<p>買ってしまいました「Garmin Fore Runner 110」。<br/>
-Amazonでハートレートモニター付属の並行輸入品、18,900円で購入。</p>
-
-<p>いやあ素晴らしいですねｗ<br/>
-今までiphoneのGPSアプリを使っていたのですが、iphoneを持って走るのが億劫になり購入してしまいました。<br/>
-では簡単にですがレビューします。</p>
-
-<h2>Garmin Fore Runner 110　でできること</h2>
-
-<ul>
-<li>1km(指定した距離)ごとにお知らせ音がなること</li>
-<li>1km(指定した距離)ごとにペースが表示されること</li>
-<li>GPS機能で走った道のりやカロリーが確認できること</li>
-<li>心拍数が(ハートレートモニターを使って)計測できること</li>
-</ul>
-
-
-<h2>できないこと</h2>
-
-<ul>
-<li>信号などで立ち止まった時に、自動で計測が止まらないこと</li>
-<li>距離などをバイブレーションで知らせる機能がないこと</li>
-</ul>
-
-
-<h2>すばらしい点</h2>
-
-<ul>
-<li>操作方法がシンプル。ボタンは４つなのですが、機能毎に集約されていて使いやすい</li>
-<li>画面が大きい。またバックライトが見やすい</li>
-<li>見た目のわりに軽い(227g)</li>
-<li>Garmin Connect(データを管理するサイト)がすごく使いやすい</li>
-</ul>
-
-
-<h2>不満な点</h2>
-
-<ul>
-<li>時計とUSBを接続する方法がクリップ式になっていて、時計の画面に毎回クリップで挟んださいのゴムの後が残る</li>
-</ul>
-
-
-<h2>注意点</h2>
-
-<ul>
-<li>時計の画面が「Saving Activity」というメッセージが表示されてフリーズする</li>
-</ul>
-
-
-<p> &ndash;> ボタン４つを長押しして、初期化(ただし計測した走行データはきえなかった)する。</p>
-
-<ul>
-<li>ChromeでGarmin Connectに接続するとPluginがないと警告が出る</li>
-</ul>
-
-
-<p> &ndash;> Safariで開く</p>
-
-<ul>
-<li>Garminが認識されない</li>
-</ul>
-
-
-<p> &ndash;>「Garmin Communicator Plugin」と「Garmin ANT Agent」をインストールし、safariで開く</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/20/emacs-lisp/">Emacs-Lispの変数の扱いについて</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-20T18:08:00+09:00" pubdate data-updated="true">Sep 20<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>やさしいEmacs-Lisp講座(改訂版)の勉強メモ。</p>
-
-<h2>動的スコープ(P21)</h2>
-
-<p>変数(let*以外)は動的スコープとして扱われる。<br/>
-つまり一度変数を宣言すると、その変数はどこからでも参照できてしまう。</p>
-
-<h2>変数名の衝突(P19)</h2>
-
-<p>Emacs-Lispは処理系全体(読み込んでいるすべてのプログラム)で一つの名前空間しかない。<br/>
-なのでグローバル変数にはパッケージ固有のプレフィックスをつける。</p>
-
-<h2>defvar(P19)</h2>
-
-<p>defvarで変数を宣言すると、その変数の値は、defvarで再度値を代入しても更新されない(しかしsetqなどで値の代入された場合は更新されてしまう)。<br/>
-Emacs-Lispでは「定数宣言」のように使っていく。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">defvar</span> <span class="nv">dvar</span> <span class="mi">1</span> <span class="s">&quot;実験用&quot;</span><span class="p">)</span> <span class="c1">;; -&gt; 1</span>
-</span><span class='line'><span class="p">(</span><span class="nf">defvar</span> <span class="nv">dvar</span> <span class="mi">2</span><span class="p">)</span>         <span class="c1">;; -&gt; 1 値が上書きされない</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">dvar</span> <span class="mi">3</span><span class="p">)</span>           <span class="c1">;; -&gt; 3 defvar以外で宣言(代入)された場合は上書きされてしまう。</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>set,setq(P18)</h2>
-
-<p>変数の代入(宣言)を行う。setqのほうは同時に複数の変数を代入できる。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">set</span> <span class="ss">&#39;foo</span> <span class="mi">5</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">aa</span> <span class="mi">3</span> <span class="nv">bb</span> <span class="mi">2</span> <span class="nv">cc</span> <span class="mi">4</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>let(P20)</h2>
-
-<p>let式の中で初めて宣言された変数は、let式外(グローバル領域)では参照できない。<br/>
-関数内だけで参照したい(ローカル変数として使いたい)場合に用いる。<br/>
-グローバル変数をlet式内で一時的に変えたい場合に用いる。<br/>
-本体すべてを評価したあとで、最後に評価した値を返す。</p>
-
-<p>;書式&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-<br/>
-;(let (変数リスト)　|<br/>
-;  本体) 　　　　　|<br/>
-; &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">foo</span> <span class="mi">5</span><span class="p">)</span><span class="c1">;; -&gt; 5</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">foo</span> <span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="nf">fuga</span> <span class="nv">foo</span><span class="p">))</span>
-</span><span class='line'>  <span class="nv">fuga</span><span class="p">)</span><span class="c1">;; -&gt; 5 fugaがグローバル変数のfooで初期化されるため</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">foo</span> <span class="mi">3</span><span class="p">))</span>
-</span><span class='line'>  <span class="nv">foo</span><span class="p">)</span><span class="c1">;; -&gt; 3 let式のfooで初期化されるため</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">foo</span>  <span class="c1">;; -&gt; 5 let式で値が更新(代入)されても、値に影響されない</span>
-</span><span class='line'><span class="nv">fuga</span> <span class="c1">;; -&gt; error let式内で宣言された変数のため</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>let*(P21)</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="k">let* </span><span class="p">((</span><span class="nf">foo</span> <span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="nf">fuga</span> <span class="nv">foo</span><span class="p">))</span>
-</span><span class='line'>  <span class="nv">fuga</span><span class="p">)</span><span class="c1">;; -&gt; 3 fugaがlet式のfooで初期化されるため</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="k">let* </span><span class="p">((</span><span class="nf">foo</span> <span class="mi">3</span><span class="p">))</span>
-</span><span class='line'>  <span class="nv">foo</span><span class="p">)</span><span class="c1">;; -&gt; 3 let式のfooで初期化されるため</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/16/mac-ricky/">MacにRictyをインストールする</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-09-16T17:59:00+09:00" pubdate data-updated="true">Sep 16<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Rictyとは</h2>
-
-<p>去年あたりから話題だったRictyをなんとなくインストールしてみました。<br/>
-フォントの特徴は、本家サイトに詳しく書いてあるので見て頂くとして、個人的には「半角文字と全角文字の横幅の比が 1:2 に調整される」ところが素敵だなあと思います。</p>
-
-<h2>インストールの前に</h2>
-
-<p>Rictyをインストール(生成する)には、事前に<br/>
-1.「fontforge」がインストールされていること<br/>
-2.「Inconsolata」と「Migu 1M」をダウンロードしていること<br/>
-が前提となります。</p>
-
-<h2>fontforgeのインストール</h2>
-
-<p>homebrewでインストールします。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>brew install fontforge --use-gcc --without-python</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Ricty本体のダウンロード</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git://github.com/yascentur/Ricty.git</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Inconsolata、Migu 1Mのダウンロード</h2>
-
-<p>ダウンロード先は、先程cloneしてできたRictyディレクトリ内にしました。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd git/Ricty
-</span><span class='line'>wget http://levien.com/type/myfonts/Inconsolata.otf
-</span><span class='line'>wget 'http://sourceforge.jp/frs/redir.php?m=iij&f=%2Fmix-mplus-ipa%2F56156%2Fmigu-1m-20120411-2.zip'
-</span><span class='line'>unzip migu-1m-20120411-2.zip</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Rictyの生成</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sh ricty_generator.sh auto</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>生成したフォントをコピー</h2>
-
-<p>Macのフォントは/Library/Fonts以下で管理しているので、生成したRictyをcopy。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cp -a Ricty*.ttf /Library/Fonts</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>ターミナルのフォントの設定をRictyにする</h2>
-
-<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/ricty001.png" alt="" /></p>
-
-<p>他のサイトではemacs単体のみに設定していることが多かったんですが、<br/>
-せっかくなんでターミナル全体に設定します。ちなみに私はTotalTerminal派です。</p>
-
-<h2>実行画面</h2>
-
-<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/ricty002.png" alt="" /></p>
-
-<p>見ていただくと解るように<br/>
-「半角文字と全角文字の横幅の比が 1:2に調整されている」<br/>
-「全角スペースが可視化されている」ことがわかります。<br/>
-文字自体は少し丸っこくて初めはちょっとだけ違和感があったのですが、慣れるとすごく見やすく感じてきました。</p>
-
-<h2>参考サイト</h2>
-
-<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
-
-<ul>
-<li><a href="http://save.sys.t.u-tokyo.ac.jp/~yusa/fonts/ricty.html">プログラミング用フォント Ricty</a></li>
-<li><a href="http://show-web.jp/2012/01/31/mac-os-x-lion%E7%92%B0%E5%A2%83netbeans-ide%E3%81%AB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E7%94%A8%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88ricty%E5%B0%8E%E5%85%A5/">Mac OS X Lion環境NetBeans IDEにプログラミング用フォントRicty導入</a></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -1065,30 +1154,30 @@ Emacs-Lispでは「定数宣言」のように使っていく。</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/16/install-yasnippet-to-elpa/">elpaでyasnippet.elをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/16/emacs-install-scss-mode/">Auto-installでscss-modeをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/14/install-sass-and-compass/">Sassとcompassをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/27/connect-with-livedoor-provider-and-flets-hikari-pppoe/">livedoorプロバイダを使っていて、Bフレッツからフレッツ光ネクストに切り替えたらネットに繋がらなくなった</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/10/handlersocket-install/">HandlerSocketをインストールする</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/10/octopress-clippit/">Octopressのコードスニペットの設定</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/09/octopress-install/">Octopressをインストールする</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/01/pbcopy-pbpaste/">Tmuxでもpbcopy、pbpasteを使えるように設定する</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/16/emacs-git-gutter/">git-gutter.elをインストールする</a>
       </li>
     
   </ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.85714285714286%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 108.57142857142857%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 105.71428571428571%'>auto-install(2)</a> <a href='/blog/categories/cakephp' style='font-size: 102.85714285714286%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 114.28571428571429%'>CoffeeScript(5)</a> <a href='/blog/categories/el-get' style='font-size: 114.28571428571429%'>el-get(5)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(21)</a> <a href='/blog/categories/flymake' style='font-size: 102.85714285714286%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 117.14285714285714%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.85714285714286%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.71428571428571%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.71428571428571%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.85714285714286%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.85714285714286%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 114.28571428571429%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.71428571428571%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.85714285714286%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.85714285714286%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 108.57142857142857%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.71428571428571%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.71428571428571%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.71428571428571%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.85714285714286%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.85714285714286%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.71428571428571%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 111.42857142857143%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.85714285714286%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.85714285714286%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 117.14285714285714%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.85714285714286%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.85714285714286%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.71428571428571%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.71428571428571%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.85714285714286%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.85714285714286%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.85714285714286%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 128.57142857142858%'>running(10)</a> <a href='/blog/categories/tmux' style='font-size: 111.42857142857143%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.85714285714286%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.85714285714286%'>wordpress(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.6086956521739%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 107.82608695652173%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 107.82608695652173%'>auto-install(3)</a> <a href='/blog/categories/cakephp' style='font-size: 102.6086956521739%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 113.04347826086956%'>CoffeeScript(5)</a> <a href='/blog/categories/compass' style='font-size: 102.6086956521739%'>compass(1)</a> <a href='/blog/categories/css' style='font-size: 105.21739130434783%'>css(2)</a> <a href='/blog/categories/el-get' style='font-size: 113.04347826086956%'>el-get(5)</a> <a href='/blog/categories/elpa' style='font-size: 102.6086956521739%'>elpa(1)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(23)</a> <a href='/blog/categories/etc' style='font-size: 102.6086956521739%'>etc(1)</a> <a href='/blog/categories/flymake' style='font-size: 102.6086956521739%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 115.65217391304348%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.6086956521739%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.21739130434783%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.21739130434783%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.6086956521739%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.6086956521739%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 113.04347826086956%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.21739130434783%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.6086956521739%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.6086956521739%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 107.82608695652173%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.21739130434783%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.21739130434783%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.21739130434783%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.6086956521739%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.6086956521739%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.21739130434783%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 110.43478260869566%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.6086956521739%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.6086956521739%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 115.65217391304348%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.6086956521739%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.6086956521739%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.21739130434783%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.21739130434783%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.6086956521739%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.6086956521739%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.6086956521739%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 126.08695652173913%'>running(10)</a> <a href='/blog/categories/sass' style='font-size: 105.21739130434783%'>sass(2)</a> <a href='/blog/categories/tmux' style='font-size: 110.43478260869566%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.6086956521739%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.6086956521739%'>wordpress(1)</a> <a href='/blog/categories/yasnippet' style='font-size: 102.6086956521739%'>yasnippet(1)</a> </span>
 </section>
 
 <section class="well">

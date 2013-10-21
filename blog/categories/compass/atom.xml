@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: compass | 10rane.com]]></title>
+  <link href="http://tatsuyano.github.io/blog/categories/compass/atom.xml" rel="self"/>
+  <link href="http://tatsuyano.github.io/"/>
+  <updated>2013-10-21T23:50:42+09:00</updated>
+  <id>http://tatsuyano.github.io/</id>
+  <author>
+    <name><![CDATA[tatsuyano]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[sassとcompassをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/10/14/install-sass-and-compass/"/>
+    <updated>2013-10-14T18:31:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/10/14/install-sass-and-compass</id>
+    <content type="html"><![CDATA[<p>最近PGでもCSSがいじれて当たり前いう空気をヒシヒシと感じ、<br/>
+せっかくなんでsassを勉強することにしました。</p>
+
+<h3>用語の整理</h3>
+
+<ul>
+<li>less &hellip; CSS拡張メタ言語。コンパイルして使う less &ndash;> css</li>
+<li>scss &hellip; CSS拡張メタ言語。コンパイルして使う scss &ndash;> css</li>
+<li>sass &hellip; scssのバージョン違い。広義の意味ではこれもscss。ファイルの拡張子も.scss</li>
+<li>compass &hellip; cssのFW、というかツールに近い。</li>
+</ul>
+
+
+<h3>どれを使うか</h3>
+
+<p>文法がシンプルでかつoctopressやrailsで採用されているので、sassを使うことにしました。<br/>
+sassを記述するのにcompassを使うと便利、というか標準みたいなのでcompassも使います。</p>
+
+<h3>sassのインストール</h3>
+
+<p>```
+gem install sass</p>
+
+<p>gem list sass
+sass (3.2.12)</p>
+
+<p>gem which sass
+/home/hoge/.rbenv/versions/1.9.3-p125/lib/ruby/gems/1.9.1/gems/sass-3.2.12/lib/sass.rb
+```</p>
+
+<h3>compassのインストール</h3>
+
+<p>```
+gem install compass</p>
+
+<p>gem list compass
+compass (0.12.2)</p>
+
+<p>gem which compass
+/home/noguchi/.rbenv/versions/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/lib/compass.rb
+```</p>
+
+<h3>パスを通す</h3>
+
+<p>パスが通っていなかったので、パスの通っている<br/>
+$HOME/.rbenv/shims/以下に同じ名前のスクリプトを置きました。
+<code>
+cp -a $HOME/.rbenv/shims/rake $HOME/.rbenv/shims/sass
+cp -a $HOME/.rbenv/shims/rake $HOME/.rbenv/shims/compass
+</code></p>
+
+<h3>プロジェクトの作成</h3>
+
+<p>```
+compass create test &mdash;sass-dir &ldquo;sass&rdquo; &mdash;css-dir &ldquo;css&rdquo; &mdash;javascripts-dir &ldquo;js&rdquo; &mdash;images-dir &ldquo;img&rdquo;
+tree test
+test
+├── config.rb
+├── css
+│   ├── ie.css
+│   ├── print.css
+│   └── screen.css
+└── sass</p>
+
+<pre><code>├── ie.scss
+    ├── print.scss
+        └── screen.scss
+</code></pre>
+
+<p>```</p>
+
+<h3>既存のプロジェクトにCompassプロジェクトを追加する</h3>
+
+<p><code>
+compass init &lt;ディレクトリ名&gt;
+</code></p>
+
+<h3>Sassファイルのコンパイル</h3>
+
+<p><code>
+compass compile
+</code></p>
+
+<h3>ファイル変更時、自動でコンパイルする</h3>
+
+<p><code>
+compass watch
+</code></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://parashuto.com/rriver/development/compass-sass-basics-installation-and-tools">CompassとSassの基礎の覚書</a></li>
+<li><a href="http://howtohp.com/css/compass-environment_setting.html">Compassで本番用と開発用で設定を振り分けてみる</a></li>
+<li><a href="http://parashuto.com/rriver/development/utilizing-sass-compass-in-an-organization">Sass/Compassの社内運用に関するありがたいスライドから学んだことのまとめ</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

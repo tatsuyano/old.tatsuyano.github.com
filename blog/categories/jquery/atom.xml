@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Jquery | 10rane.com]]></title>
   <link href="http://tatsuyano.github.io/blog/categories/jquery/atom.xml" rel="self"/>
   <link href="http://tatsuyano.github.io/"/>
-  <updated>2013-09-05T22:41:23+09:00</updated>
+  <updated>2013-10-21T23:50:42+09:00</updated>
   <id>http://tatsuyano.github.io/</id>
   <author>
     <name><![CDATA[tatsuyano]]></name>
@@ -20,94 +20,63 @@
     <id>http://tatsuyano.github.io/blog/2013/03/12/coffee-script-study-jquery</id>
     <content type="html"><![CDATA[<h2>クラス</h2>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Javascript Array Syntax <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kr">class</span> <span class="nx">Animal</span>
-</span><span class='line'>  <span class="nx">constructor</span><span class="o">:</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="o">&amp;</span><span class="nx">ndash</span><span class="p">;</span><span class="o">&gt;</span> <span class="err">@</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">say</span><span class="o">:</span><span class="p">(</span><span class="nx">word</span><span class="p">)</span> <span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s2">&quot;#{@name} said: #{word}&quot;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="kr">class</span> <span class="nx">Dog</span> <span class="kr">extends</span> <span class="nx">Animal</span>
-</span><span class='line'>  <span class="nx">constructor</span><span class="o">:</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="o">&amp;</span><span class="nx">ndash</span><span class="p">;</span><span class="o">&gt;</span> <span class="kr">super</span> <span class="nx">name</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">say</span><span class="o">:</span><span class="p">(</span><span class="nx">word</span><span class="p">)</span> <span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span> <span class="kr">super</span> <span class="s2">&quot;Bowwow, #{word}&quot;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">dog</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Dog</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">Bob</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;)</span>
-</span><span class='line'><span class="nx">dog</span><span class="p">.</span><span class="nx">say</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">hello</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;)</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock Javascript Array Syntax lang:js <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation %}
+class Animal
+  constructor:(name) &ndash;> @name = name</p>
+
+<pre><code>say:(word) -&gt; console.log "#{@name} said: #{word}"
+</code></pre>
+
+<p>class Dog extends Animal
+  constructor:(name) &ndash;> super name</p>
+
+<pre><code>say:(word) -&gt; super "Bowwow, #{word}"
+</code></pre>
+
+<p>dog = new Dog(&ldquo;Bob&rdquo;)
+dog.say(&ldquo;hello&rdquo;)
+{% endcodeblock %}</p>
 
 <h3>静的なプロパティ</h3>
 
 <p>クラスの静的なプロパティを定義するには変数名の頭に@を付けます。
-<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Javascript Array Syntax <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kr">class</span> <span class="nx">Dog</span>
-</span><span class='line'>  <span class="err">@</span><span class="nx">TYPE_CHIHUAHUA</span> <span class="o">=</span> <span class="mi">1</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+{% codeblock Javascript Array Syntax lang:js <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation %}
+class Dog
+  @TYPE_CHIHUAHUA = 1
+{% endcodeblock %}</p>
 
 <p>コンパイル結果↓</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Javascript Array Syntax <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">var</span> <span class="nx">Dog</span><span class="p">;</span>
-</span><span class='line'><span class="nx">Dog</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">function</span> <span class="nx">Dog</span><span class="p">()</span> <span class="p">{}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">pre</span><span class="o">&gt;&lt;</span><span class="nx">code</span><span class="o">&gt;</span><span class="nx">Dog</span><span class="p">.</span><span class="nx">TYPE_CHIHUAHUA</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'><span class="k">return</span> <span class="nx">Dog</span><span class="p">;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="err">/code&gt;&lt;/pre&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="p">})();</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock Javascript Array Syntax lang:js <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation %}
+var Dog;
+Dog = (function() {
+  function Dog() {}</p>
+
+<pre><code>Dog.TYPE_CHIHUAHUA = 1;
+return Dog;
+</code></pre>
+
+<p>})();
+{% endcodeblock %}</p>
 
 <p>クラスの静的なプロパティの使い方というか、そもそもJsのオブジェクト指向、クロージャの実装がしっかりと理解していない。ここは後日勉強する。</p>
 
 <h2>無名関数</h2>
 
 <p>setTimeoutなど引数に無名関数を渡したい場合は、次の行頭にカンマを付けます。
-<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Javascript Array Syntax <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">setTimeout</span> <span class="o">&amp;</span><span class="nx">ndash</span><span class="p">;</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ok</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;)</span>
-</span><span class='line'>  <span class="p">,</span><span class="mi">1000</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+{% codeblock Javascript Array Syntax lang:js <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation %}
+setTimeout &ndash;>
+  console.log(&ldquo;ok&rdquo;)
+  ,1000
+{% endcodeblock %}</p>
 
 <p>コンパイル結果↓</p>
 
-<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>Javascript Array Syntax <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation </span></figcaption>
- <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="nx">ok</span><span class="o">&amp;</span><span class="nx">rdquo</span><span class="p">;);</span>
-</span><span class='line'><span class="p">},</span><span class="mi">1000</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+<p>{% codeblock Javascript Array Syntax lang:js <a href="http://j.mp/pPUUmW">http://j.mp/pPUUmW</a> MDN Documentation %}
+setTimeout(function() {
+  return console.log(&ldquo;ok&rdquo;);
+},1000);
+{% endcodeblock %}</p>
 
 <h2>コンパイルせずに、直接CoffeeScriptを記述する方法</h2>
 

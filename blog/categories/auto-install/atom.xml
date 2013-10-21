@@ -4,7 +4,7 @@
   <title><![CDATA[Category: auto-install | 10rane.com]]></title>
   <link href="http://tatsuyano.github.io/blog/categories/auto-install/atom.xml" rel="self"/>
   <link href="http://tatsuyano.github.io/"/>
-  <updated>2013-09-05T22:41:23+09:00</updated>
+  <updated>2013-10-21T23:50:42+09:00</updated>
   <id>http://tatsuyano.github.io/</id>
   <author>
     <name><![CDATA[tatsuyano]]></name>
@@ -12,6 +12,42 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[auto-installでscss-modeをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/10/16/emacs-install-scss-mode/"/>
+    <updated>2013-10-16T00:01:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/10/16/emacs-install-scss-mode</id>
+    <content type="html"><![CDATA[<p>el-getでうまくインストールできなかったので、今回はauto-installを使いました。</p>
+
+<p><code>
+M-x auto-install-from-url RET https://raw.github.com/antonj/scss-mode/master/scss-mode.el
+</code></p>
+
+<p>touch ~/.emacs.d/conf/55-scss.el
+``` scheme
+;; scss-mode
+;; <a href="https://github.com/antonj/scss-mode">https://github.com/antonj/scss-mode</a>
+(autoload &lsquo;scss-mode &ldquo;scss-mode&rdquo;)
+(add-to-list 'auto-mode-alist &rsquo;(&ldquo;\.\(scss\|css\|sass\)\&lsquo;&rdquo; . scss-mode))
+(setq scss-compile-at-save nil)</p>
+
+<p>;; auto-comple
+(add-to-list &lsquo;ac-modes 'scss-mode)
+(add-hook 'scss-mode-hook 'ac-css-mode-setup)
+```</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://blog.sanojimaru.com/post/20621077969/emacs-scss-scss-mode">emacsでscssを扱うscss-modeを入れる</a></li>
+<li><a href="http://blog.be-open.net/emacs/emacs-scss-mode/">Emacsにscss-modeをいれた。</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[el-get.elでauto-install.elをインストールする]]></title>

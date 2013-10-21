@@ -4,7 +4,7 @@
   <title><![CDATA[Category: emacs | 10rane.com]]></title>
   <link href="http://tatsuyano.github.io/blog/categories/emacs/atom.xml" rel="self"/>
   <link href="http://tatsuyano.github.io/"/>
-  <updated>2013-09-05T22:41:23+09:00</updated>
+  <updated>2013-10-21T23:50:42+09:00</updated>
   <id>http://tatsuyano.github.io/</id>
   <author>
     <name><![CDATA[tatsuyano]]></name>
@@ -12,6 +12,125 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[elpaでyasnippet.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/10/16/install-yasnippet-to-elpa/"/>
+    <updated>2013-10-16T22:24:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/10/16/install-yasnippet-to-elpa</id>
+    <content type="html"><![CDATA[<p>今さらですけどysnippet.elをインストールすることにしました。<br/>
+でいつものようにel-getでインストールしようとしたんですが、<br/>
+昨日scss-modeをインストールしようとした時と同じで、<br/>
+githubに接続するところで止まってしまう(インストールが完了しない)。</p>
+
+<p>もうel-getやめようかなあ。elpaだけのほうが楽っぽいし。。<br/>
+とりあえず、今回はelpaでインストールすることにしました。</p>
+
+<h3>elpaでのインストール</h3>
+
+<p>M-x list-packages でパッケージリストを表示させ、ysnippetの行で[x] &amp; [i]でインストール。</p>
+
+<p>~/.emacs.d/conf/82-yasnippet.el
+``` scheme
+;; yasnippetを置いているフォルダにパス
+(add-to-list &lsquo;load-path</p>
+
+<pre><code>         (expand-file-name "~/.emacs.d/elisp/el-get/package/elpa/yasnippet-0.8.0"))
+</code></pre>
+
+<p>(require &lsquo;yasnippet)</p>
+
+<p>(setq yas-snippet-dirs</p>
+
+<pre><code>  '("~/.emacs.d/elisp/el-get/package/elpa/yasnippet-0.8.0/snippets"
+    ))
+</code></pre>
+
+<p>(yas-global-mode 1)
+```</p>
+
+<h3>スニペットの登録</h3>
+
+<p>試しに、html-modeでスペースのエスケープ文字を登録してみます。</p>
+
+<p>[sp]と入力してtabを押下すると[&amp;nbsp]と出力できるようにする</p>
+
+<p>htmlモードに変更
+<code>scheme
+M-x html-mode
+</code></p>
+
+<p>snippetのひな形作成
+<code>scheme
+M-x yas/new-snippet
+</code></p>
+
+<p>``` scheme</p>
+
+<h1>&ndash;<em>&ndash; mode: snippet &ndash;</em>&ndash;</h1>
+
+<h1>name: &nbsp;</h1>
+
+<h1>key: sp</h1>
+
+<h1>&mdash;</h1>
+
+<p>&nbsp;
+```</p>
+
+<p>html-modeで使いたいので、保存先は以下にします。
+<code>
+/.emacs.d/elisp/el-get/package/elpa/yasnippet-0.8.0/snippets/html-mode/sp
+</code></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://rakkyoo.net/?p=1157">Emacsで「ysnippet.el」を使ってみる</a></li>
+<li><a href="http://d.hatena.ne.jp/mizchi/20100806/1281093295">Emacs/yasnipettで、やさしいコードスニペットの作り方</a></li>
+<li><a href="http://fukuyama.co/yasnippet">yasnippet 8.0の導入からスニペットの書き方、anything/helm/auto-completeとの連携</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[auto-installでscss-modeをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/10/16/emacs-install-scss-mode/"/>
+    <updated>2013-10-16T00:01:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/10/16/emacs-install-scss-mode</id>
+    <content type="html"><![CDATA[<p>el-getでうまくインストールできなかったので、今回はauto-installを使いました。</p>
+
+<p><code>
+M-x auto-install-from-url RET https://raw.github.com/antonj/scss-mode/master/scss-mode.el
+</code></p>
+
+<p>touch ~/.emacs.d/conf/55-scss.el
+``` scheme
+;; scss-mode
+;; <a href="https://github.com/antonj/scss-mode">https://github.com/antonj/scss-mode</a>
+(autoload &lsquo;scss-mode &ldquo;scss-mode&rdquo;)
+(add-to-list 'auto-mode-alist &rsquo;(&ldquo;\.\(scss\|css\|sass\)\&lsquo;&rdquo; . scss-mode))
+(setq scss-compile-at-save nil)</p>
+
+<p>;; auto-comple
+(add-to-list &lsquo;ac-modes 'scss-mode)
+(add-hook 'scss-mode-hook 'ac-css-mode-setup)
+```</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://blog.sanojimaru.com/post/20621077969/emacs-scss-scss-mode">emacsでscssを扱うscss-modeを入れる</a></li>
+<li><a href="http://blog.be-open.net/emacs/emacs-scss-mode/">Emacsにscss-modeをいれた。</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[git-gutter.elをインストールする]]></title>
@@ -420,196 +539,6 @@ wget https://raw.github.com/sandai/dotfiles/master/.emacs.d/ac-dict/js2-mode
 </code></pre>
 
 <p>))
-```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[el-get.elでauto-complete.elをインストールする]]></title>
-    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-complete/"/>
-    <updated>2013-03-19T18:43:00+09:00</updated>
-    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-auto-complete</id>
-    <content type="html"><![CDATA[<h2>el-getにインストールされているパッケージリストが古かったので、レシピを更新</h2>
-
-<p>パッケージリストには、auto-complete.elがあるのですが、レシピが古くインストールしてもディレクトリの中は空なので、レシピを新たに設定します。</p>
-
-<p>また、auto-complete.el は popup.el と fuzzy.el というelispが必須なのですが、今回 popup.el のレシピを用意し、auto-complete とは別にインストールする必要があります。<br/>
-※ とりあえず fuzzy.el は別途インストールしなくても動いているので、fuzzy.el は保留。</p>
-
-<h2>レシピの追加</h2>
-
-<p>10-el-get.el
-``` scheme
-(setq el-get-dir &ldquo;~/.emacs.d/elisp/el-get/&rdquo;)</p>
-
-<p>(unless (require &lsquo;el-get nil 'noerror)
-  (with-current-buffer</p>
-
-<pre><code>(url-retrieve-synchronously
-  "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-(goto-char (point-max))
-(eval-print-last-sexp)))
-</code></pre>
-
-<p>(setq el-get-sources
-  &lsquo;(</p>
-
-<pre><code>(:name init-loader
-  :type http
-  :url "https://raw.github.com/gist/1021706/init-loader.el"
-  :description "[My Recipes] Split management init.el. ")
-(:name popup ;; &lt;- 追加
-  :type github
-  :website "https://github.com/auto-complete/popup-el"
-  :description "[My Recipes] This section describes the basic data structures and operations of popups."
-  :pkgname "auto-complete/popup-el")
-(:name auto-complete ;; &lt;- 追加
-  :type github
-  :website "https://github.com/auto-complete/auto-complete"
-  :description "[My Recipes] Auto Complete Mode renews an old completion interface and provides an environment that makes users could be more concentrate on their own works."
-  :pkgname "auto-complete/auto-complete")
-))
-</code></pre>
-
-<p>(el-get &lsquo;sync)
-```</p>
-
-<h2>インストール</h2>
-
-<p>これで、auto-complete.el と popup.el のレシピが更新されたので、M-x el-get-list-packages　でインストールします。</p>
-
-<h2>設定</h2>
-
-<p>12-auto-complete.el
-<code>scheme
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/elisp/el-get/auto-complete/dict")
-(ac-config-default)
-(setq ac-use-menu-map t)
-</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[el-get.elでinit-loader.elをインストールする]]></title>
-    <link href="http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-init-loader/"/>
-    <updated>2013-03-19T18:11:00+09:00</updated>
-    <id>http://tatsuyano.github.io/blog/2013/03/19/emacs-el-get-init-loader</id>
-    <content type="html"><![CDATA[<h2>インストールしたいパッケージが、el-get のパッケージリストにない場合</h2>
-
-<p>自分でレシピを作成(設定)し、パッケージリストに追加します。リストに追加する方法は２つあります。</p>
-
-<ul>
-<li>レシピ(rcpファイル)を作成し .emacs.d/elisp/el-get/el-get/recipes/ 以下にファイルを置く方法</li>
-<li>init.el などに直接設定を記述する方法</li>
-</ul>
-
-
-<p>どちらも設定する内容は一緒なので、今回は直接設定することにします。設定する内容は主に以下のようになります。</p>
-
-<p>```
-(:name {パッケージ名}</p>
-
-<pre><code>   :type {パッケージ配布方法: elpa, emacswiki, git, svn, http, ...}
-   :url {パッケージURL}
-   :after {後処理} ...)
-</code></pre>
-
-<p>```</p>
-
-<p><a href="http://d.hatena.ne.jp/koshigoeb/20110503/1304425417">el-getありきのinit.elに書き換えてみた</a></p>
-
-<h2>最新のinit-loader.el</h2>
-
-<p>init-loader.elの最新ファイルは 現在<a href="https://gist.github.com/zqwell/1021706">gist</a> にあるので、<br/>
-まずは <a href="http://blog.10rane.com/tech/2013/03/19/gist-raw-url/">rawファイル</a>のURLを確認します。</p>
-
-<p><a href="https://raw.github.com/gist/1021706/init-loader.el">https://raw.github.com/gist/1021706/init-loader.el</a></p>
-
-<h2>レシピの追加</h2>
-
-<p>init.el
-``` scheme
-(setq el-get-dir &ldquo;~/.emacs.d/elisp/el-get/&rdquo;)</p>
-
-<p>(unless (require &lsquo;el-get nil 'noerror)
-  (with-current-buffer</p>
-
-<pre><code>(url-retrieve-synchronously
-  "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-(goto-char (point-max))
-(eval-print-last-sexp)))
-</code></pre>
-
-<p>(setq el-get-sources</p>
-
-<pre><code>  '(
-  (:name init-loader
-  :type http
-  :url "https://raw.github.com/gist/1021706/init-loader.el"
-  :description "[My Recipes] Split management init.el.")
-  ))
-</code></pre>
-
-<p>(el-get &lsquo;sync)
-```</p>
-
-<h2>インストール</h2>
-
-<p>レシピが正しい場合、 M-x el-get-list-packages で init-loader が追加されているので、インストールできます。</p>
-
-<h2>init.elの分割</h2>
-
-<p>今まで、init.elにすべて記述していた内容をパッケージごとに分割します。</p>
-
-<p>conf<br/>
-├── 00-basic.el<br/>
-├── 01-truncate-lines.el<br/>
-├── 10-el-get.el<br/>
-├── 11-auto-install.el<br/>
-└── 12-auto-complete.el</p>
-
-<p>init.el
-``` scheme
-(setq load-path
-  (append
-  (list
-  (expand-file-name &ldquo;~/.emacs.d/&rdquo;)
-  (expand-file-name &ldquo;~/.emacs.d/elisp/&rdquo;)
-  (expand-file-name &ldquo;~/.emacs.d/elisp/el-get/init-loader/&rdquo;)
-  (expand-file-name &ldquo;~/.emacs.d/elisp/el-get/el-get/&rdquo;)
-  (expand-file-name &ldquo;~/.emacs.d/elisp/auto-install/&rdquo;)
-  )
-  load-path))</p>
-
-<p>(require &lsquo;init-loader)
-(init-loader-load &ldquo;~/.emacs.d/conf&rdquo;)
-```</p>
-
-<p>10-el-get.el
-``` scheme
-(setq el-get-dir &ldquo;~/.emacs.d/elisp/el-get/&rdquo;)</p>
-
-<p>(unless (require &lsquo;el-get nil 'noerror)
-  (with-current-buffer</p>
-
-<pre><code>(url-retrieve-synchronously
-"https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-(goto-char (point-max))
-(eval-print-last-sexp)))
-</code></pre>
-
-<p>(setq el-get-sources</p>
-
-<pre><code>  '(
-  (:name init-loader
-  :type http
-  :url "https://raw.github.com/gist/1021706/init-loader.el"
-  :description "[My Recipes] Split management init.el.")
-  ))
-</code></pre>
-
-<p>(el-get &lsquo;sync)
 ```</p>
 ]]></content>
   </entry>

@@ -9,7 +9,22 @@
   <meta name="author" content="tatsuyano">
 
   
-  <meta name="description" content="まずは coffee-mode.el を el-get で通常通りにインストールします。 auto-complete で補完に使うdict(辞書)について 補完をするときに参照している辞書は、.emacs.d/elisp/el-get/auto-complete/dict/ 配下にあります。 &hellip;">
+  <meta name="description" content="前回のディレクトリ中のファイルサイズの合計値を再帰的に集計したい その１でmac用、linux用のワンライナーを関数として登録したのですが、
+mac用のワンライナーが厳密には、期待した結果とは違うので、作り直してみました。 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +80,827 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/07/find-cmd-on-mac-2/">ディレクトリ中のファイルサイズの合計値を再帰的に集計したい その２</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-07T19:54:00+09:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前回の<a href="/blog/2013/04/06/find-cmd-on-mac-1/">ディレクトリ中のファイルサイズの合計値を再帰的に集計したい その１</a>でmac用、linux用のワンライナーを関数として登録したのですが、
+mac用のワンライナーが厳密には、期待した結果とは違うので、作り直してみました。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="c1">#!/usr/bin/env perl</span>
+</span><span class='line'><span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="n">constant</span> <span class="n">DELETED_STDOUT</span>    <span class="o">=&gt;</span> <span class="s">&quot;\x1b[1A&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="n">constant</span> <span class="n">INITIALIZE_STDOUT</span> <span class="o">=&gt;</span> <span class="s">&quot; &quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">my</span> <span class="nv">$dir</span> <span class="o">=</span> <span class="nv">$ARGV</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">||</span> <span class="s">&quot;.&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="k">my</span> <span class="nv">$info</span> <span class="o">=</span> <span class="n">file_info</span><span class="p">(</span><span class="nv">$dir</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">printf</span> <span class="n">INITIALIZE_STDOUT</span><span class="p">;</span>
+</span><span class='line'><span class="n">print_info</span><span class="p">(</span><span class="nv">$info</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">sub </span><span class="nf">file_info</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">my</span> <span class="nv">$dir</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">my</span> <span class="nv">@list</span> <span class="o">=</span> <span class="p">();</span>
+</span><span class='line'>  <span class="k">my</span> <span class="nv">$info</span> <span class="o">=</span> <span class="p">{</span> <span class="n">file_size</span>   <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>               <span class="n">directories</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>               <span class="n">files</span>       <span class="o">=&gt;</span> <span class="mi">0</span> <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">opendir</span><span class="p">(</span><span class="n">DIR</span><span class="p">,</span> <span class="nv">$dir</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">die</span><span class="p">(</span><span class="s">&quot;Can not open directory:$dir ($!)&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="nv">@list</span> <span class="o">=</span> <span class="nb">readdir</span><span class="p">(</span><span class="n">DIR</span><span class="p">);</span>
+</span><span class='line'>  <span class="nb">closedir</span><span class="p">(</span><span class="n">DIR</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">foreach</span> <span class="k">my</span> <span class="nv">$file</span> <span class="p">(</span><span class="nb">sort</span> <span class="nv">@list</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">next</span> <span class="k">if</span> <span class="nv">$file</span> <span class="o">=~</span><span class="sr"> /^\.{1,2}$/</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span><span class="p">(</span> <span class="o">-</span><span class="n">d</span> <span class="s">&quot;$dir/$file&quot;</span> <span class="p">){</span>
+</span><span class='line'>      <span class="k">my</span> <span class="nv">$hash</span> <span class="o">=</span> <span class="n">file_info</span><span class="p">(</span><span class="s">&quot;$dir/$file&quot;</span><span class="p">);</span>
+</span><span class='line'>      <span class="nv">$info</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">file_size</span><span class="p">}</span>   <span class="o">+=</span> <span class="nv">$hash</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">file_size</span><span class="p">};</span>
+</span><span class='line'>      <span class="nv">$info</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">directories</span><span class="p">}</span> <span class="o">+=</span> <span class="nv">$hash</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">directories</span><span class="p">};</span>
+</span><span class='line'>      <span class="nv">$info</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">files</span><span class="p">}</span>       <span class="o">+=</span> <span class="nv">$hash</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">files</span><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nv">$info</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">directories</span><span class="p">}</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+</span><span class='line'>      <span class="nv">$info</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">file_size</span><span class="p">}</span> <span class="o">+=</span> <span class="o">-</span><span class="n">s</span> <span class="s">&quot;$dir/$file&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="nv">$info</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">files</span><span class="p">}</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">print_info</span><span class="p">(</span><span class="nv">$info</span><span class="p">);</span>
+</span><span class='line'>  <span class="nb">printf</span> <span class="n">DELETED_STDOUT</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nv">$info</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">sub </span><span class="nf">print_info</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">my</span> <span class="nv">$info</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">printf</span> <span class="s">&quot;%d directories, %d files, %s\n&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nv">$info</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">directories</span><span class="p">},</span>
+</span><span class='line'>    <span class="nv">$info</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">files</span><span class="p">},</span>
+</span><span class='line'>    <span class="n">format_kmgt</span><span class="p">(</span><span class="nv">$info</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">file_size</span><span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">sub </span><span class="nf">format_kmgt</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">my</span> <span class="nv">$byte</span> <span class="o">=</span> <span class="nb">shift</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">my</span> <span class="nv">@prefix</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;B&quot;</span><span class="p">,</span><span class="s">&quot;K&quot;</span><span class="p">,</span><span class="s">&quot;M&quot;</span><span class="p">,</span><span class="s">&quot;G&quot;</span><span class="p">,</span><span class="s">&quot;T&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">while</span><span class="p">(</span><span class="mi">1024</span> <span class="o">&lt;</span> <span class="nv">$byte</span><span class="p">){</span>
+</span><span class='line'>    <span class="nv">$byte</span> <span class="o">=</span> <span class="nv">$byte</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">;</span>
+</span><span class='line'>    <span class="nb">shift</span> <span class="nv">@prefix</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="nb">sprintf</span> <span class="s">&quot;%.1f%s&quot;</span><span class="p">,</span><span class="nv">$byte</span><span class="p">,</span><span class="nb">shift</span> <span class="nv">@prefix</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">1</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>プログラムの置場所をどこにするべきか少し悩んだのですが、Dropbox以下にPATHを通したディレクトリを用意し、そこに置くことにしました。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="nb">mkdir</span> <span class="sr">/Users/</span><span class="nv">$HOME</span><span class="sr">/Dropbox/</span><span class="n">dotfile</span><span class="o">/</span><span class="n">mybin</span>
+</span><span class='line'><span class="nb">chmod</span> <span class="mi">755</span> <span class="sr">/Users/</span><span class="nv">$HOME</span><span class="sr">/Dropbox/</span><span class="n">dotfile</span><span class="o">/</span><span class="n">mybin</span>
+</span><span class='line'><span class="nb">chmod</span> <span class="mi">755</span> <span class="sr">/Users/</span><span class="nv">$HOME</span><span class="sr">/Dropbox/</span><span class="n">dotfile</span><span class="sr">/mybin/</span><span class="n">bu</span>
+</span><span class='line'><span class="n">cat</span> <span class="o">&gt;&gt;</span> <span class="o">.</span><span class="n">zshrc</span> <span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="nv">$PATH:$HOME</span><span class="sr">/Dropbox/</span><span class="n">dotfile</span><span class="o">/</span><span class="n">mybin</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>perlのプログラムなので</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="sr">/Users/</span><span class="nv">$HOME</span><span class="sr">/perl5/</span><span class="n">perlbrew</span><span class="sr">/perls/</span><span class="n">perl</span><span class="o">-</span><span class="mf">5.14.2</span><span class="sr">/bin/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>や、自前のプログラムということで、</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='perl'><span class='line'><span class="sr">/usr/</span><span class="nb">local</span><span class="o">/</span><span class="n">bin</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>がいいのかもしれません。</p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://dqn.sakusakutto.jp/2011/08/linux_usrlocal.html">/usr/local/の使い方まとめ</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/06/find-cmd-on-mac-1/">ディレクトリ中のファイルサイズの合計値を再帰的に集計したい その１</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-06T19:45:00+09:00" pubdate data-updated="true">Apr 6<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>たまにディレクトリ中のファイルサイズの合計値を、再帰的に集計したいときがある。<br/>
+で、いつも考えなしにこちらのサイトで紹介されているコマンドを叩いていたわけなんですが、</p>
+
+<p><a href="http://sonic64.com/2004-05-26.html">ディレクトリ中のファイルサイズ合計値を バイト表示</a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>find -type f -printf "%s\n" |perl -ne '$i++; $byte += $_; $str = "\r$i files, $byte byte"; $str =~ s/(\d{1,3})(?=(?:\d\d\d)+(?!\d))/$1,/g; print $str'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>mac(osx)だと動かない。どうやらmacのfindのオプションに printf がないもよう。</p>
+
+<p><a href="http://stackoverflow.com/questions/752818/why-does-macs-find-not-have-the-option-printf">Why does Mac&rsquo;s $find not have the option -printf?</a></p>
+
+<p>そこで printf f &lsquo;%s\n&rsquo; のかわりに stat -f &lsquo;%z&rsquo; を代用してみた。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>find ./ -print0 | xargs -0 stat -f '%z' | perl -ne '$i++; $byte += $_; $str = "\r$i files, $byte byte"; $str =~ s/(\d{1,3})(?=(?:\d\d\d)+(?!\d))/$1,/g; print $str';</span></code></pre></td></tr></table></div></figure>
+
+
+<p>とりあえず期待した結果になるが、カレントディレクトリのサイズも合計されてしまう。。<br/>
+ちょっとカレントディレクトリのサイズを除外する方法がわからなかったので、このまま関数にして使うことにした。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># linux
+</span><span class='line'>function bu(){ find -type f -printf "%s\n" |perl -ne '$i++; $byte += $_; $str = "\r$i files, $byte byte"; $str =~ s/(\d{1,3})(?=(?:\d\d\d)+(?!\d))/$1,/g; print $str'; }
+</span><span class='line'>
+</span><span class='line'># mac
+</span><span class='line'>function bu(){ find ./ -print0 | xargs -0 stat -f '%z' | perl -ne '$i++; $byte += $_; $str = "\r$i files, $byte byte"; $str =~ s/(\d{1,3})(?=(?:\d\d\d)+(?!\d))/$1,/g; print $str'; }</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://sonic64.com/2004-05-26.html">ディレクトリ中のファイルサイズ合計値を バイト表示</a></li>
+<li><a href="http://stackoverflow.com/questions/752818/why-does-macs-find-not-have-the-option-printf">Why does Mac&rsquo;s $find not have the option -printf?</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/05/item2-color-scheme/">Iterm2のカラースキームを変更する</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-05T19:33:00+09:00" pubdate data-updated="true">Apr 5<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近は background を白系の透過で使っていたが、なんとなくまた黒系の透過に戻してみた。<br/>
+毎回自分で設定するのは面倒なので、今回はこちらの方のカラースキームを使わしてもらうことにした。</p>
+
+<p><a href="http://this.aereal.org/entry/2013/01/02/222304">iTerm 2 で使えるカラースキーム、Japanesque を作った</a></p>
+
+<h2>カラースキームのダウンロード</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir Dropbox/src/itermcolors
+</span><span class='line'>$ cd Dropbox/src/itermcolors
+</span><span class='line'>$ wget https://raw.github.com/aereal/dotfiles/master/colors/Japanesque/Japanesque.itermcolors</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>カラースキームの設定</h2>
+
+<h3>新しい Profile を作成する</h3>
+
+<p>Preferences > Profiles > General > +<br/>
+Preferences > Profiles > General > Name<br/>
+Preferences > Profiles > General > Other Actions > Set as Default</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/iterm2_color_scheme_001.png" alt="" /></p>
+
+<h3>ダウンロードしたカラースキームを import する</h3>
+
+<p>Import を行うと、Load Presets に新たに Japanesque が追加される。</p>
+
+<p>Preferences > Profiles > Colors > Import<br/>
+Preferences > Profiles > Colors > Japanesque</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/iterm2_color_scheme_002.png" alt="" /></p>
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/nomnel/20111120/1321799289">iTerm2のカラースキームをSolarizedにする</a></li>
+<li><a href="http://this.aereal.org/entry/2013/01/02/222304">iTerm 2 で使えるカラースキーム、Japanesque を作った</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/03/26/emacs-rsense/">emacsでのRuby環境(Rsenseでオムニ補完)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-26T19:00:00+09:00" pubdate data-updated="true">Mar 26<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今更ですが、最近yugaiさんの「初めてのRuby」を読み始めています。すごく読みやすくて楽しいです。<br/>
+そこでemacsのRuby環境もちゃんと用意することにしました。</p>
+
+<h2>Rsenseとは</h2>
+
+<p>Rsenseは、rubyコードのオムニ補完(文脈を解析して行う補完)をしてくれるツールです。<br/>
+emacsでのrubyのコード補完は、他にもauto-complete(単体)、auto-complete-ruby、rcodetools などあります。<br/>
+※ Rsense は Java Runtime Environment (JRE) 1.5以上が必要です。JREはOSXに標準でインストールされています。</p>
+
+<h2>Rsense のインストール</h2>
+
+<p>本家サイトから最新版をwgetします。<br/>
+※ emacs には el-get.le を事前にインストールしておいてください。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget http://cx4a.org/pub/rsense/rsense-0.3.tar.bz2
+</span><span class='line'>tar xvzf rsense-0.3.tar.bz2
+</span><span class='line'>
+</span><span class='line'>mkdir .emacs.d/opt
+</span><span class='line'>mv rsense-0.3 .emacs.d/opt/</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>.rsenseの作成</h2>
+
+<p>次に Rsense に Rubyの環境変数を指定するための ~/.rsense を作成します。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd $HOME/.emacs.d/opt/rsense-0.3/
+</span><span class='line'>chmod +x ./bin/rsense
+</span><span class='line'>bin/rsense version
+</span><span class='line'>&gt;&gt; RSense 0.3 # &lt;- 今回インストールしたRsenseのバージョン
+</span><span class='line'>
+</span><span class='line'># $HOME 直下に ~/.rsenseファイルを作成、環境変数が設定されている
+</span><span class='line'>ruby ./etc/config.rb &gt; ~/.rsense</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Java Runtime が正しく動くか確認</h2>
+
+<p>生成した ~/.rsense の環境変数が正しく設定されていないと Java Runtime が動きません。<br/>
+下記のコマンドで、まずJava Runtimeが正常に動くか確認してください。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd $HOME/.emacs.d/opt/rsense-0.3/
+</span><span class='line'>bin/rsense server # &lt;- 環境変数がおかしいと、この段階でエラーが出るのでパスを修正する
+</span><span class='line'>
+</span><span class='line'>java -cp lib/jruby.jar:lib/antlr-runtime-3.2.jar:lib/rsense.jar org.cx4a.rsense.Main version
+</span><span class='line'>RSense 0.3 # &lt;- 正常値</span></code></pre></td></tr></table></div></figure>
+
+
+<p>本家サイトに<a href="http://cx4a.org/software/rsense/manual.ja.html#.E3.83.88.E3.83.A9.E3.83.96.E3.83.AB.E3.82.B7.E3.83.A5.E3.83.BC.E3.83.86.E3.82.A3.E3.83.B3.E3.82.B0" title="">トラブルシューティング</a>があるのでうまく動かない場合は、確認にしてみてください。</p>
+
+<h2>.emacs に Rsense の設定を追加</h2>
+
+<p>.emacs.d/conf/54-ruby.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">rsense-home</span> <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/opt/rsense-0.3&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="p">(</span><span class="nf">concat</span> <span class="nv">rsense-home</span> <span class="s">&quot;/etc&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;rsense</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;ruby-mode-hook</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">lambda </span><span class="p">()</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;ac-sources</span> <span class="ss">&#39;ac-source-rsense-method</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;ac-sources</span> <span class="ss">&#39;ac-source-rsense-constant</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rsenseが正しく動いているか確認</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">M-x</span> <span class="nv">rsense-version</span> <span class="o">#</span> <span class="k">=&gt; </span><span class="nv">Rsense</span> <span class="mf">3.0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/emacs_rsense_001.png" alt="" /></p>
+
+<h2>リファレンスの追加</h2>
+
+<p>リファレンスを追加することで、オムニ補完中にリファレンスを表示することができる。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">cd</span> <span class="nv">$HOME/</span><span class="o">.</span><span class="nv">emacs</span><span class="o">.</span><span class="nv">d/opt/rsense-0</span><span class="o">.</span><span class="mi">3</span><span class="nv">/doc</span>
+</span><span class='line'><span class="nv">wget</span> <span class="nv">ruby-refm-1</span><span class="o">.</span><span class="mf">9.3</span><span class="nv">-dynamic-snapshot</span><span class="o">.</span><span class="nv">tar</span><span class="o">.</span><span class="nv">gz</span>
+</span><span class='line'><span class="nv">tar</span> <span class="nv">xvzf</span> <span class="nv">ruby-refm-1</span><span class="o">.</span><span class="mf">9.3</span><span class="nv">-dynamic-snapshot</span><span class="o">.</span><span class="nv">tar</span><span class="o">.</span><span class="nv">gz</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>.emacs に設定追加</h3>
+
+<p>.emacs.d/conf/54-ruby.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">rsense-rurema-home</span> <span class="p">(</span><span class="nf">concat</span> <span class="nv">rsense-home</span> <span class="s">&quot;/doc/ruby-refm-1.9.3-dynamic-snapshot&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">rsense-rurema-refe</span> <span class="s">&quot;refe-1_9_3&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/emacs_rsense_002.png" alt="" /></p>
+
+<h2>参考サイト</h2>
+
+<ul>
+<li><a href="http://kayakaya.net/d/20100321.html">Rsenseを動かしてみた</a></li>
+<li><a href="http://cx4a.org/software/rsense/manual.ja.html#.E3.83.88.E3.83.A9.E3.83.96.E3.83.AB.E3.82.B7.E3.83.A5.E3.83.BC.E3.83.86.E3.82.A3.E3.83.B3.E3.82.B0">本家サイト トラブルシューティング</a></li>
+<li><a href="http://tcnksm.sakura.ne.jp/blog/2012/05/07/">Emacs で ruby の自動入力補完とリファレンスの表示</a></li>
+<li><a href="http://cx4a.org/software/rsense/manual.ja.html#Ruby.E3.83.AA.E3.83.95.E3.82.A1.E3.83.AC.E3.83.B3.E3.82.B9.E3.83.9E.E3.83.8B.E3.83.A5.E3.82.A2.E3.83.AB">本家サイト Rubyリファレンスマニュアル</a></li>
+</ul>
+
+
+<h2>ruby-block、ruby-electric のインストール</h2>
+
+<p>ruby-block は、end に対応する行をハイライトしてくれるパッケージです。<br/>
+ruby-electric は、括弧などを自動挿入してくれます。</p>
+
+<p>こちらは el-get に初めから recipe があるので、M-x el-get-list-package でインストールします。</p>
+
+<p>.emacs.d/conf/54-ruby.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;ruby-block</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">ruby-block-mode</span> <span class="nv">t</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">ruby-block-highlight-toggle</span> <span class="nv">t</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;ruby-electric</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;ruby-mode-hook</span> <span class="o">&#39;</span><span class="p">(</span><span class="k">lambda </span><span class="p">()</span> <span class="p">(</span><span class="nf">ruby-electric-mode</span> <span class="nv">t</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">ruby-electric-expand-delimiters-list</span> <span class="nv">nil</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考サイト</h2>
+
+<ul>
+<li><a href="http://shibayu36.hatenablog.com/entry/2013/03/18/192651">emacsのruby環境を整えています</a></li>
+</ul>
+
+
+<h2>inf-ruby のインストール</h2>
+
+<p>irb を emacs 上から利用することができます。M-x run-ruby (C-c C-s)<br/>
+el-get でインストールすると error がでて、Rsense が動かなくなったので、自分で recipe を用意します。</p>
+
+<p>.emacs.d/conf/10-el-get.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">el-get-dir</span> <span class="s">&quot;~/.emacs.d/elisp/el-get/&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">unless</span> <span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;el-get</span> <span class="nv">nil</span> <span class="ss">&#39;noerror</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">with-current-buffer</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">url-retrieve-synchronously</span>
+</span><span class='line'>    <span class="s">&quot;https://raw.github.com/dimitri/el-get/master/el-get-install.el&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">goto-char</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">eval-print-last-sexp</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">el-get-sources</span>
+</span><span class='line'>  <span class="o">&#39;</span><span class="p">(</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">:name</span> <span class="nv">inf-ruby</span>
+</span><span class='line'>    <span class="nv">:type</span> <span class="nv">http</span>
+</span><span class='line'>    <span class="nv">:url</span> <span class="s">&quot;https://raw.github.com/ruby/ruby/trunk/misc/inf-ruby.el&quot;</span>
+</span><span class='line'>    <span class="nv">:description</span> <span class="s">&quot;[My Recipes] Inferior Ruby Mode&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">el-get</span> <span class="ss">&#39;sync</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.emacs.d/conf/54-ruby.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;run-ruby</span> <span class="s">&quot;inf-ruby&quot;</span> <span class="s">&quot;Run an inferior Ruby process&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;inf-ruby-keys</span> <span class="s">&quot;inf-ruby&quot;</span> <span class="s">&quot;Set local key defs for inf-ruby in ruby-mode&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;ruby-mode-hook</span> <span class="o">&#39;</span><span class="p">(</span><span class="k">lambda </span><span class="p">()</span> <span class="p">(</span><span class="nf">inf-ruby-keys</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考サイト</h2>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/a666666/20090703/1246609986">Emacs から irb を使いやすくするために inf-ruby.el の設定を追加した</a></li>
+</ul>
+
+
+<h2>rcodetools のインストール</h2>
+
+<p>コード補完や xmp(画面出力の結果をコメントにしてソースに自動で記載してくれる) など、便利な機能が追加されます。<br/>
+自分は補完は Rsense で行なっているので、xmp のみ使っています。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">gem</span> <span class="nv">install</span> <span class="nv">rcodetools</span>
+</span><span class='line'><span class="nv">cp</span> <span class="nv">-a</span> <span class="o">.</span><span class="nv">rbenv/versions/2</span><span class="o">.</span><span class="mf">0.0</span><span class="nv">-p0/lib/ruby/gems/2</span><span class="o">.</span><span class="mf">0.0</span><span class="nv">/gems/rcodetools-0</span><span class="o">.</span><span class="mf">8.5</span><span class="o">.</span><span class="mi">0</span><span class="nv">/rcodetools</span><span class="o">.</span><span class="nv">el</span> <span class="o">.</span><span class="nv">emacs</span><span class="o">.</span><span class="nv">d/elisp/</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>.emacs.d/conf/54-ruby.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;rcodetools</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">rct-find-tag-if-available</span> <span class="nv">nil</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">ruby-mode-hook-rcodetools</span> <span class="p">()</span>
+</span><span class='line'><span class="c1">;;  (define-key ruby-mode-map &quot;\M-\C-i&quot; &#39;rct-complete-symbol)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">define-key</span> <span class="nv">ruby-mode-map</span> <span class="s">&quot;\C-c\C-t&quot;</span> <span class="ss">&#39;ruby-toggle-buffer</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">define-key</span> <span class="nv">ruby-mode-map</span> <span class="s">&quot;\C-c\C-d&quot;</span> <span class="ss">&#39;xmp</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">define-key</span> <span class="nv">ruby-mode-map</span> <span class="s">&quot;\C-c\C-f&quot;</span> <span class="ss">&#39;rct-ri</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;ruby-mode-hook</span> <span class="ss">&#39;ruby-mode-hook-rcodetools</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&lsquo; # =>&rsquo; とコメントして、C-cC-d すると、</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/emacs_rsense_003.png" alt="" /></p>
+
+<h2>出力結果をコメントしてくれる。</h2>
+
+<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/emacs_rsense_004.png" alt="" /></p>
+
+<h2>参考サイト</h2>
+
+<ul>
+<li><a href="http://d.hatena.ne.jp/authorNari/20090523/1243051306">rcodetoolsが素晴らしすぎる件</a></li>
+</ul>
+
+
+<h2>最終的な.emacsd</h2>
+
+<p>※ el-get の recipe は省略してます。</p>
+
+<p>.emacs.d/conf/54-ruby.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="c1">;; --------------------------------------------------</span>
+</span><span class='line'><span class="c1">;; ruby-mode</span>
+</span><span class='line'><span class="c1">;; http://shibayu36.hatenablog.com/entry/2013/03/18/192651</span>
+</span><span class='line'><span class="c1">;; --------------------------------------------------</span>
+</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;ruby-mode</span> <span class="s">&quot;ruby-mode&quot;</span>
+</span><span class='line'>  <span class="s">&quot;Mode for editing ruby source files&quot;</span> <span class="nv">t</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;auto-mode-alist</span> <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;\\.rb$&quot;</span> <span class="o">.</span> <span class="nv">ruby-mode</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;auto-mode-alist</span> <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;Capfile$&quot;</span> <span class="o">.</span> <span class="nv">ruby-mode</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;auto-mode-alist</span> <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;Gemfile$&quot;</span> <span class="o">.</span> <span class="nv">ruby-mode</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; --------------------------------------------------</span>
+</span><span class='line'><span class="c1">;; Rsense</span>
+</span><span class='line'><span class="c1">;; [description] オムニ補完</span>
+</span><span class='line'><span class="c1">;; http://kayakaya.net/d/20100321.html</span>
+</span><span class='line'><span class="c1">;; http://cx4a.org/software/rsense/manual.ja.html#.E3.83.88.E3.83.A9.E3.83.96.E3.83.AB.E3.82.B7.E3.83.A5.E3.83.BC.E3.83.86.E3.82.A3.E3.83.B3.E3.82.B0</span>
+</span><span class='line'><span class="c1">;; http://tcnksm.sakura.ne.jp/blog/2012/05/07/</span>
+</span><span class='line'><span class="c1">;; --------------------------------------------------</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">rsense-home</span> <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/opt/rsense-0.3&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="p">(</span><span class="nf">concat</span> <span class="nv">rsense-home</span> <span class="s">&quot;/etc&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;rsense</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;ruby-mode-hook</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">lambda </span><span class="p">()</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;ac-sources</span> <span class="ss">&#39;ac-source-rsense-method</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;ac-sources</span> <span class="ss">&#39;ac-source-rsense-constant</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; http://cx4a.org/software/rsense/manual.ja.html#Ruby.E3.83.AA.E3.83.95.E3.82.A1.E3.83.AC.E3.83.B3.E3.82.B9.E3.83.9E.E3.83.8B.E3.83.A5.E3.82.A2.E3.83.AB</span>
+</span><span class='line'><span class="c1">;; cd $HOME/.emacs.d/opt/rsense-0.3/doc &amp;&amp; wget ruby-refm-1.9.3-dynamic-snapshot.tar.gz</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">rsense-rurema-home</span> <span class="p">(</span><span class="nf">concat</span> <span class="nv">rsense-home</span> <span class="s">&quot;/doc/ruby-refm-1.9.3-dynamic-snapshot&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">rsense-rurema-refe</span> <span class="s">&quot;refe-1_9_3&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; --------------------------------------------------</span>
+</span><span class='line'><span class="c1">;; ruby-block</span>
+</span><span class='line'><span class="c1">;; [description] endに対応する行のハイライト</span>
+</span><span class='line'><span class="c1">;; --------------------------------------------------</span>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;ruby-block</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">ruby-block-mode</span> <span class="nv">t</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">ruby-block-highlight-toggle</span> <span class="nv">t</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; --------------------------------------------------</span>
+</span><span class='line'><span class="c1">;; ruby-electric</span>
+</span><span class='line'><span class="c1">;; [description] 括弧などを自動挿入</span>
+</span><span class='line'><span class="c1">;; --------------------------------------------------</span>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;ruby-electric</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;ruby-mode-hook</span> <span class="o">&#39;</span><span class="p">(</span><span class="k">lambda </span><span class="p">()</span> <span class="p">(</span><span class="nf">ruby-electric-mode</span> <span class="nv">t</span><span class="p">)))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">ruby-electric-expand-delimiters-list</span> <span class="nv">nil</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; --------------------------------------------------</span>
+</span><span class='line'><span class="c1">;; rcodetools</span>
+</span><span class='line'><span class="c1">;; http://d.hatena.ne.jp/authorNari/20090523/1243051306</span>
+</span><span class='line'><span class="c1">;; gem install rcodetools</span>
+</span><span class='line'><span class="c1">;; cp -a .rbenv/versions/2.0.0-p0/lib/ruby/gems/2.0.0/gems/rcodetools-0.8.5.0/rcodetools.el .emacs.d/elisp/</span>
+</span><span class='line'><span class="c1">;; --------------------------------------------------</span>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;rcodetools</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">rct-find-tag-if-available</span> <span class="nv">nil</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">defun</span> <span class="nv">ruby-mode-hook-rcodetools</span> <span class="p">()</span>
+</span><span class='line'><span class="c1">;;  (define-key ruby-mode-map &quot;\M-\C-i&quot; &#39;rct-complete-symbol)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">define-key</span> <span class="nv">ruby-mode-map</span> <span class="s">&quot;\C-c\C-t&quot;</span> <span class="ss">&#39;ruby-toggle-buffer</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">define-key</span> <span class="nv">ruby-mode-map</span> <span class="s">&quot;\C-c\C-d&quot;</span> <span class="ss">&#39;xmp</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">define-key</span> <span class="nv">ruby-mode-map</span> <span class="s">&quot;\C-c\C-f&quot;</span> <span class="ss">&#39;rct-ri</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;ruby-mode-hook</span> <span class="ss">&#39;ruby-mode-hook-rcodetools</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; --------------------------------------------------</span>
+</span><span class='line'><span class="c1">;; inf-ruby</span>
+</span><span class='line'><span class="c1">;; [description] irbをemacsから利用する。M-x run-ruby (C-c C-s)</span>
+</span><span class='line'><span class="c1">;; el-getでインストールするとerrorがでて、rsenseが動かなくなったので、自分でrecipeを用意すること</span>
+</span><span class='line'><span class="c1">;; http://d.hatena.ne.jp/a666666/20090703/1246609986</span>
+</span><span class='line'><span class="c1">;; --------------------------------------------------</span>
+</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;run-ruby</span> <span class="s">&quot;inf-ruby&quot;</span> <span class="s">&quot;Run an inferior Ruby process&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;inf-ruby-keys</span> <span class="s">&quot;inf-ruby&quot;</span> <span class="s">&quot;Set local key defs for inf-ruby in ruby-mode&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;ruby-mode-hook</span> <span class="o">&#39;</span><span class="p">(</span><span class="k">lambda </span><span class="p">()</span> <span class="p">(</span><span class="nf">inf-ruby-keys</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -732,299 +1568,6 @@ init.el に以下の設定を入れて、emacsを起動させると自動でイ�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/17/mosh/">Moshを使ってみる</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-17T18:02:00+09:00" pubdate data-updated="true">Mar 17<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>去年ぐらいから流行っているmoshを入れてみる。</p>
-
-<p>moshを利用するには、クライアント、サーバー両方にmoshをインストールする必要がある。<br/>
-またmosh内でsshを利用するため、sshの代価というわけではない。</p>
-
-<h2>centosにmoshをmake install</h2>
-
-<p>git cloneして、インストールスクリプトを実行したほうがいいかも。。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>yum --enablerepo=epel install -y protobuf-compiler protobuf-devel boost-devel
-</span><span class='line'>wget https://github.com/downloads/keithw/mosh/mosh-1.2.3.tar.gz
-</span><span class='line'>tar xvzf mosh-1.2.3.tar.gz
-</span><span class='line'>cd mosh-1.2.3
-</span><span class='line'>./configure
-</span><span class='line'>make
-</span><span class='line'>make install
-</span><span class='line'>
-</span><span class='line'># インストール先
-</span><span class='line'>which mosh
-</span><span class='line'>/usr/local/bin/mosh</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>iptablesに追加</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>emacs /etc/sysconfig/iptables
-</span><span class='line'>-A INPUT -p udp -m udp --dport 60000:61000 -j ACCEPT
-</span><span class='line'>
-</span><span class='line'>/etc/init.d/iptables restart</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>macにmoshにインストール</h2>
-
-<p>mosh(mobile-shell)をbrewでインストール</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>brew update
-</span><span class='line'>brew install mobile-shell</span></code></pre></td></tr></table></div></figure>
-
-
-<p>IO::Ptyというperlモジュールも必要なので、cpanmでインストール</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cpanm IO::Pty</span></code></pre></td></tr></table></div></figure>
-
-
-<p>zshrcに補完関数を追加</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cat &gt;&gt; .zshrc
-</span><span class='line'># moshcompdef
-</span><span class='line'>mosh=ssh</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>利用方法</h2>
-
-<p>利用方法はsshと同じ。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>mosh &lt;server-name&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>回線がすぐ切れるような環境でないと、あまり恩恵は感じないと思うが、とりあえず使ってみようと思います。</p>
-
-<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
-
-<ul>
-<li><a href="http://d.hatena.ne.jp/karasuyamatengu/20120411/1334092521">mosh: MITからモバイル時代のSSH代替品</a></li>
-<li><a href="http://mosh.mit.edu/">本家サイト</a></li>
-<li><a href="http://d.hatena.ne.jp/mutsune/20120416/1334590736">mosh のインストール</a></li>
-<li><a href="http://gihyo.jp/admin/serial/01/ubuntu-recipe/0220">第220回　Ubuntuでモバイルシェル「Mosh」を使う</a></li>
-<li>[<a href="http://d.hatena.ne.jp/naoya/20130108/1357630895">近頃の開発環境 : Mosh、z、tmux、Emacs、Perl について</a></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/15/asics-store-tokyo/">アシックスストア東京に行って計測してきた</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-15T20:30:00+09:00" pubdate data-updated="true">Mar 15<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/asics_store_tokyo_001.jpg" alt="" /></p>
-
-<p>最近膝の痛みがひどく、一度自分のランニングスタイルを確認してみたかったので、アシックスストア東京で計測してきました。</p>
-
-<h2>足型測定 STATIC FOOT ID</h2>
-
-<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/asics_store_tokyo_002.jpg" alt="" /></p>
-
-<p>まずは足型の測定から。足が小さい(足長が短い)わりには甲高な足ｗ 我ながらかっこ悪い。<br/>
-それ以外の気になるの点は、右足のかかとの傾斜角が少しついていることぐらいでしょうか。</p>
-
-<h2>プロネーション測定 DYNAMIC FOOT ID</h2>
-
-<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/asics_store_tokyo_003.jpg" alt="" /></p>
-
-<p>今回の計測で一番の発見がこれ。自分はずっとシューズの「かかと外側のすり減り」がヒドかったので、てっきり「オーバープロネーション」になっていると思い込んでいたのですが、計測した結果「アンダープロネーション」でした。</p>
-
-<p>つまり膝への負担(オーバープロネーション)ではなく、すねの筋肉などに負担がかかっているとのこと。<br/>
-また店員さんいわく「かかと外側のすり減り」は正常なランニングスタイルだとのこと。</p>
-
-<h2>では膝の痛みの原因はなんだろう？</h2>
-
-<p>フォームの問題ではないとすると「筋力が足りていない」とか「オーバーワーク」ということなのでしょうか。。<br/>
-とりあえず当面は、痛みをあまりひどくならないように、セーブしながら走っていこうと思います。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/14/uglify-js/">Uglify-js</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-14T18:01:00+09:00" pubdate data-updated="true">Mar 14<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>npm install -g uglify-js</span></code></pre></td></tr></table></div></figure>
-
-
-<p>パラメータの-gは「global」の意味。「global」はnodeのインストールディレクトリ、<br/>
-そうでなければカレントパッケージのルートかカレントワーキングディレクトリ。</p>
-
-<h2>npmの参考サイト</h2>
-
-<ul>
-<li><a href="https://npmjs.org/doc/config.html">Manage the npm configuration file</a></li>
-<li><a href="http://kysnm.hatenablog.com/entry/20111225/1324828008">npm についてまとめてみる</a></li>
-</ul>
-
-
-<h2>uglify-jsの使い方</h2>
-
-<ul>
-<li>-b, &mdash;beautify     整形(軽量化の逆)</li>
-<li>-o,&mdash;output <file> 出力ファイルの指定</li>
-<li>&mdash;overwrite        軽量化後のコードで入力ファイルを上書きします</li>
-<li>&mdash;unsafe           コードをより短い表現に変換</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>uglifyjs -o min.js jquery-1.9.1.js</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/03/12/tmux-copy/">Tmuxのコピーモードで、標準出力を見る方法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-12T17:58:00+09:00" pubdate data-updated="true">Mar 12<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>tmux.confに「set-window-option -g mode-mouse on」を追加する方法もあるが、<br/>
-これだと、「カーソルで文字を反転させて(文字を選んで)、コピペ」ができなくなってしまう。</p>
-
-<p>なので、代わりにコピーモードで標準出力を見る方法</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>C-z [ # コピーモード、C-n、C-pで上下に移動
-</span><span class='line'>q # コピーモードをぬける</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -1042,30 +1585,30 @@ init.el に以下の設定を入れて、emacsを起動させると自動でイ�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/16/install-yasnippet-to-elpa/">elpaでyasnippet.elをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/16/emacs-install-scss-mode/">Auto-installでscss-modeをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/14/install-sass-and-compass/">Sassとcompassをインストールする</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/27/connect-with-livedoor-provider-and-flets-hikari-pppoe/">livedoorプロバイダを使っていて、Bフレッツからフレッツ光ネクストに切り替えたらネットに繋がらなくなった</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/10/handlersocket-install/">HandlerSocketをインストールする</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/10/octopress-clippit/">Octopressのコードスニペットの設定</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/09/octopress-install/">Octopressをインストールする</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/01/pbcopy-pbpaste/">Tmuxでもpbcopy、pbpasteを使えるように設定する</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/04/16/emacs-git-gutter/">git-gutter.elをインストールする</a>
       </li>
     
   </ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.85714285714286%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 108.57142857142857%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 105.71428571428571%'>auto-install(2)</a> <a href='/blog/categories/cakephp' style='font-size: 102.85714285714286%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 114.28571428571429%'>CoffeeScript(5)</a> <a href='/blog/categories/el-get' style='font-size: 114.28571428571429%'>el-get(5)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(21)</a> <a href='/blog/categories/flymake' style='font-size: 102.85714285714286%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 117.14285714285714%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.85714285714286%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.71428571428571%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.71428571428571%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.85714285714286%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.85714285714286%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 114.28571428571429%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.71428571428571%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.85714285714286%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.85714285714286%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 108.57142857142857%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.71428571428571%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.71428571428571%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.71428571428571%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.85714285714286%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.85714285714286%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.71428571428571%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 111.42857142857143%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.85714285714286%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.85714285714286%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 117.14285714285714%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.85714285714286%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.85714285714286%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.71428571428571%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.71428571428571%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.85714285714286%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.85714285714286%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.85714285714286%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 128.57142857142858%'>running(10)</a> <a href='/blog/categories/tmux' style='font-size: 111.42857142857143%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.85714285714286%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.85714285714286%'>wordpress(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/anyting' style='font-size: 102.6086956521739%'>anyting(1)</a> <a href='/blog/categories/auto-complete' style='font-size: 107.82608695652173%'>auto-complete(3)</a> <a href='/blog/categories/auto-install' style='font-size: 107.82608695652173%'>auto-install(3)</a> <a href='/blog/categories/cakephp' style='font-size: 102.6086956521739%'>CakePHP(1)</a> <a href='/blog/categories/coffeescript' style='font-size: 113.04347826086956%'>CoffeeScript(5)</a> <a href='/blog/categories/compass' style='font-size: 102.6086956521739%'>compass(1)</a> <a href='/blog/categories/css' style='font-size: 105.21739130434783%'>css(2)</a> <a href='/blog/categories/el-get' style='font-size: 113.04347826086956%'>el-get(5)</a> <a href='/blog/categories/elpa' style='font-size: 102.6086956521739%'>elpa(1)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>emacs(23)</a> <a href='/blog/categories/etc' style='font-size: 102.6086956521739%'>etc(1)</a> <a href='/blog/categories/flymake' style='font-size: 102.6086956521739%'>flymake(1)</a> <a href='/blog/categories/git' style='font-size: 115.65217391304348%'>git(6)</a> <a href='/blog/categories/handlersocket' style='font-size: 102.6086956521739%'>HandlerSocket(1)</a> <a href='/blog/categories/init-loader' style='font-size: 105.21739130434783%'>init-loader(2)</a> <a href='/blog/categories/item2' style='font-size: 105.21739130434783%'>item2(2)</a> <a href='/blog/categories/jquery' style='font-size: 102.6086956521739%'>Jquery(1)</a> <a href='/blog/categories/lisp' style='font-size: 102.6086956521739%'>lisp(1)</a> <a href='/blog/categories/mac' style='font-size: 113.04347826086956%'>mac(5)</a> <a href='/blog/categories/mamp' style='font-size: 105.21739130434783%'>MAMP(2)</a> <a href='/blog/categories/markdown' style='font-size: 102.6086956521739%'>markdown(1)</a> <a href='/blog/categories/mosh' style='font-size: 102.6086956521739%'>mosh(1)</a> <a href='/blog/categories/mysql' style='font-size: 107.82608695652173%'>mysql(3)</a> <a href='/blog/categories/nginx' style='font-size: 105.21739130434783%'>nginx(2)</a> <a href='/blog/categories/node-js' style='font-size: 105.21739130434783%'>node.js(2)</a> <a href='/blog/categories/npm' style='font-size: 105.21739130434783%'>npm(2)</a> <a href='/blog/categories/nvm' style='font-size: 102.6086956521739%'>nvm(1)</a> <a href='/blog/categories/nxhtml' style='font-size: 102.6086956521739%'>nxhtml(1)</a> <a href='/blog/categories/octopress' style='font-size: 105.21739130434783%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 110.43478260869566%'>perl(4)</a> <a href='/blog/categories/perl-completion' style='font-size: 102.6086956521739%'>perl-completion(1)</a> <a href='/blog/categories/perltidy' style='font-size: 102.6086956521739%'>perltidy(1)</a> <a href='/blog/categories/php' style='font-size: 115.65217391304348%'>php(6)</a> <a href='/blog/categories/php-completion' style='font-size: 102.6086956521739%'>php-completion(1)</a> <a href='/blog/categories/php-mode' style='font-size: 102.6086956521739%'>php-mode(1)</a> <a href='/blog/categories/phpstorm' style='font-size: 105.21739130434783%'>PhpStorm(2)</a> <a href='/blog/categories/review' style='font-size: 105.21739130434783%'>review(2)</a> <a href='/blog/categories/ricky' style='font-size: 102.6086956521739%'>ricky(1)</a> <a href='/blog/categories/rsense' style='font-size: 102.6086956521739%'>rsense(1)</a> <a href='/blog/categories/ruby' style='font-size: 102.6086956521739%'>ruby(1)</a> <a href='/blog/categories/running' style='font-size: 126.08695652173913%'>running(10)</a> <a href='/blog/categories/sass' style='font-size: 105.21739130434783%'>sass(2)</a> <a href='/blog/categories/tmux' style='font-size: 110.43478260869566%'>tmux(4)</a> <a href='/blog/categories/uglify-js' style='font-size: 102.6086956521739%'>uglify-js(1)</a> <a href='/blog/categories/wordpress' style='font-size: 102.6086956521739%'>wordpress(1)</a> <a href='/blog/categories/yasnippet' style='font-size: 102.6086956521739%'>yasnippet(1)</a> </span>
 </section>
 
 <section class="well">

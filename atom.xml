@@ -4,7 +4,7 @@
   <title><![CDATA[10rane.com]]></title>
   <link href="http://tatsuyano.github.io/atom.xml" rel="self"/>
   <link href="http://tatsuyano.github.io/"/>
-  <updated>2013-09-05T22:41:23+09:00</updated>
+  <updated>2013-10-21T23:50:05+09:00</updated>
   <id>http://tatsuyano.github.io/</id>
   <author>
     <name><![CDATA[tatsuyano]]></name>
@@ -12,6 +12,297 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[elpaでyasnippet.elをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/10/16/install-yasnippet-to-elpa/"/>
+    <updated>2013-10-16T22:24:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/10/16/install-yasnippet-to-elpa</id>
+    <content type="html"><![CDATA[<p>今さらですけどysnippet.elをインストールすることにしました。<br/>
+でいつものようにel-getでインストールしようとしたんですが、<br/>
+昨日scss-modeをインストールしようとした時と同じで、<br/>
+githubに接続するところで止まってしまう(インストールが完了しない)。</p>
+
+<p>もうel-getやめようかなあ。elpaだけのほうが楽っぽいし。。<br/>
+とりあえず、今回はelpaでインストールすることにしました。</p>
+
+<h3>elpaでのインストール</h3>
+
+<p>M-x list-packages でパッケージリストを表示させ、ysnippetの行で[x] &amp; [i]でインストール。</p>
+
+<p>~/.emacs.d/conf/82-yasnippet.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="c1">;; yasnippetを置いているフォルダにパス</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;load-path</span>
+</span><span class='line'>             <span class="p">(</span><span class="nf">expand-file-name</span> <span class="s">&quot;~/.emacs.d/elisp/el-get/package/elpa/yasnippet-0.8.0&quot;</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">require</span> <span class="ss">&#39;yasnippet</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">yas-snippet-dirs</span>
+</span><span class='line'>      <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;~/.emacs.d/elisp/el-get/package/elpa/yasnippet-0.8.0/snippets&quot;</span>
+</span><span class='line'>        <span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">yas-global-mode</span> <span class="mi">1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>スニペットの登録</h3>
+
+<p>試しに、html-modeでスペースのエスケープ文字を登録してみます。</p>
+
+<p>[sp]と入力してtabを押下すると[&amp;nbsp]と出力できるようにする</p>
+
+<p>htmlモードに変更</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">M-x</span> <span class="nv">html-mode</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>snippetのひな形作成</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">M-x</span> <span class="nv">yas/new-snippet</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="o">#</span> <span class="nv">-*-</span> <span class="nv">mode:</span> <span class="nv">snippet</span> <span class="nv">-*-</span>
+</span><span class='line'><span class="o">#</span> <span class="nv">name:</span> <span class="nv">&amp;nbsp</span><span class="c1">;</span>
+</span><span class='line'><span class="o">#</span> <span class="nv">key:</span> <span class="nv">sp</span>
+</span><span class='line'><span class="o">#</span> <span class="nv">--</span>
+</span><span class='line'><span class="nv">&amp;nbsp</span><span class="c1">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>html-modeで使いたいので、保存先は以下にします。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">/</span><span class="o">.</span><span class="nv">emacs</span><span class="o">.</span><span class="nv">d/elisp/el-get/package/elpa/yasnippet-0</span><span class="o">.</span><span class="mf">8.0</span><span class="nv">/snippets/html-mode/sp</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://rakkyoo.net/?p=1157">Emacsで「ysnippet.el」を使ってみる</a></li>
+<li><a href="http://d.hatena.ne.jp/mizchi/20100806/1281093295">Emacs/yasnipettで、やさしいコードスニペットの作り方</a></li>
+<li><a href="http://fukuyama.co/yasnippet">yasnippet 8.0の導入からスニペットの書き方、anything/helm/auto-completeとの連携</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[auto-installでscss-modeをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/10/16/emacs-install-scss-mode/"/>
+    <updated>2013-10-16T00:01:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/10/16/emacs-install-scss-mode</id>
+    <content type="html"><![CDATA[<p>el-getでうまくインストールできなかったので、今回はauto-installを使いました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>M-x auto-install-from-url RET https://raw.github.com/antonj/scss-mode/master/scss-mode.el</span></code></pre></td></tr></table></div></figure>
+
+
+<p>touch ~/.emacs.d/conf/55-scss.el</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="c1">;; scss-mode</span>
+</span><span class='line'><span class="c1">;; https://github.com/antonj/scss-mode</span>
+</span><span class='line'><span class="p">(</span><span class="nf">autoload</span> <span class="ss">&#39;scss-mode</span> <span class="s">&quot;scss-mode&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;auto-mode-alist</span> <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;\\.\\(scss\\|css\\|sass\\)\\&#39;&quot;</span> <span class="o">.</span> <span class="nv">scss-mode</span><span class="p">))</span>
+</span><span class='line'><span class="p">(</span><span class="nf">setq</span> <span class="nv">scss-compile-at-save</span> <span class="nv">nil</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; auto-comple</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-to-list</span> <span class="ss">&#39;ac-modes</span> <span class="ss">&#39;scss-mode</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nf">add-hook</span> <span class="ss">&#39;scss-mode-hook</span> <span class="ss">&#39;ac-css-mode-setup</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://blog.sanojimaru.com/post/20621077969/emacs-scss-scss-mode">emacsでscssを扱うscss-modeを入れる</a></li>
+<li><a href="http://blog.be-open.net/emacs/emacs-scss-mode/">Emacsにscss-modeをいれた。</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[sassとcompassをインストールする]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/10/14/install-sass-and-compass/"/>
+    <updated>2013-10-14T18:31:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/10/14/install-sass-and-compass</id>
+    <content type="html"><![CDATA[<p>最近PGでもCSSがいじれて当たり前いう空気をヒシヒシと感じ、<br/>
+せっかくなんでsassを勉強することにしました。</p>
+
+<h3>用語の整理</h3>
+
+<ul>
+<li>less &hellip; CSS拡張メタ言語。コンパイルして使う less &ndash;> css</li>
+<li>scss &hellip; CSS拡張メタ言語。コンパイルして使う scss &ndash;> css</li>
+<li>sass &hellip; scssのバージョン違い。広義の意味ではこれもscss。ファイルの拡張子も.scss</li>
+<li>compass &hellip; cssのFW、というかツールに近い。</li>
+</ul>
+
+
+<h3>どれを使うか</h3>
+
+<p>文法がシンプルでかつoctopressやrailsで採用されているので、sassを使うことにしました。<br/>
+sassを記述するのにcompassを使うと便利、というか標準みたいなのでcompassも使います。</p>
+
+<h3>sassのインストール</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install sass
+</span><span class='line'>
+</span><span class='line'>gem list sass
+</span><span class='line'>sass (3.2.12)
+</span><span class='line'>
+</span><span class='line'>gem which sass
+</span><span class='line'>/home/hoge/.rbenv/versions/1.9.3-p125/lib/ruby/gems/1.9.1/gems/sass-3.2.12/lib/sass.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>compassのインストール</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem install compass
+</span><span class='line'>
+</span><span class='line'>gem list compass
+</span><span class='line'>compass (0.12.2)
+</span><span class='line'>
+</span><span class='line'>gem which compass
+</span><span class='line'>/home/noguchi/.rbenv/versions/1.9.3-p125/lib/ruby/gems/1.9.1/gems/compass-0.12.2/lib/compass.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>パスを通す</h3>
+
+<p>パスが通っていなかったので、パスの通っている<br/>
+$HOME/.rbenv/shims/以下に同じ名前のスクリプトを置きました。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cp -a $HOME/.rbenv/shims/rake $HOME/.rbenv/shims/sass
+</span><span class='line'>cp -a $HOME/.rbenv/shims/rake $HOME/.rbenv/shims/compass</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>プロジェクトの作成</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>compass create test --sass-dir "sass" --css-dir "css" --javascripts-dir "js" --images-dir "img"
+</span><span class='line'>tree test
+</span><span class='line'>test
+</span><span class='line'>├── config.rb
+</span><span class='line'>├── css
+</span><span class='line'>│   ├── ie.css
+</span><span class='line'>│   ├── print.css
+</span><span class='line'>│   └── screen.css
+</span><span class='line'>└── sass
+</span><span class='line'>    ├── ie.scss
+</span><span class='line'>        ├── print.scss
+</span><span class='line'>            └── screen.scss</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>既存のプロジェクトにCompassプロジェクトを追加する</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>compass init &lt;ディレクトリ名&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Sassファイルのコンパイル</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>compass compile</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>ファイル変更時、自動でコンパイルする</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>compass watch</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考サイト</h2>
+
+<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
+
+<ul>
+<li><a href="http://parashuto.com/rriver/development/compass-sass-basics-installation-and-tools">CompassとSassの基礎の覚書</a></li>
+<li><a href="http://howtohp.com/css/compass-environment_setting.html">Compassで本番用と開発用で設定を振り分けてみる</a></li>
+<li><a href="http://parashuto.com/rriver/development/utilizing-sass-compass-in-an-organization">Sass/Compassの社内運用に関するありがたいスライドから学んだことのまとめ</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[livedoorプロバイダを使っていて、Bフレッツからフレッツ光ネクストに切り替えたらネットに繋がらなくなった]]></title>
+    <link href="http://tatsuyano.github.io/blog/2013/09/27/connect-with-livedoor-provider-and-flets-hikari-pppoe/"/>
+    <updated>2013-09-27T21:58:00+09:00</updated>
+    <id>http://tatsuyano.github.io/blog/2013/09/27/connect-with-livedoor-provider-and-flets-hikari-pppoe</id>
+    <content type="html"><![CDATA[<p>引越で、Bフレッツからフレッツ光ネクストに変わったら、<br/>
+ネットに繋がらなくなって、少し焦ったという話。</p>
+
+<p>livedoorプロバイダの光ファイバー(固定IP一つ)を使っていて、<br/>
+引越しなどで、Bフレッツ(VDSL)からフレッツ光ネクスト(PPPoE)に切り替えた場合、</p>
+
+<p>livedoorサポートに連絡して、新たにアカウントを取りなおす必要があります。<br/>
+この時、固定IPとパスワードが変わります。</p>
+
+<p>知っていればなんてことない話なのですが、<br/>
+ネットにそれっぽい情報がなかったので記事に残しておきます。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[HandlerSocketをインストールする]]></title>
@@ -2140,191 +2431,6 @@ init.el に以下の設定を入れて、emacsを起動させると自動でイ�
 <a href="https://gist.github.com/zqwell/1021706  ">https://gist.github.com/zqwell/1021706  </a>
 ↓<br/>
 <a href="https://raw.github.com/gist/1021706/init-loader.el">https://raw.github.com/gist/1021706/init-loader.el</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[moshを使ってみる]]></title>
-    <link href="http://tatsuyano.github.io/blog/2013/03/17/mosh/"/>
-    <updated>2013-03-17T18:02:00+09:00</updated>
-    <id>http://tatsuyano.github.io/blog/2013/03/17/mosh</id>
-    <content type="html"><![CDATA[<p>去年ぐらいから流行っているmoshを入れてみる。</p>
-
-<p>moshを利用するには、クライアント、サーバー両方にmoshをインストールする必要がある。<br/>
-またmosh内でsshを利用するため、sshの代価というわけではない。</p>
-
-<h2>centosにmoshをmake install</h2>
-
-<p>git cloneして、インストールスクリプトを実行したほうがいいかも。。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>yum --enablerepo=epel install -y protobuf-compiler protobuf-devel boost-devel
-</span><span class='line'>wget https://github.com/downloads/keithw/mosh/mosh-1.2.3.tar.gz
-</span><span class='line'>tar xvzf mosh-1.2.3.tar.gz
-</span><span class='line'>cd mosh-1.2.3
-</span><span class='line'>./configure
-</span><span class='line'>make
-</span><span class='line'>make install
-</span><span class='line'>
-</span><span class='line'># インストール先
-</span><span class='line'>which mosh
-</span><span class='line'>/usr/local/bin/mosh</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>iptablesに追加</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>emacs /etc/sysconfig/iptables
-</span><span class='line'>-A INPUT -p udp -m udp --dport 60000:61000 -j ACCEPT
-</span><span class='line'>
-</span><span class='line'>/etc/init.d/iptables restart</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>macにmoshにインストール</h2>
-
-<p>mosh(mobile-shell)をbrewでインストール</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>brew update
-</span><span class='line'>brew install mobile-shell</span></code></pre></td></tr></table></div></figure>
-
-
-<p>IO::Ptyというperlモジュールも必要なので、cpanmでインストール</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cpanm IO::Pty</span></code></pre></td></tr></table></div></figure>
-
-
-<p>zshrcに補完関数を追加</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cat &gt;&gt; .zshrc
-</span><span class='line'># moshcompdef
-</span><span class='line'>mosh=ssh</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>利用方法</h2>
-
-<p>利用方法はsshと同じ。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>mosh &lt;server-name&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>回線がすぐ切れるような環境でないと、あまり恩恵は感じないと思うが、とりあえず使ってみようと思います。</p>
-
-<p>以下のサイトを参考にさせていただきました。ありがとうございます！</p>
-
-<ul>
-<li><a href="http://d.hatena.ne.jp/karasuyamatengu/20120411/1334092521">mosh: MITからモバイル時代のSSH代替品</a></li>
-<li><a href="http://mosh.mit.edu/">本家サイト</a></li>
-<li><a href="http://d.hatena.ne.jp/mutsune/20120416/1334590736">mosh のインストール</a></li>
-<li><a href="http://gihyo.jp/admin/serial/01/ubuntu-recipe/0220">第220回　Ubuntuでモバイルシェル「Mosh」を使う</a></li>
-<li>[<a href="http://d.hatena.ne.jp/naoya/20130108/1357630895">近頃の開発環境 : Mosh、z、tmux、Emacs、Perl について</a></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[アシックスストア東京に行って計測してきた]]></title>
-    <link href="http://tatsuyano.github.io/blog/2013/03/15/asics-store-tokyo/"/>
-    <updated>2013-03-15T20:30:00+09:00</updated>
-    <id>http://tatsuyano.github.io/blog/2013/03/15/asics-store-tokyo</id>
-    <content type="html"><![CDATA[<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/asics_store_tokyo_001.jpg" alt="" /></p>
-
-<p>最近膝の痛みがひどく、一度自分のランニングスタイルを確認してみたかったので、アシックスストア東京で計測してきました。</p>
-
-<h2>足型測定 STATIC FOOT ID</h2>
-
-<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/asics_store_tokyo_002.jpg" alt="" /></p>
-
-<p>まずは足型の測定から。足が小さい(足長が短い)わりには甲高な足ｗ 我ながらかっこ悪い。<br/>
-それ以外の気になるの点は、右足のかかとの傾斜角が少しついていることぐらいでしょうか。</p>
-
-<h2>プロネーション測定 DYNAMIC FOOT ID</h2>
-
-<p><img src="https://dl.dropboxusercontent.com/u/159938/blog_images/asics_store_tokyo_003.jpg" alt="" /></p>
-
-<p>今回の計測で一番の発見がこれ。自分はずっとシューズの「かかと外側のすり減り」がヒドかったので、てっきり「オーバープロネーション」になっていると思い込んでいたのですが、計測した結果「アンダープロネーション」でした。</p>
-
-<p>つまり膝への負担(オーバープロネーション)ではなく、すねの筋肉などに負担がかかっているとのこと。<br/>
-また店員さんいわく「かかと外側のすり減り」は正常なランニングスタイルだとのこと。</p>
-
-<h2>では膝の痛みの原因はなんだろう？</h2>
-
-<p>フォームの問題ではないとすると「筋力が足りていない」とか「オーバーワーク」ということなのでしょうか。。<br/>
-とりあえず当面は、痛みをあまりひどくならないように、セーブしながら走っていこうと思います。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[uglify-js]]></title>
-    <link href="http://tatsuyano.github.io/blog/2013/03/14/uglify-js/"/>
-    <updated>2013-03-14T18:01:00+09:00</updated>
-    <id>http://tatsuyano.github.io/blog/2013/03/14/uglify-js</id>
-    <content type="html"><![CDATA[<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>npm install -g uglify-js</span></code></pre></td></tr></table></div></figure>
-
-
-<p>パラメータの-gは「global」の意味。「global」はnodeのインストールディレクトリ、<br/>
-そうでなければカレントパッケージのルートかカレントワーキングディレクトリ。</p>
-
-<h2>npmの参考サイト</h2>
-
-<ul>
-<li><a href="https://npmjs.org/doc/config.html">Manage the npm configuration file</a></li>
-<li><a href="http://kysnm.hatenablog.com/entry/20111225/1324828008">npm についてまとめてみる</a></li>
-</ul>
-
-
-<h2>uglify-jsの使い方</h2>
-
-<ul>
-<li>-b, &mdash;beautify     整形(軽量化の逆)</li>
-<li>-o,&mdash;output <file> 出力ファイルの指定</li>
-<li>&mdash;overwrite        軽量化後のコードで入力ファイルを上書きします</li>
-<li>&mdash;unsafe           コードをより短い表現に変換</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>uglifyjs -o min.js jquery-1.9.1.js</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[tmuxのコピーモードで、標準出力を見る方法]]></title>
-    <link href="http://tatsuyano.github.io/blog/2013/03/12/tmux-copy/"/>
-    <updated>2013-03-12T17:58:00+09:00</updated>
-    <id>http://tatsuyano.github.io/blog/2013/03/12/tmux-copy</id>
-    <content type="html"><![CDATA[<p>tmux.confに「set-window-option -g mode-mouse on」を追加する方法もあるが、<br/>
-これだと、「カーソルで文字を反転させて(文字を選んで)、コピペ」ができなくなってしまう。</p>
-
-<p>なので、代わりにコピーモードで標準出力を見る方法</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>C-z [ # コピーモード、C-n、C-pで上下に移動
-</span><span class='line'>q # コピーモードをぬける</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
